@@ -2,4 +2,7 @@
 <resources>
     <!-- Stock 1440x3200 SystemUI rounded-corner content inset. -->
     <dimen name="rounded_corner_content_padding">89px</dimen>
+
+    <!-- Two thirds of the 1440px display-mode width. -->
+    <dimen name="udfps_animation_size">960px</dimen>
 </resources>

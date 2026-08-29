@@ -2,4 +2,14 @@
 <resources>
     <!-- Stock 1440x3200 SystemUI rounded-corner content inset. -->
     <dimen name="rounded_corner_content_padding">89px</dimen>
+
+    <!--
+         HyperOS draws the fingerprint icon across the full 184px sensor area.
+         SystemUI expresses the icon diameter in microns, so convert the panel's
+         48.7um pixel pitch back to the stock visual diameter (184 * 48.7um).
+    -->
+    <item name="udfps_icon_size" format="float" type="dimen">8960</item>
+
+    <!-- HyperOS uses an animation canvas equal to two thirds of the panel width. -->
+    <dimen name="udfps_animation_size">960px</dimen>
 </resources>

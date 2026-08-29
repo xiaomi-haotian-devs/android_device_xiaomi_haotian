@@ -1,0 +1,22 @@
+//
+// SPDX-FileCopyrightText: 2026 The Xiaomi haotian developers
+// SPDX-License-Identifier: Apache-2.0
+//
+
+cc_binary {
+    name: "haotian-charging-service",
+    srcs: ["haotian_charging_service.cpp"],
+    init_rc: ["haotian-charging-service.rc"],
+    relative_install_path: "hw",
+    vendor: true,
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+    shared_libs: [
+        "libbase",
+        "libbinder",
+        "liblog",
+        "libutils",
+    ],
+}

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Haotian charging</string>
+    <string name="page_summary">Local controls only. No cloud policy can enable or lock a charging restriction.</string>
+    <string name="section_reverse">Reverse wireless charging</string>
+    <string name="reverse_title">PowerShare</string>
+    <string name="reverse_summary">Allow this phone to charge Qi accessories</string>
+    <string name="reverse_threshold">Stop below</string>
+    <string name="section_protection">Battery protection</string>
+    <string name="anti_aging_title">Battery anti-aging</string>
+    <string name="anti_aging_summary">Use Xiaomi’s local cycle-count and battery-health strategies. Turning this off stops the service and removes its voltage limit.</string>
+    <string name="section_performance">Charging behaviour</string>
+    <string name="fast_charge_title">Wired top-speed charging</string>
+    <string name="fast_charge_summary">Prefer maximum supported wired charging speed. Thermal and hardware safety limits still apply.</string>
+    <string name="wireless_quiet_title">Quiet wireless charging</string>
+    <string name="wireless_quiet_summary">Reduce wireless charging noise and speed</string>
+    <string name="bypass_title">Manual bypass charging</string>
+    <string name="bypass_summary">Power the phone while reducing battery charging. Automatically turns off when unplugged.</string>
+    <string name="bypass_requirement">Connect a wired charger and charge the battery to at least 40% first.</string>
+    <string name="section_status">Battery and firmware</string>
+    <string name="status_loading">Reading MiCharge…</string>
+    <string name="status_format">Battery health: %1$d%%\nCycles: %2$d\nRated capacity: %3$d mAh\nMaximum charging power: %4$d W\nWireless firmware state: %5$d</string>
+    <string name="firmware_update">Update wireless charging firmware</string>
+    <string name="firmware_update_summary">Uses Xiaomi’s on-device firmware updater. It never runs automatically.</string>
+    <string name="firmware_confirm_title">Update wireless firmware?</string>
+    <string name="firmware_confirm_message">Keep the phone still and do not remove power while the update is running. This action is always manual.</string>
+    <string name="firmware_not_supported">Wireless firmware update is not supported by the current HAL.</string>
+    <string name="firmware_guard_battery">Battery must be at least 30%.</string>
+    <string name="firmware_guard_wireless">Remove the phone from its wireless charger first.</string>
+    <string name="firmware_guard_reverse">Turn off reverse wireless charging first.</string>
+    <string name="firmware_guard_busy">A wireless firmware operation is already active.</string>
+    <string name="firmware_started">Wireless firmware update requested.</string>
+    <string name="reset_limits">Turn off all Xiaomi-specific restrictions</string>
+    <string name="reset_limits_summary">Disables anti-aging, quiet mode and bypass, and removes the top-speed override.</string>
+    <string name="reset_done">Xiaomi-specific charging controls are off.</string>
+    <string name="operation_failed">The charging service rejected the change.</string>
+    <string name="service_unavailable">The required charging service is unavailable.</string>
+    <string name="cancel">Cancel</string>
+    <string name="update">Update</string>
+</resources>

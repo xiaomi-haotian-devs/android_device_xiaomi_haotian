@@ -24,6 +24,17 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libhaotian_camera_provider_cgroup
 
+# Local-only charging controls. Limiting features default to off and can only
+# be enabled by the user from the haotian charging settings page.
+PRODUCT_PACKAGES += \
+    HaotianCharging \
+    haotian-charging-service
+
+PRODUCT_VENDOR_PROPERTIES += \
+    persist.vendor.batteryantiaging=0 \
+    persist.vendor.haotian.batteryantiaging=0 \
+    persist.vendor.haotian.fast_charge=0
+
 PRODUCT_COPY_FILES += \
     device/xiaomi/haotian/configs/displayconfig/display_id_4630946654109872275.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/displayconfig/display_id_4630946654109872275.xml
 

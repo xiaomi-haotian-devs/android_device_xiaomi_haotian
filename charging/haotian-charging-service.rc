@@ -1,0 +1,8 @@
+service haotian-charging /vendor/bin/hw/haotian-charging-service
+    class main
+    user system
+    group system
+    disabled
+
+on property:sys.boot_completed=1
+    start haotian-charging

@@ -1,0 +1,19 @@
+type haotian_charging_service, domain;
+type haotian_charging_service_exec, exec_type, vendor_file_type, file_type;
+type haotian_charging_service_manager, service_manager_type;
+
+init_daemon_domain(haotian_charging_service)
+binder_use(haotian_charging_service)
+
+allow haotian_charging_service haotian_charging_service_manager:service_manager add;
+allow platform_app haotian_charging_service_manager:service_manager find;
+binder_call(platform_app, haotian_charging_service)
+
+set_prop(haotian_charging_service, ctl_start_prop)
+set_prop(haotian_charging_service, ctl_stop_prop)
+set_prop(haotian_charging_service, vendor_batteryantiaging_prop)
+set_prop(haotian_charging_service, vendor_haotian_charging_prop)
+
+allow haotian_charging_service sysfs_thermal:file w_file_perms;
+allow haotian_charging_service vendor_sysfs_qcom_battery:dir r_dir_perms;
+allow haotian_charging_service vendor_sysfs_qcom_battery:file rw_file_perms;

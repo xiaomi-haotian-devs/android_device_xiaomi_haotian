@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">昊天充電設定</string>
+    <string name="page_summary">所有功能均由本機使用者控制，不接受雲端控制啟用或鎖定任何充電限制。</string>
+    <string name="section_reverse">無線反向充電</string>
+    <string name="reverse_title">無線反向充電</string>
+    <string name="reverse_summary">使用手機為 Qi 配件充電</string>
+    <string name="reverse_threshold">低於此電量時停止</string>
+    <string name="section_protection">電池保護</string>
+    <string name="anti_aging_title">電池抗老化</string>
+    <string name="anti_aging_summary">使用小米本機循環次數與電池健康策略。關閉後會停止服務並清除其浮充電壓限制。</string>
+    <string name="section_performance">充電行為</string>
+    <string name="fast_charge_title">有線極速充電</string>
+    <string name="fast_charge_summary">優先使用裝置支援的最高有線充電速度；溫控與硬體安全限制仍然有效。</string>
+    <string name="wireless_quiet_title">無線充電靜音模式</string>
+    <string name="wireless_quiet_summary">降低無線充電噪音及速度</string>
+    <string name="bypass_title">手動旁路充電</string>
+    <string name="bypass_summary">儘量直接為手機供電並減少電池充電；拔線後自動關閉。</string>
+    <string name="bypass_requirement">請先連接有線充電器並將電量充至至少 40%。</string>
+    <string name="section_status">電池與韌體</string>
+    <string name="status_loading">正在讀取 MiCharge…</string>
+    <string name="status_format">電池健康度：%1$d%%\n循環次數：%2$d\n額定容量：%3$d mAh\n最大充電功率：%4$d W\n無線韌體狀態：%5$d</string>
+    <string name="firmware_update">更新無線充電韌體</string>
+    <string name="firmware_update_summary">呼叫小米裝置內建韌體更新程式，絕不會自動執行。</string>
+    <string name="firmware_confirm_title">更新無線充電韌體？</string>
+    <string name="firmware_confirm_message">更新期間請保持手機靜止且不要斷電。本操作一律需要手動確認。</string>
+    <string name="firmware_not_supported">目前 MiCharge HAL 不支援無線韌體更新。</string>
+    <string name="firmware_guard_battery">電量必須至少為 30%。</string>
+    <string name="firmware_guard_wireless">請先將手機移出無線充電器。</string>
+    <string name="firmware_guard_reverse">請先關閉無線反向充電。</string>
+    <string name="firmware_guard_busy">已有無線韌體操作正在進行。</string>
+    <string name="firmware_started">已請求更新無線充電韌體。</string>
+    <string name="reset_limits">關閉所有小米專用限制</string>
+    <string name="reset_limits_summary">關閉抗老化、靜音與旁路模式，並移除極速充電覆寫。</string>
+    <string name="reset_done">所有小米專用充電控制均已關閉。</string>
+    <string name="operation_failed">充電服務拒絕了此項變更。</string>
+    <string name="service_unavailable">所需的充電服務無法使用。</string>
+    <string name="cancel">取消</string>
+    <string name="update">更新</string>
+</resources>

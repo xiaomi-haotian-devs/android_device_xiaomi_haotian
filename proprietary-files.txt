@@ -1,6 +1,21 @@
 ## All proprietary files from this list, unless pinned and noted otherwise,
 ## are from Xiaomi 15 Pro (OS3.0.302.0.WOBCNXM).
 
+# Battery anti-aging (locally controlled; disabled by default)
+odm/etc/charger/BAA_config_common.json
+odm/etc/charger/BAA_config_haotian.json
+vendor/bin/hw/vendor.xiaomi.hardware.batteryantiaging-service
+vendor/etc/init/vendor.xiaomi.hardware.batteryantiaging-service.rc
+vendor/etc/vintf/manifest/vendor.xiaomi.hardware.batteryantiaging.xml
+vendor/lib64/libbaa_BasedOnCC_VolDown.so
+vendor/lib64/libbaa_ChargeInfo.so
+vendor/lib64/libbaa_ClosedSourceClass.so
+vendor/lib64/libbaa_ExampleClass.so
+vendor/lib64/libbaa_FreqChgFvDown.so
+vendor/lib64/libbaa_LowSohFvDown.so
+vendor/lib64/libbaa_common.so
+vendor/lib64/vendor.xiaomi.hardware.batteryantiaging-V1-ndk.so
+
 # ACDB
 odm/etc/acdbdata/Mi/Mi_acdb_cal.acdb
 odm/etc/acdbdata/Mi/Mi_workspaceFileXml.qwsp

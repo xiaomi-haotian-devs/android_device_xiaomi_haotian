@@ -203,6 +203,12 @@ namespace_imports = [
 ]
 
 blob_fixups: blob_fixups_user_type = {
+    'vendor/etc/init/vendor.xiaomi.hardware.batteryantiaging-service.rc':
+        blob_fixup()
+        # The user-facing charging page is the sole authority for enabling
+        # this limiter. Never let the normal HAL/charger classes start it.
+        .regex_replace(r'(?m)^(service batteryantiaging .*)$', r'\1\n    disabled')
+        .regex_replace(r'(?m)^(service BAA-charger .*)$', r'\1\n    disabled'),
     'system/priv-app/MiuiCamera/MiuiCamera.apk': blob_fixup()
         .apktool_unpack('patches/MiuiCamera')
         .patch_dir('patches/MiuiCamera')

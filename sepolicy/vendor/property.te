@@ -2,3 +2,8 @@
 # UID applications.  Keep these public because com.miui.tsmclient runs in the
 # platform nfc (core) domain.
 vendor_public_prop(vendor_haotian_nfc_prop)
+
+# User-controlled charging features. These are written only by the local
+# controller service, never by a cloud configuration client.
+vendor_internal_prop(vendor_batteryantiaging_prop)
+vendor_internal_prop(vendor_haotian_charging_prop)

@@ -1,1 +1,5 @@
 ro.vendor.nfc.    u:object_r:vendor_haotian_nfc_prop:s0 prefix
+
+persist.vendor.batteryantiaging u:object_r:vendor_batteryantiaging_prop:s0 exact bool
+persist.vendor.haotian.batteryantiaging u:object_r:vendor_haotian_charging_prop:s0 exact bool
+persist.vendor.haotian.fast_charge u:object_r:vendor_haotian_charging_prop:s0 exact bool

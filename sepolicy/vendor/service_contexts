@@ -1,0 +1,2 @@
+haotian_charging u:object_r:haotian_charging_service_manager:s0
+vendor.xiaomi.hardware.batteryantiaging.IBatteryAntiAging/default u:object_r:hal_batteryantiaging_service:s0

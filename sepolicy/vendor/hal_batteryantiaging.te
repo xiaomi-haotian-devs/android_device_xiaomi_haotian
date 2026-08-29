@@ -1,0 +1,32 @@
+hal_attribute(batteryantiaging)
+
+type hal_batteryantiaging_default, domain;
+type hal_batteryantiaging_default_exec, exec_type, vendor_file_type, file_type;
+type hal_batteryantiaging_service, hal_service_type, service_manager_type;
+type batteryantiaging_cfg_file, file_type, vendor_file_type;
+type batteryantiaging_cache_file, file_type, data_file_type;
+
+init_daemon_domain(hal_batteryantiaging_default)
+hal_server_domain(hal_batteryantiaging_default, hal_batteryantiaging)
+hal_attribute_service(hal_batteryantiaging, hal_batteryantiaging_service)
+binder_use(hal_batteryantiaging_default)
+
+allow hal_batteryantiaging_default self:netlink_kobject_uevent_socket create_socket_perms_no_ioctl;
+r_dir_file(hal_batteryantiaging_default, batteryantiaging_cfg_file)
+r_dir_file(hal_batteryantiaging_default, vendor_sysfs_battery_supply)
+r_dir_file(hal_batteryantiaging_default, vendor_sysfs_qcom_battery)
+r_dir_file(hal_batteryantiaging_default, vendor_sysfs_usb_supply)
+
+allow hal_batteryantiaging_default vendor_sysfs_battery_supply:file rw_file_perms;
+allow hal_batteryantiaging_default vendor_sysfs_qcom_battery:file rw_file_perms;
+allow hal_batteryantiaging_default vendor_sysfs_usb_supply:file rw_file_perms;
+allow hal_batteryantiaging_default vendor_sysfs_xm_power:dir r_dir_perms;
+allow hal_batteryantiaging_default vendor_sysfs_xm_power:{ file chr_file } rw_file_perms;
+
+file_type_auto_trans(hal_batteryantiaging_default, vendor_data_file,
+                     batteryantiaging_cache_file)
+allow hal_batteryantiaging_default vendor_data_file:dir create_dir_perms;
+allow hal_batteryantiaging_default batteryantiaging_cache_file:dir create_dir_perms;
+allow hal_batteryantiaging_default batteryantiaging_cache_file:file create_file_perms;
+
+set_prop(hal_batteryantiaging_default, vendor_batteryantiaging_prop)

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">昊天充电设置</string>
+    <string name="page_summary">所有功能均由本机用户控制，不接受云控开启或锁定任何充电限制。</string>
+    <string name="section_reverse">无线反向充电</string>
+    <string name="reverse_title">无线反向充电</string>
+    <string name="reverse_summary">使用手机为 Qi 配件充电</string>
+    <string name="reverse_threshold">低于此电量时停止</string>
+    <string name="section_protection">电池保护</string>
+    <string name="anti_aging_title">电池抗老化</string>
+    <string name="anti_aging_summary">使用小米本地循环次数和电池健康策略。关闭后会停止服务并清除其浮充电压限制。</string>
+    <string name="section_performance">充电行为</string>
+    <string name="fast_charge_title">有线极速充电</string>
+    <string name="fast_charge_summary">优先使用设备支持的最高有线充电速度，温控及硬件安全限制仍然有效。</string>
+    <string name="wireless_quiet_title">无线充电静音模式</string>
+    <string name="wireless_quiet_summary">降低无线充电噪声和速度</string>
+    <string name="bypass_title">手动旁路充电</string>
+    <string name="bypass_summary">尽量直接为手机供电并减少给电池充电；拔线后自动关闭。</string>
+    <string name="bypass_requirement">请先连接有线充电器并将电量充至至少 40%。</string>
+    <string name="section_status">电池和固件</string>
+    <string name="status_loading">正在读取 MiCharge…</string>
+    <string name="status_format">电池健康度：%1$d%%\n循环次数：%2$d\n额定容量：%3$d mAh\n最大充电功率：%4$d W\n无线固件状态：%5$d</string>
+    <string name="firmware_update">更新无线充电固件</string>
+    <string name="firmware_update_summary">调用小米设备内置固件更新器，绝不会自动运行。</string>
+    <string name="firmware_confirm_title">更新无线充电固件？</string>
+    <string name="firmware_confirm_message">更新期间请保持手机静止且不要断电。本操作始终需要手动确认。</string>
+    <string name="firmware_not_supported">当前 MiCharge HAL 不支持无线固件更新。</string>
+    <string name="firmware_guard_battery">电量必须至少为 30%。</string>
+    <string name="firmware_guard_wireless">请先将手机移出无线充电器。</string>
+    <string name="firmware_guard_reverse">请先关闭无线反向充电。</string>
+    <string name="firmware_guard_busy">已有无线固件操作正在进行。</string>
+    <string name="firmware_started">已请求更新无线充电固件。</string>
+    <string name="reset_limits">关闭所有小米专用限制</string>
+    <string name="reset_limits_summary">关闭抗老化、静音及旁路模式，并移除极速充电覆盖。</string>
+    <string name="reset_done">所有小米专用充电控制均已关闭。</string>
+    <string name="operation_failed">充电服务拒绝了此项更改。</string>
+    <string name="service_unavailable">所需的充电服务不可用。</string>
+    <string name="cancel">取消</string>
+    <string name="update">更新</string>
+</resources>

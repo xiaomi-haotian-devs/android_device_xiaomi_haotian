@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="wallet_blue">#3A7AFE</color>
+    <color name="wallet_blue_soft">#EAF1FF</color>
+    <color name="wallet_background">#F7F8FA</color>
+    <color name="wallet_surface">#FFFFFFFF</color>
+    <color name="wallet_text_primary">#FF17191C</color>
+    <color name="wallet_text_secondary">#FF6B7078</color>
+    <color name="wallet_divider">#FFE7E9ED</color>
+    <color name="wallet_disabled">#FFA8ADB5</color>
+</resources>

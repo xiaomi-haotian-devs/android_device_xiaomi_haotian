@@ -1,0 +1,2 @@
+mi_nfc                                    u:object_r:mi_nfc_service:s0
+miui.sedc                                 u:object_r:miui_sedc_service:s0

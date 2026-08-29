@@ -10,9 +10,13 @@ bluetooth.device.default_name=Xiaomi 15 Pro
 debug.config.video.hevchdr10.encode.support=true
 debug.video.recovery.killenable=true
 persist.sys.miui_default_resolution=1440x3200
-persist.sys.miui_resolution=1080,2400,450
+persist.sys.miui_resolution=1440,3200,600
 persist.vendor.disable_idle_fps.threshold=0
 persist.vendor.disable_idle_fps=false
+
+# NFC
+ro.vendor.se.type=eSE,HCE,UICC
+
 persist.vendor.touchfeature.gameturbotool.version=v3.5
 ro.vendor.fps.switch.default=true
 ro.vendor.fps.switch.thermal=true
@@ -40,11 +44,20 @@ vendor.display.support_mafr_feature=1
 vendor.mi_sf.enable_second_refresh_rate_overlay=1
 
 # Camera
+persist.vendor.camera.logentry=1
 persist.vendor.camera.sdk.third.jpegr.enable=0
 
 # Fingerprint
 persist.vendor.fingerprint.type=udfps
-persist.vendor.fingerprint.sensor_location=720|2480|134
+persist.vendor.fingerprint.sensor_location=720|2502|92
+persist.vendor.sys.fp.fod.location.X_Y=628,2410
+persist.vendor.sys.fp.fod.size.width_height=184,184
+persist.vendor.sys.fp.fod.us.target=616,2388,824,2616
+ro.hardware.fp.fod.touch.ctl.version=2.0
+ro.hardware.fp.fod=true
+ro.hardware.fp.fod.c=true
+ro.hardware.fp.mievent=true
+ro.vendor.mi_sf.disable_mifod_flag=true
 
 # Marketname
 ro.product.marketname=Xiaomi 15 Pro

@@ -5,4 +5,15 @@
 //
 
 soong_namespace {
+    imports: [
+        "device/xiaomi/sm8750-common",
+    ],
+}
+
+cc_library_shared {
+    name: "libhaotian_camera_provider_cgroup",
+    srcs: ["cameraopt/ProviderCgroupWrapper.cpp"],
+    compile_multilib: "64",
+    device_specific: true,
+    stl: "none",
 }

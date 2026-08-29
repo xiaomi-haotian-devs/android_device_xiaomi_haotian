@@ -1,0 +1,16 @@
+# MiuiCamera
+persist.vendor.camera.privapp.list=org.codeaurora.snapcam,com.android.camera
+ro.com.google.lens.oem_camera_package=com.android.camera
+ro.hardware.camera=xiaomi
+ro.miui.build.region=cn
+ro.miui.region=CN
+ro.miui.ui.version.code=816
+ro.miui.ui.version.name=V816
+ro.mi.os.version.code=3
+ro.mi.os.version.name=OS3.0
+ro.mi.os.version.incremental=OS3.0.302.0.WOBCNXM
+ro.miui.notch=1
+ro.product.mod_device=haotian
+vendor.camera.aux.packagelist=com.xiaomi.runin,com.xiaomi.cameratest,com.xiaomi.factory.mmi,org.codeaurora.snapcam,com.android.camera
+vendor.camera.aux.packagelistext=com.xiaomi.factory.CameraTestItem,com.firefightcam1,com.phonetest.hwttss
+vendor.camera.support.mivi=true

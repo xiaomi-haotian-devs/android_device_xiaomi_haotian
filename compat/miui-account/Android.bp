@@ -1,0 +1,8 @@
+// SPDX-License-Identifier: Apache-2.0
+
+java_library {
+    name: "haotian-miui-account-compat",
+    srcs: ["src/**/*.java"],
+    installable: true,
+    sdk_version: "system_current",
+}

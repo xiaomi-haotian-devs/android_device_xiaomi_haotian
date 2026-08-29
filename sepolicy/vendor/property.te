@@ -1,0 +1,4 @@
+# Read-only HyperOS NFC capability switches consumed by the stock NFC shared
+# UID applications.  Keep these public because com.miui.tsmclient runs in the
+# platform nfc (core) domain.
+vendor_public_prop(vendor_haotian_nfc_prop)

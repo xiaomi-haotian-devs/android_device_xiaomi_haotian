@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">錢包</string>
+    <string name="home">首頁</string>
+    <string name="mine">我的</string>
+    <string name="wallet_title">我的卡片</string>
+    <string name="wallet_subtitle">安全地管理手機中的 NFC 卡片</string>
+    <string name="traffic_card">交通卡</string>
+    <string name="traffic_card_desc">查看餘額、加值與管理交通卡</string>
+    <string name="door_key">門卡·鑰匙</string>
+    <string name="door_key_desc">管理門禁卡、車鑰匙和其他鑰匙</string>
+    <string name="mi_pay">Mi Pay</string>
+    <string name="mi_pay_desc">管理裝置中的銀行卡</string>
+    <string name="mine_title">我的</string>
+    <string name="xiaomi_account">小米帳號</string>
+    <string name="xiaomi_account_desc">由系統帳號元件管理登入狀態</string>
+    <string name="wallet_settings">錢包設定</string>
+    <string name="wallet_settings_desc">錢包、預設卡片服務與 NFC 選項</string>
+    <string name="wallet_settings_page_desc">管理錢包實際使用的刷卡服務；推廣、金融和資料蒐集功能已從前端移除。</string>
+    <string name="smart_card_settings">小米智慧卡設定</string>
+    <string name="smart_card_settings_desc">快捷刷卡與 eSE 卡片選項</string>
+    <string name="default_card_service">預設卡片服務</string>
+    <string name="default_card_service_desc">切換小米 eSE 或其他 HCE 錢包</string>
+    <string name="system_nfc_settings">系統 NFC 設定</string>
+    <string name="system_nfc_settings_desc">NFC 總開關與讀卡選項</string>
+    <string name="privacy">隱私權與資料</string>
+    <string name="privacy_desc">本前端不連網且不蒐集資訊</string>
+    <string name="version_format">精簡前端 %1$s</string>
+    <string name="back">返回</string>
+    <string name="service_notifications">服務通知</string>
+    <string name="personalized_recommendations">個人化推薦</string>
+    <string name="activities_and_offers">活動與優惠</string>
+    <string name="location_services">位置相關服務</string>
+    <string name="usage_analytics">使用情況分析</string>
+    <string name="short_video">短劇與影片內容</string>
+    <string name="financial_marketing">借貸、保險與理財行銷</string>
+    <string name="fixed_off">已關閉</string>
+    <string name="privacy_title">隱私權與資料</string>
+    <string name="privacy_body">此精簡前端沒有網路權限，不包含廣告、推播、統計、風控、定位、通訊錄、裝置識別碼或行為蒐集 SDK。交通卡、門卡和 Mi Pay 的業務網路由小米智慧卡後端在你主動進入相應頁面後使用。</string>
+    <string name="component_missing">找不到小米智慧卡元件</string>
+    <string name="wallet_auth_title">驗證身分</string>
+    <string name="wallet_auth_subtitle">使用臉部、指紋或螢幕鎖定繼續</string>
+    <string name="wallet_auth_unavailable">請先設定螢幕鎖定或生物辨識</string>
+    <string name="require_authentication">進入錢包時驗證</string>
+    <string name="require_authentication_desc">使用臉部、指紋或螢幕鎖定驗證</string>
+</resources>

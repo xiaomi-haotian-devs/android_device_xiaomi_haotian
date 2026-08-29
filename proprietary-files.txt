@@ -1,5 +1,5 @@
 ## All proprietary files from this list, unless pinned and noted otherwise,
-## are from Xiaomi 15 pro (OS3.0.5.0.WOBCNXM). 
+## are from Xiaomi 15 Pro (OS3.0.302.0.WOBCNXM).
 
 # ACDB
 odm/etc/acdbdata/Mi/Mi_acdb_cal.acdb
@@ -2275,6 +2275,7 @@ odm/lib64/camera/camxfl300v1indices.bin
 odm/lib64/camera/camxfl300v2indices.bin
 odm/lib64/camera/camxflcustom300indices.bin
 odm/lib64/camera/chifdnodeconfig.bin
+odm/lib64/camera/com.qti.tuned.tpg.sun.bin|79fd1a8aa9138666f43a3d448737cbaa640fd4e6
 odm/lib64/camera/fdconfigoffline.bin
 odm/lib64/camera/fdconfigpreview.bin
 odm/lib64/camera/fdconfigpreviewlite.bin
@@ -2486,6 +2487,7 @@ odm/lib64/camera/plugins/com.xiaomi.plugin.offlinemfnr.so
 odm/lib64/camera/plugins/com.xiaomi.plugin.offlinemlawb.so
 odm/lib64/camera/plugins/com.xiaomi.plugin.offlinetintlesshdr.so
 odm/lib64/camera/plugins/com.xiaomi.plugin.offlinetintless.so
+odm/lib64/camera/plugins/com.xiaomi.plugin.offlineyuveis.so|f17163d1123555cc579413409d715f6b309e8b68
 odm/lib64/camera/plugins/com.xiaomi.plugin.offlineyuvreprocess.so
 odm/lib64/camera/plugins/com.xiaomi.plugin.offlineyuvsplit.so
 odm/lib64/camera/plugins/com.xiaomi.plugin.pixman.so
@@ -2522,8 +2524,19 @@ odm/lib64/camera/zsl/com.xiaomi.zsl.single.so
 odm/lib64/camera/zsl/com.xiaomi.zsl.sr.so
 
 # Camera ODM
+odm/etc/camera/cameraopt_reclaim.json
+odm/etc/camera/xiaomi/miviprocesstimethreshold.json
+odm/etc/init/vendor.qti.camera.provider-service_64.rc
 odm/bin/hw/misensor_camera
 odm/bin/hw/vendor.qti.camera.provider-service_64
+vendor/lib64/android.hardware.camera.device-V2-ndk.so:vendor/lib64/android.hardware.camera.device-V2-ndk-stock.so;FIX_SONAME
+vendor/lib64/android.hardware.common-V2-ndk.so:vendor/lib64/android.hardware.common-V2-ndk-stock.so;FIX_SONAME
+vendor/lib64/android.hardware.common.fmq-V1-ndk.so:vendor/lib64/android.hardware.common.fmq-V1-ndk-stock.so;FIX_SONAME
+vendor/lib64/android.hardware.graphics.allocator-V2-ndk.so:vendor/lib64/android.hardware.graphics.allocator-V2-ndk-stock.so;FIX_SONAME
+vendor/lib64/android.hardware.graphics.common-V5-ndk.so:vendor/lib64/android.hardware.graphics.common-V5-ndk-stock.so;FIX_SONAME
+vendor/lib64/libcamera_metadata.so:vendor/lib64/libcam_metadata_xm.so;FIX_SONAME|dac7716977a3d5355127614f4606c8601e518259
+vendor/lib64/libgralloctypes.so:vendor/lib64/libgralloctypes_xm.so;FIX_SONAME|9d7f9dcf76786493ae4ea287d3b088c90890f348
+vendor/lib64/libui.so:vendor/lib64/libui_xm.so;FIX_SONAME|e17441922231730e08b8eedc0341190f03090f1d
 odm/lib64/camx.device-impl.so
 odm/lib64/camx.provider-impl.so
 odm/lib64/com.qti.camx.chiiqutils.so
@@ -3048,6 +3061,14 @@ odm/etc/touch/gameturbotool.json
 odm/firmware/haotian_syna_thp_config.ini
 odm/firmware/haotian_test_limits_S3910P.csv
 odm/firmware/synaptics_spi_haotian.img
+
+# MiuiCamera
+product/etc/device_features/haotian.xml|bb84587795e27e42dc7800cec7c8992caa2d5832
+product/priv-app/MiuiCamera/MiuiCamera.apk:system/priv-app/MiuiCamera/MiuiCamera.apk;OVERRIDES=Aperture,Camera,Camera2,GoogleCameraGo|1dc3c8c0b99b40b0a99d515f022d75f5a061df3c|bb7cbff0763442de48b124d3481c782fc01bcd16
+system_ext/lib64/libcamera_algoup_jni.xiaomi.so:system/lib64/libcamera_algoup_jni.xiaomi.so;SYMLINK=system/priv-app/MiuiCamera/lib/arm64/libcamera_algoup_jni.xiaomi.so|bd33462edc35fe2735133a3734c4fb19630ca61c|b04d88a740c3a8f7cf1a9f8f8de38938d94aae31
+system_ext/lib64/libcamera_mianode_jni.xiaomi.so:system/lib64/libcamera_mianode_jni.xiaomi.so;SYMLINK=system/priv-app/MiuiCamera/lib/arm64/libcamera_mianode_jni.xiaomi.so|799a31b3be2aa09b3b0aa478ebcdc7ba75b2e87e|c9592b3729543e6d2a6f41458bcd7ba34d0ab01c
+system_ext/lib64/libmicampostproc_client.so:system/lib64/libmicampostproc_client.so|d5e756e13b657e26fa073bb67b7443aa51a96802
+system_ext/lib64/vendor.xiaomi.hardware.campostproc@1.0.so:system/lib64/vendor.xiaomi.hardware.campostproc@1.0.so;MODULE_SUFFIX=_system|7d25559269d882f989f84db260eb1b225d159c44
 
 # Vibrator
 odm/firmware/0_click_P_RTP.bin:vendor/etc/vibrator/effect_0.bin

@@ -1,0 +1,369 @@
+diff --git a/smali/B/M2.smali b/smali/B/M2.smali
+index ad0c205..24bd70e 100644
+--- a/smali/B/M2.smali
++++ b/smali/B/M2.smali
+@@ -149,6 +149,13 @@
+     invoke-virtual {v1, p2, v2}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Z)Landroid/content/Intent;
+ 
+     :goto_1
++    # Always keep MiuiCamera's thumbnail/review flow inside MiuiGallery. This
++    # does not change the system-wide image viewer, which remains Google
++    # Photos; it only removes the global/AOSP branch above for this intent.
++    const-string p2, "com.miui.gallery"
++
++    invoke-virtual {v1, p2}, Landroid/content/Intent;->setPackage(Ljava/lang/String;)Landroid/content/Intent;
++
+     invoke-virtual {v0}, Lv7/b;->a()Z
+ 
+     move-result p2
+diff --git a/smali/com/android/camera/fragment/settings/CameraCapturePreferenceFragment.smali b/smali/com/android/camera/fragment/settings/CameraCapturePreferenceFragment.smali
+index ebab331..7c8235b 100644
+--- a/smali/com/android/camera/fragment/settings/CameraCapturePreferenceFragment.smali
++++ b/smali/com/android/camera/fragment/settings/CameraCapturePreferenceFragment.smali
+@@ -365,36 +365,10 @@
+ 
+     const-string v0, "com.android.settings"
+ 
+-    const-string v1, "com.android.settings.SubSettings"
++    const-string v1, "com.android.settings.Settings$DoubleTapPowerSettingsActivity"
+ 
+     invoke-virtual {p1, v0, v1}, Landroid/content/Intent;->setClassName(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
+ 
+-    const-string v0, ":settings:show_fragment"
+-
+-    const-string v1, "com.android.settings.AodAndLockScreenSettings"
+-
+-    invoke-virtual {p1, v0, v1}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
+-
+-    const-string v0, ":settings:fragment_args_key"
+-
+-    const-string/jumbo v1, "volume_down_launch_camera_or_take_photo"
+-
+-    invoke-virtual {p1, v0, v1}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
+-
+-    const-string v0, ":android:no_headers"
+-
+-    invoke-virtual {p1, v0, v4}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Z)Landroid/content/Intent;
+-
+-    const v0, 0x7f140d30
+-
+-    invoke-virtual {p0, v0}, Landroidx/fragment/app/Fragment;->getString(I)Ljava/lang/String;
+-
+-    move-result-object v0
+-
+-    const-string v1, ":settings:show_fragment_title"
+-
+-    invoke-virtual {p1, v1, v0}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
+-
+     invoke-virtual {p0, p1}, Landroidx/fragment/app/Fragment;->startActivity(Landroid/content/Intent;)V
+ 
+     :goto_2
+diff --git a/smali_classes2/Z5/j.smali b/smali_classes2/Z5/j.smali
+index fb54918..139cffa 100644
+--- a/smali_classes2/Z5/j.smali
++++ b/smali_classes2/Z5/j.smali
+@@ -860,6 +860,24 @@
+ .method public final a()Landroid/view/Surface;
+     .locals 4
+ 
++    # The vendor OFE graph only accepts its fixed 4:3 ZoomMap output. Keep the
++    # actual zoom path enabled for every ratio, but omit this auxiliary map
++    # surface when the selected photo ratio is not 4:3.
++    iget-object v0, p0, LZ5/j;->f:Landroid/util/Size;
++
++    invoke-virtual {v0}, Landroid/util/Size;->getWidth()I
++
++    move-result v0
++
++    const/16 v1, 0x198
++
++    if-eq v0, v1, :zoom_map_supported_ratio
++
++    const/4 v0, 0x0
++
++    return-object v0
++
++    :zoom_map_supported_ratio
+     iget-object v0, p0, LZ5/j;->e:Landroid/view/Surface;
+ 
+     if-nez v0, :cond_0
+@@ -904,6 +922,24 @@
+ 
+     move-result v3
+ 
++    # Only replace the native 408x306 request: the AOSP path rounds that size
++    # incompatibly. Other aspect ratios retain their own ZoomMap geometry.
++    const/16 v1, 0x198
++
++    if-ne v2, v1, :zoom_map_size_ready
++
++    const/16 v1, 0x132
++
++    if-ne v3, v1, :zoom_map_size_ready
++
++    const/16 v2, 0x280
++
++    const/16 v3, 0x1e0
++
++    :zoom_map_size_ready
++
++    const/4 v1, 0x0
++
+     invoke-virtual {v0, v2, v3}, Landroid/graphics/SurfaceTexture;->setDefaultBufferSize(II)V
+ 
+     new-instance v0, Landroid/view/Surface;
+diff --git a/smali_classes2/a6/c.smali b/smali_classes2/a6/c.smali
+index 562fd39..9ae848c 100644
+--- a/smali_classes2/a6/c.smali
++++ b/smali_classes2/a6/c.smali
+@@ -1950,11 +1950,10 @@
+ 
+     iput-object p2, p0, La6/c;->f:Ljava/util/HashSet;
+ 
+-    invoke-static {}, LE7/d;->h()Z
+-
+-    move-result p2
+-
+-    if-eqz p2, :cond_1
++    # AOSP does not advertise Xiaomi's static capability tags through
++    # getAvailableCaptureRequestKeys(). Keep the native vendor-key path used by
++    # HyperOS here on every platform, without changing the app-wide HyperOS
++    # detection result.
+ 
+     sget-object p2, Lpc/a;->a:Landroid/hardware/camera2/CameraCharacteristics$Key;
+ 
+diff --git a/smali_classes2/a6/c0.smali b/smali_classes2/a6/c0.smali
+index da3d669..c98a43b 100644
+--- a/smali_classes2/a6/c0.smali
++++ b/smali_classes2/a6/c0.smali
+@@ -25517,6 +25517,42 @@
+ .method public final u0(Landroid/util/Size;)V
+     .locals 4
+ 
++    # haotian's 0x9002 DualSAT OFE graph has a fixed 4:3 algorithm-preview
++    # output. Keep the UI preview and final photo at the selected ratio, but
++    # feed the internal SAT algorithm stream with its native 1440x1080 size.
++    iget-object v0, p0, La6/c0;->E:La6/c;
++
++    invoke-virtual {v0}, La6/c;->C()I
++
++    move-result v0
++
++    const v2, 0x9002
++
++    if-ne v0, v2, :algorithm_preview_ratio_ready
++
++    invoke-virtual {p1}, Landroid/util/Size;->getWidth()I
++
++    move-result v0
++
++    mul-int/lit8 v0, v0, 0x3
++
++    invoke-virtual {p1}, Landroid/util/Size;->getHeight()I
++
++    move-result v2
++
++    mul-int/lit8 v2, v2, 0x4
++
++    if-eq v0, v2, :algorithm_preview_ratio_ready
++
++    new-instance p1, Landroid/util/Size;
++
++    const/16 v0, 0x5a0
++
++    const/16 v2, 0x438
++
++    invoke-direct {p1, v0, v2}, Landroid/util/Size;-><init>(II)V
++
++    :algorithm_preview_ratio_ready
+     const-string/jumbo v0, "setAlgorithmPreviewSize size = "
+ 
+     invoke-static {v0, p1}, LB/g3;->g(Ljava/lang/String;Landroid/util/Size;)Ljava/lang/String;
+diff --git a/smali_classes2/com/android/camera/module/Camera2Module.smali b/smali_classes2/com/android/camera/module/Camera2Module.smali
+index edf7da5..636e0ce 100644
+--- a/smali_classes2/com/android/camera/module/Camera2Module.smali
++++ b/smali_classes2/com/android/camera/module/Camera2Module.smali
+@@ -15428,7 +15428,7 @@
+ .end method
+ 
+ .method private updateSizeResult(Ljava/util/Map;)V
+-    .locals 3
++    .locals 4
+     .annotation system Ldalvik/annotation/Signature;
+         value = {
+             "(",
+@@ -16327,6 +16327,33 @@
+ 
+     check-cast v2, Landroid/util/Size;
+ 
++    # haotian's 0x9002 photo pipeline stretches non-4:3 preview buffers instead
++    # of cropping them. Feed PreviewRenderEngine a native 4:3 buffer; the UI
++    # viewport still follows the selected ratio and performs the center crop.
++    invoke-virtual {v2}, Landroid/util/Size;->getWidth()I
++
++    move-result v3
++
++    mul-int/lit8 v3, v3, 0x3
++
++    invoke-virtual {v2}, Landroid/util/Size;->getHeight()I
++
++    move-result v0
++
++    mul-int/lit8 v0, v0, 0x4
++
++    if-eq v3, v0, :haotian_preview_ratio_ready
++
++    new-instance v2, Landroid/util/Size;
++
++    const/16 v0, 0x5a0
++
++    const/16 v3, 0x438
++
++    invoke-direct {v2, v0, v3}, Landroid/util/Size;-><init>(II)V
++
++    :haotian_preview_ratio_ready
++
+     invoke-interface {v1, v2}, Lt3/j;->q0(Landroid/util/Size;)V
+ 
+     iget-object v1, p0, Lcom/android/camera/module/BaseModule;->mCameraManager:Lt3/j;
+@@ -16335,13 +16362,7 @@
+ 
+     move-result-object v1
+ 
+-    invoke-interface {v0}, Ljava/util/Map$Entry;->getValue()Ljava/lang/Object;
+-
+-    move-result-object v0
+-
+-    check-cast v0, Landroid/util/Size;
+-
+-    invoke-virtual {v1, v0}, La6/I;->R(Landroid/util/Size;)V
++    invoke-virtual {v1, v2}, La6/I;->R(Landroid/util/Size;)V
+ 
+     goto/16 :goto_0
+ 
+diff --git a/smali_classes2/m4/n.smali b/smali_classes2/m4/n.smali
+index 48407b1..c016446 100644
+--- a/smali_classes2/m4/n.smali
++++ b/smali_classes2/m4/n.smali
+@@ -713,8 +713,32 @@
+ 
+     move-result v2
+ 
+-    if-nez v2, :cond_9
++    if-eqz v2, :haotian_refresh_final_thumbnail
+ 
++    # For non-4:3 captures PreviewSaveRequest deliberately skips haotian's
++    # corrupt early quick-view bitmap. Refresh from the final HEIC/JPEG even
++    # when Storage.updateImage keeps the same MediaStore URI.
++    iget v2, v0, Lm4/b;->i:I
++
++    mul-int/lit8 v2, v2, 0x3
++
++    iget v3, v0, Lm4/b;->j:I
++
++    mul-int/lit8 v3, v3, 0x4
++
++    if-eq v2, v3, :cond_9
++
++    iget v2, v0, Lm4/b;->i:I
++
++    mul-int/lit8 v2, v2, 0x4
++
++    iget v3, v0, Lm4/b;->j:I
++
++    mul-int/lit8 v3, v3, 0x3
++
++    if-eq v2, v3, :cond_9
++
++    :haotian_refresh_final_thumbnail
+     iget-object v2, v0, Lm4/b;->e:[B
+ 
+     invoke-virtual {v0, v12, v13, v1, v2}, Lm4/n;->i(ILjava/lang/String;Landroid/net/Uri;[B)V
+diff --git a/smali_classes2/m4/q.smali b/smali_classes2/m4/q.smali
+index 9f64e37..21339cd 100644
+--- a/smali_classes2/m4/q.smali
++++ b/smali_classes2/m4/q.smali
+@@ -1331,6 +1331,31 @@
+     const/4 v3, 0x0
+ 
+     :goto_e
++    # haotian's AlgoUp early-image buffer is only valid at the vendor graph's
++    # native 4:3 geometry. BitmapFactory can decode the non-4:3 quick view but
++    # its pixels use the wrong stride (green/corrupt thumbnail). Do not publish
++    # that temporary bitmap; ParallelSaveRequest will publish the final image.
++    iget v4, v2, Lm4/b;->i:I
++
++    mul-int/lit8 v4, v4, 0x3
++
++    iget v5, v2, Lm4/b;->j:I
++
++    mul-int/lit8 v5, v5, 0x4
++
++    if-eq v4, v5, :haotian_quickview_aspect_supported
++
++    iget v4, v2, Lm4/b;->i:I
++
++    mul-int/lit8 v4, v4, 0x4
++
++    iget v5, v2, Lm4/b;->j:I
++
++    mul-int/lit8 v5, v5, 0x3
++
++    if-ne v4, v5, :cond_19
++
++    :haotian_quickview_aspect_supported
+     iget-boolean v4, v2, Lm4/b;->f:Z
+ 
+     if-eqz v4, :cond_19
+diff --git a/smali_classes6/Di/a.smali b/smali_classes6/Di/a.smali
+index cf9fb11..7717b2a 100644
+--- a/smali_classes6/Di/a.smali
++++ b/smali_classes6/Di/a.smali
+@@ -599,11 +599,47 @@
+ 
+     if-lez v6, :cond_1
+ 
++    :next_mode
+     add-int/lit8 v4, v4, 0x1
+ 
+     goto :goto_0
+ 
+     :cond_1
++    # Several physical resolutions expose the same refresh rate on haotian.
++    # Match the dimensions too, otherwise the first 120 Hz mode may silently
++    # switch the app and system back to the wrong physical resolution.
++    iget-object v6, p0, LDi/a;->c:Landroid/view/Display;
++
++    invoke-virtual {v6}, Landroid/view/Display;->getMode()Landroid/view/Display$Mode;
++
++    move-result-object v6
++
++    invoke-virtual {v5}, Landroid/view/Display$Mode;->getPhysicalWidth()I
++
++    move-result v7
++
++    invoke-virtual {v6}, Landroid/view/Display$Mode;->getPhysicalWidth()I
++
++    move-result v6
++
++    if-ne v7, v6, :next_mode
++
++    iget-object v6, p0, LDi/a;->c:Landroid/view/Display;
++
++    invoke-virtual {v6}, Landroid/view/Display;->getMode()Landroid/view/Display$Mode;
++
++    move-result-object v6
++
++    invoke-virtual {v5}, Landroid/view/Display$Mode;->getPhysicalHeight()I
++
++    move-result v7
++
++    invoke-virtual {v6}, Landroid/view/Display$Mode;->getPhysicalHeight()I
++
++    move-result v6
++
++    if-ne v7, v6, :next_mode
++
+     if-nez p2, :cond_2
+ 
+     invoke-virtual {p0}, Ljava/lang/Object;->hashCode()I

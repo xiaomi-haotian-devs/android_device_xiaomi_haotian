@@ -1,0 +1,7 @@
+# Mi Smart Cards initializes Qualcomm's system performance manager from its
+# RenderThread. Keep this access scoped to the NFC shared-UID domain.
+hal_client_domain(nfc, vendor_hal_qspmhal)
+
+# Mi Smart Cards reads ro.vendor.nfc.wallet_fusion and related stock feature
+# switches before selecting its eSE/card-management paths.
+get_prop(nfc, vendor_haotian_nfc_prop)

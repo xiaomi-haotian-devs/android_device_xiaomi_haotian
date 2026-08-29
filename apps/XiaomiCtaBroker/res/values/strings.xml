@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">系统权限声明</string>
+    <string name="unknown_app">此应用</string>
+    <string name="default_purpose">应用需要使用设备能力以继续运行。</string>
+    <string name="declaration_title">允许“%1$s”继续吗？</string>
+    <string name="agree">同意</string>
+    <string name="disagree">不同意</string>
+</resources>

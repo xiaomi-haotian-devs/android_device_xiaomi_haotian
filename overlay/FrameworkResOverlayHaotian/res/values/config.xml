@@ -1,7 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--
+         Xiaomi Account otherwise waits forever for HyperOS Find Device's
+         miui.sedc Binder.  The device service reports hardware FID signing as
+         unsupported so AccountSDK can use its existing no-FID fallback.
+    -->
+    <string-array name="config_deviceSpecificSystemServices" translatable="false">
+        <item>com.android.server.haotian.MiuiSedcCompatService</item>
+    </string-array>
+
+    <!-- Use HyperOS-style, independently configurable hardware-key shortcuts. -->
+    <bool name="config_deviceKeyShortcutsEnabled">true</bool>
+    <integer name="config_doubleTapPowerGestureMode">0</integer>
+
     <!-- Stock haotian center punch-hole geometry, in physical display pixels. -->
     <string name="config_mainBuiltInDisplayCutout" translatable="false">M 0,0 H -40.5 V 169 H 40.5 V 0 H 0 Z</string>
+
+    <!--
+         Do not fall back to the framework's legacy integer minimum (10/255).
+         BrightnessSynchronizer converts that value to 0.035433, which clips the
+         first two points from haotian's physical brightness map and raises the
+         panel minimum from 0.2289 nit to about 6.41 nit.
+    -->
+    <item name="config_screenBrightnessSettingMinimumFloat" format="float" type="dimen">0.0</item>
+    <item name="config_screenBrightnessSettingMaximumFloat" format="float" type="dimen">1.0</item>
 
     <!-- HyperOS haotian auto-brightness lux curve, kept as nits for AOSP physical mapping. -->
     <integer-array name="config_autoBrightnessLevels">

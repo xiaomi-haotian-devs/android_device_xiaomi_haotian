@@ -1,0 +1,4 @@
+# Xiaomi Account reads the SoC identifier while constructing the stock device
+# identity sent to Xiaomi services. vendor_cpuid_prop is declared public and
+# read-only; the account package runs in the standard privileged-app domain.
+get_prop(priv_app, vendor_cpuid_prop)

@@ -1,0 +1,7 @@
+# Started by SystemServer through config_deviceSpecificSystemServices.
+add_service(system_server, miui_sedc_service)
+
+# Xiaomi Account queries whether hardware FID signing is supported.  Keep the
+# service private to privileged apps; the compatibility endpoint always
+# returns false and exposes no credential material.
+allow priv_app miui_sedc_service:service_manager find;

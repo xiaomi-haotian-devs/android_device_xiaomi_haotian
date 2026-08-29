@@ -1,0 +1,7 @@
+# Xiaomi's raw NFC extension must not inherit the broadly discoverable
+# platform nfc_service label.
+type mi_nfc_service, service_manager_type;
+
+# Xiaomi Account device-credential compatibility endpoint.  It only exposes
+# an "unsupported" result and contains no credential material.
+type miui_sedc_service, service_manager_type;

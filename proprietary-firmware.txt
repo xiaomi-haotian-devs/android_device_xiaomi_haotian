@@ -1,5 +1,5 @@
 ## All proprietary files from this list, unless pinned and noted otherwise,
-## are from Xiaomi 15 pro (OS3.0.5.0.WOBCNXM). 
+## are from Xiaomi 15 Pro (OS3.0.302.0.WOBCNXM).
 
 abl.img;AB
 aop.img;AB

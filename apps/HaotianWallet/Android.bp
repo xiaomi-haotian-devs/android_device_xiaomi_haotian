@@ -1,0 +1,13 @@
+android_app {
+    name: "HaotianMiPayWallet",
+    srcs: ["src/**/*.java"],
+    manifest: "AndroidManifest.xml",
+    resource_dirs: ["res"],
+    certificate: "platform",
+    product_specific: true,
+    sdk_version: "current",
+    min_sdk_version: "35",
+    optimize: {
+        enabled: true,
+    },
+}

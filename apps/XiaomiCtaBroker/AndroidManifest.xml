@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.miui.securitycenter">
+    <uses-permission android:name="android.permission.GET_ACCOUNTS_PRIVILEGED" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+
+    <queries>
+        <package android:name="com.miui.tsmclient" />
+    </queries>
+
+    <permission
+        android:name="com.miui.securitycenter.permission.SYSTEM_PERMISSION_DECLARE"
+        android:protectionLevel="signature|privileged" />
+    <permission
+        android:name="com.miui.securitycenter.permission.PERM_USE_INFO"
+        android:protectionLevel="normal" />
+
+    <application
+        android:allowBackup="false"
+        android:directBootAware="true"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <receiver
+            android:name=".XiaomiAccountVisibilityReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_UNLOCKED" />
+                <action android:name="android.accounts.LOGIN_ACCOUNTS_CHANGED" />
+                <action android:name="android.accounts.action.VISIBLE_ACCOUNTS_CHANGED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".SystemPermissionDeclarationActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="miui.intent.action.SYSTEM_PERMISSION_DECLARE" />
+                <action android:name="miui.intent.action.SYSTEM_PERMISSION_DECLARE_NEW" />
+                <action android:name="miui.intent.action.SYSTEM_PERMISSION_DECLARE_NO_OPTIONAL" />
+                <action android:name="miui.intent.action.CTA_DECLARE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

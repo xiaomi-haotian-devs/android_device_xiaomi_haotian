@@ -1,0 +1,3 @@
+# Nfc_st registers mi_nfc and the pinned wallet runs in the same nfc domain.
+# No untrusted/priv/platform app domain receives find access.
+add_service(nfc, mi_nfc_service)

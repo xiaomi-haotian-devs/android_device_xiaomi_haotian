@@ -1,0 +1,13 @@
+android_app {
+    name: "XiaomiCtaBroker",
+    srcs: ["src/**/*.java"],
+    manifest: "AndroidManifest.xml",
+    resource_dirs: ["res"],
+    sdk_version: "current",
+    min_sdk_version: "35",
+    privileged: true,
+    product_specific: true,
+    optimize: {
+        enabled: true,
+    },
+}

@@ -1,0 +1,34 @@
+<!--
+     UID-to-UUID mappings consumed by the stock SecureElement service.
+
+     The service selects this file from ro.boot.product.hardware.sku, so the
+     filename must remain hal_uuid_map_haotian.xml on this device.
+-->
+<ref_do>
+    <!-- VTS/root test identity. -->
+    <uuid_ref_do>
+        <uids>
+            <uid>0</uid>
+        </uids>
+        <uuid>9f36407ead0639fc966f14dde7970f68</uuid>
+    </uuid_ref_do>
+
+    <!-- NXP KeyMint, Weaver and AuthSecret HAL identities. -->
+    <uuid_ref_do>
+        <uids>
+            <uid>2910</uid>
+            <uid>2911</uid>
+            <uid>2915</uid>
+        </uids>
+        <uuid>636F6D2E6E78702E7365637572697479</uuid>
+    </uuid_ref_do>
+
+    <!-- ST KeyMint and Weaver HAL identities. -->
+    <uuid_ref_do>
+        <uids>
+            <uid>2913</uid>
+            <uid>2916</uid>
+        </uids>
+        <uuid>534552454144595f48414c5f55554944</uuid>
+    </uuid_ref_do>
+</ref_do>

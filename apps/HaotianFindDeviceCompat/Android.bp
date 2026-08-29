@@ -1,0 +1,15 @@
+// SPDX-License-Identifier: Apache-2.0
+
+android_app {
+    name: "HaotianFindDeviceCompat",
+    srcs: ["src/**/*.java"],
+    manifest: "AndroidManifest.xml",
+    certificate: "platform",
+    privileged: true,
+    product_specific: true,
+    sdk_version: "current",
+    min_sdk_version: "35",
+    optimize: {
+        enabled: true,
+    },
+}

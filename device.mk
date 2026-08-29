@@ -47,6 +47,7 @@ PRODUCT_COPY_FILES += \
 # config so the APEX and stock com.android.nfc packages can never coexist.
 ifeq ($(RELEASE_PACKAGE_NFC_STACK),NfcNci)
 PRODUCT_PACKAGES += \
+    HaotianFindDeviceCompat \
     haotian-miui-account-compat \
     android.hardware.se.omapi.ese.prebuilt.xml \
     android.hardware.se.omapi.uicc.prebuilt.xml \
@@ -65,9 +66,10 @@ PRODUCT_PACKAGES += \
     com.st.android.nfc_extensions_16 \
     com.xiaomi.nfc
 
-# XiaomiAccount calls this small HyperOS framework API when opening its
-# account settings. Keep the stock account APK untouched and expose only the
-# Android AccountManager-backed method it actually uses.
+# XiaomiAccount calls these small HyperOS compatibility surfaces when opening
+# its full account settings. Keep the stock account APK untouched: the boot jar
+# exposes the AccountManager-backed API, while HaotianFindDeviceCompat reports
+# the intentionally absent Xiaomi Find Device stack as disabled.
 PRODUCT_BOOT_JARS += \
     haotian-miui-account-compat
 

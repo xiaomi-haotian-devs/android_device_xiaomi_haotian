@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Stock 1080x2400 display-mode status-bar safe height. -->
+    <dimen name="status_bar_height_default">127px</dimen>
+    <dimen name="status_bar_height_portrait">127px</dimen>
+</resources>

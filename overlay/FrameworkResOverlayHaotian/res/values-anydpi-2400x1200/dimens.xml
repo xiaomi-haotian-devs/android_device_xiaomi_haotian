@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Stock haotian rounded-corner radius, in physical display pixels. -->
+    <!-- Stock 1440x3200 display-mode geometry. -->
     <dimen name="rounded_corner_radius">140px</dimen>
     <dimen name="rounded_corner_radius_top">140px</dimen>
     <dimen name="rounded_corner_radius_bottom">140px</dimen>
-
-    <!-- Stock 1440x3200 punch-hole/status-bar safe height. -->
     <dimen name="status_bar_height_default">169px</dimen>
     <dimen name="status_bar_height_portrait">169px</dimen>
 </resources>

@@ -13,8 +13,14 @@
     <bool name="config_deviceKeyShortcutsEnabled">true</bool>
     <integer name="config_doubleTapPowerGestureMode">0</integer>
 
-    <!-- Stock haotian center punch-hole geometry, in physical display pixels. -->
+    <!-- Stock haotian center punch-hole safe geometry at 1440x3200, in physical pixels. -->
     <string name="config_mainBuiltInDisplayCutout" translatable="false">M 0,0 H -40.5 V 169 H 40.5 V 0 H 0 Z</string>
+
+    <!--
+         The stock AIDL fingerprint HAL reports the UDFPS at (720, 2502) with
+         a 92px radius. Keep config_udfps_sensor_props unset so that the HAL is
+         the single source of truth and scales the sensor for lower resolutions.
+    -->
 
     <!--
          Do not fall back to the framework's legacy integer minimum (10/255).

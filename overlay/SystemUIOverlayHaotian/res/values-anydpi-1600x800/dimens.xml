@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Stock 1080x2400 SystemUI rounded-corner content inset. -->
+    <dimen name="rounded_corner_content_padding">67px</dimen>
+</resources>

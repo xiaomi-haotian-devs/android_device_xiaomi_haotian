@@ -1,0 +1,11 @@
+android_app {
+    name: "HaotianButtonCalibrator",
+    srcs: ["src/**/*.java"],
+    manifest: "AndroidManifest.xml",
+    sdk_version: "current",
+    min_sdk_version: "35",
+    certificate: "platform",
+    optimize: {
+        enabled: false,
+    },
+}

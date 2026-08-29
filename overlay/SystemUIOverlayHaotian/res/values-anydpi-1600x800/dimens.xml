@@ -5,4 +5,7 @@
 
     <!-- Two thirds of the 1080px display-mode width. -->
     <dimen name="udfps_animation_size">720px</dimen>
+
+    <!-- 1450px scaled from the physical 1440x3200 mode to 1080x2400. -->
+    <dimen name="physical_power_button_center_screen_location_y">1088px</dimen>
 </resources>

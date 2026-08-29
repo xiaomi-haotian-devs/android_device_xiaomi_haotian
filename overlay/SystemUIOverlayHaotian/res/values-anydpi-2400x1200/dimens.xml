@@ -5,4 +5,7 @@
 
     <!-- Two thirds of the 1440px display-mode width. -->
     <dimen name="udfps_animation_size">960px</dimen>
+
+    <!-- Measured physical power-button center on the 1440x3200 panel. -->
+    <dimen name="physical_power_button_center_screen_location_y">1450px</dimen>
 </resources>

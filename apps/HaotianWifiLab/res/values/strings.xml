@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Wi-Fi laboratory</string>
+    <string name="page_summary">Device diagnostics for haotian. These controls only change Android Wi-Fi policy; firmware, calibration, SAR, transmit power, and regulatory enforcement remain authoritative.</string>
+
+    <string name="section_status">Status</string>
+    <string name="connection_status_title">Current connection</string>
+    <string name="capability_status_title">Hardware capabilities</string>
+    <string name="channel_status_title">Allowed 6 GHz channels</string>
+    <string name="refresh_status_title">Refresh</string>
+    <string name="refresh_status_summary">Read current values from the Wi-Fi service</string>
+    <string name="status_loading">Loading…</string>
+    <string name="status_wifi_disabled">Wi-Fi is off</string>
+    <string name="status_not_connected">Not connected</string>
+    <string name="connection_status_format">%1$s\n%2$d MHz · %3$d dBm · %4$d Mbps · %5$s</string>
+    <string name="capability_status_format">2.4 GHz: %1$s · 5 GHz: %2$s · 6 GHz: %3$s\nWi-Fi 6: %4$s · Wi-Fi 7: %5$s\nSTA + AP: %6$s · Bridged AP: %7$s</string>
+    <string name="channel_status_format">Client: %1$s\nHotspot: %2$s</string>
+    <string name="channel_list_format">%1$d channels · %2$s MHz</string>
+    <string name="channel_none">None reported</string>
+    <string name="value_yes">Supported</string>
+    <string name="value_no">Not reported</string>
+    <string name="value_unknown">Unknown</string>
+
+    <string name="section_country">Regulatory country</string>
+    <string name="country_status_title">Country status</string>
+    <string name="country_status_format">Framework: %1$s\nDriver: %2$s\nRequested in this session: %3$s</string>
+    <string name="country_code_title">Country code</string>
+    <string name="country_code_dialog_title">Enter country code</string>
+    <string name="country_code_summary">Two-letter ISO 3166 code, or 00 for the world domain</string>
+    <string name="apply_country_title">Apply country override</string>
+    <string name="apply_country_summary">Temporarily place this code at the top of Android country resolution</string>
+    <string name="clear_country_title">Clear country override</string>
+    <string name="clear_country_summary">Return country selection to telephony, 802.11d, and the boot default</string>
+    <string name="country_invalid">Enter two letters or 00</string>
+    <string name="country_applied">Country override applied</string>
+    <string name="country_cleared">Country override cleared</string>
+
+    <string name="section_profiles">Profiles</string>
+    <string name="profile_status_title">Xiaomi stock profile</string>
+    <string name="profile_status_format">%1$d of %2$d effective values match</string>
+    <string name="apply_stock_profile_title">Apply Xiaomi stock profile</string>
+    <string name="apply_stock_profile_summary">Temporarily apply the compatible values extracted from OS3.0.302.0</string>
+    <string name="restore_overlays_title">Restore source overlays</string>
+    <string name="restore_overlays_summary">Clear all temporary framework overrides and the country override</string>
+    <string name="profile_applied">Xiaomi stock profile applied</string>
+    <string name="overrides_restored">Source overlay values restored</string>
+
+    <string name="section_framework">Wi-Fi framework policy</string>
+    <string name="config_6ghz_title">6 GHz Wi-Fi</string>
+    <string name="config_6ghz_summary">Allow the framework to expose 6 GHz client operation</string>
+    <string name="config_softap_6ghz_title">6 GHz hotspot</string>
+    <string name="config_softap_6ghz_summary">Allow 6 GHz in SoftAP configuration</string>
+    <string name="config_softap_dfs_title">DFS channels in hotspot ACS</string>
+    <string name="config_softap_dfs_summary">Let automatic channel selection consider permitted DFS channels</string>
+    <string name="config_softap_beamformee_title">Hotspot HE SU beamformee</string>
+    <string name="config_softap_beamformee_summary">Advertise 802.11ax single-user beamformee support</string>
+    <string name="config_softap_beamformer_title">Hotspot HE SU beamformer</string>
+    <string name="config_softap_beamformer_summary">Advertise 802.11ax single-user beamformer support</string>
+    <string name="config_softap_11ax_title">Wi-Fi 6 hotspot</string>
+    <string name="config_softap_11ax_summary">Allow 802.11ax operation in SoftAP</string>
+    <string name="config_softap_owe_title">OWE hotspot</string>
+    <string name="config_softap_owe_summary">Allow Enhanced Open security in SoftAP</string>
+    <string name="config_softap_owe_transition_title">OWE transition mode</string>
+    <string name="config_softap_owe_transition_summary">Allow simultaneous open and Enhanced Open compatibility mode</string>
+    <string name="config_driver_reg_event_title">Driver regulatory events</string>
+    <string name="config_driver_reg_event_summary">Use nl80211 regulatory-change notifications from the driver</string>
+    <string name="config_softap_dynamic_country_title">Dynamic hotspot country updates</string>
+    <string name="config_softap_dynamic_country_summary">Allow country updates while SoftAP is active</string>
+    <string name="config_sta_dynamic_country_title">Dynamic client country updates</string>
+    <string name="config_sta_dynamic_country_summary">Allow country updates while client mode is active</string>
+    <string name="config_force_softap_restart_title">Force hotspot restart on country change</string>
+    <string name="config_force_softap_restart_summary">Restart SoftAP even when dynamic update is available</string>
+    <string name="config_auto_bridged_softap_title">Automatic bridged hotspot</string>
+    <string name="config_auto_bridged_softap_summary">Automatically upgrade eligible hotspot configurations to bridged mode</string>
+
+    <string name="section_diagnostics">Diagnostics</string>
+    <string name="verbose_logging_title">Verbose Wi-Fi logging</string>
+    <string name="verbose_logging_summary">Increase Wi-Fi framework log detail; may expose network metadata in logs</string>
+    <string name="scan_throttle_title">Scan throttling</string>
+    <string name="scan_throttle_summary">Limit application Wi-Fi scan frequency to reduce power use</string>
+
+    <string name="operation_failed">Couldn’t apply the change: %1$s</string>
+    <string name="framework_hook_unavailable">This APK requires the matching EvolutionX Wi-Fi framework patch</string>
+    <string name="permission_required">Location and nearby-device permission is required for connection and channel details</string>
+</resources>

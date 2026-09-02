@@ -1,0 +1,21 @@
+//
+// SPDX-FileCopyrightText: 2026 The Xiaomi haotian developers
+// SPDX-License-Identifier: Apache-2.0
+//
+
+android_app {
+    name: "HaotianWifiLab",
+    certificate: "platform",
+    privileged: true,
+    system_ext_specific: true,
+    platform_apis: true,
+    srcs: ["src/**/*.java"],
+    resource_dirs: ["res"],
+    static_libs: [
+        "androidx.preference_preference",
+        "SettingsLib",
+    ],
+    optimize: {
+        enabled: true,
+    },
+}

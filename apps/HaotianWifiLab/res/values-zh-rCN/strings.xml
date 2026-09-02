@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Wi-Fi 实验室</string>
+    <string name="page_summary">适用于 haotian 的设备诊断工具。这些选项只改变 Android 的 Wi-Fi 策略；固件、校准、SAR、发射功率和法规限制仍由底层决定。</string>
+
+    <string name="section_status">状态</string>
+    <string name="connection_status_title">当前连接</string>
+    <string name="capability_status_title">硬件能力</string>
+    <string name="channel_status_title">允许使用的 6 GHz 信道</string>
+    <string name="refresh_status_title">刷新</string>
+    <string name="refresh_status_summary">从 Wi-Fi 服务重新读取当前值</string>
+    <string name="status_loading">正在加载…</string>
+    <string name="status_wifi_disabled">Wi-Fi 已关闭</string>
+    <string name="status_not_connected">未连接</string>
+    <string name="connection_status_format">%1$s\n%2$d MHz · %3$d dBm · %4$d Mbps · %5$s</string>
+    <string name="capability_status_format">2.4 GHz：%1$s · 5 GHz：%2$s · 6 GHz：%3$s\nWi-Fi 6：%4$s · Wi-Fi 7：%5$s\nSTA + AP：%6$s · 桥接 AP：%7$s</string>
+    <string name="channel_status_format">客户端：%1$s\n热点：%2$s</string>
+    <string name="channel_list_format">%1$d 个信道 · %2$s MHz</string>
+    <string name="channel_none">未报告</string>
+    <string name="value_yes">支持</string>
+    <string name="value_no">未报告</string>
+    <string name="value_unknown">未知</string>
+
+    <string name="section_country">监管国家/地区</string>
+    <string name="country_status_title">国家码状态</string>
+    <string name="country_status_format">框架：%1$s\n驱动：%2$s\n本次会话请求：%3$s</string>
+    <string name="country_code_title">国家码</string>
+    <string name="country_code_dialog_title">输入国家码</string>
+    <string name="country_code_summary">两位 ISO 3166 字母代码，或用于全球域的 00</string>
+    <string name="apply_country_title">应用国家码覆盖</string>
+    <string name="apply_country_summary">临时将此代码置于 Android 国家码解析的最高优先级</string>
+    <string name="clear_country_title">清除国家码覆盖</string>
+    <string name="clear_country_summary">恢复由移动网络、802.11d 和启动默认值选择国家码</string>
+    <string name="country_invalid">请输入两个字母或 00</string>
+    <string name="country_applied">已应用国家码覆盖</string>
+    <string name="country_cleared">已清除国家码覆盖</string>
+
+    <string name="section_profiles">配置方案</string>
+    <string name="profile_status_title">小米原厂配置</string>
+    <string name="profile_status_format">%1$d/%2$d 个生效值一致</string>
+    <string name="apply_stock_profile_title">应用小米原厂配置</string>
+    <string name="apply_stock_profile_summary">临时应用从 OS3.0.302.0 提取的兼容配置</string>
+    <string name="restore_overlays_title">恢复源码 overlay</string>
+    <string name="restore_overlays_summary">清除全部临时框架覆盖和国家码覆盖</string>
+    <string name="profile_applied">已应用小米原厂配置</string>
+    <string name="overrides_restored">已恢复源码 overlay 的值</string>
+
+    <string name="section_framework">Wi-Fi 框架策略</string>
+    <string name="config_6ghz_title">6 GHz Wi-Fi</string>
+    <string name="config_6ghz_summary">允许框架公开 6 GHz 客户端功能</string>
+    <string name="config_softap_6ghz_title">6 GHz 热点</string>
+    <string name="config_softap_6ghz_summary">允许在 SoftAP 配置中使用 6 GHz</string>
+    <string name="config_softap_dfs_title">热点 ACS 使用 DFS 信道</string>
+    <string name="config_softap_dfs_summary">允许自动选频考虑法规准许的 DFS 信道</string>
+    <string name="config_softap_beamformee_title">热点 HE SU 波束成形接收端</string>
+    <string name="config_softap_beamformee_summary">声明 802.11ax 单用户波束成形接收能力</string>
+    <string name="config_softap_beamformer_title">热点 HE SU 波束成形发送端</string>
+    <string name="config_softap_beamformer_summary">声明 802.11ax 单用户波束成形发送能力</string>
+    <string name="config_softap_11ax_title">Wi-Fi 6 热点</string>
+    <string name="config_softap_11ax_summary">允许 SoftAP 使用 802.11ax</string>
+    <string name="config_softap_owe_title">OWE 热点</string>
+    <string name="config_softap_owe_summary">允许热点使用增强开放网络安全</string>
+    <string name="config_softap_owe_transition_title">OWE 过渡模式</string>
+    <string name="config_softap_owe_transition_summary">允许同时提供开放网络和增强开放网络兼容模式</string>
+    <string name="config_driver_reg_event_title">驱动监管事件</string>
+    <string name="config_driver_reg_event_summary">使用驱动的 nl80211 监管区域变化通知</string>
+    <string name="config_softap_dynamic_country_title">动态更新热点国家码</string>
+    <string name="config_softap_dynamic_country_summary">允许 SoftAP 活动时更新国家码</string>
+    <string name="config_sta_dynamic_country_title">动态更新客户端国家码</string>
+    <string name="config_sta_dynamic_country_summary">允许客户端模式活动时更新国家码</string>
+    <string name="config_force_softap_restart_title">国家码变化时强制重启热点</string>
+    <string name="config_force_softap_restart_summary">即使支持动态更新也重新启动 SoftAP</string>
+    <string name="config_auto_bridged_softap_title">自动桥接热点</string>
+    <string name="config_auto_bridged_softap_summary">自动将符合条件的热点配置升级为桥接模式</string>
+
+    <string name="section_diagnostics">诊断</string>
+    <string name="verbose_logging_title">详细 Wi-Fi 日志</string>
+    <string name="verbose_logging_summary">增加 Wi-Fi 框架日志细节；日志中可能包含网络元数据</string>
+    <string name="scan_throttle_title">扫描节流</string>
+    <string name="scan_throttle_summary">限制应用扫描 Wi-Fi 的频率以降低功耗</string>
+
+    <string name="operation_failed">无法应用更改：%1$s</string>
+    <string name="framework_hook_unavailable">此 APK 需要配套的 EvolutionX Wi-Fi 框架补丁</string>
+    <string name="permission_required">连接和信道详情需要位置与附近设备权限</string>
+</resources>

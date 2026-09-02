@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/app_name">
+
+    <com.android.settingslib.widget.TopIntroPreference
+        android:key="page_intro"
+        android:title="@string/page_summary"
+        android:selectable="false" />
+
+    <PreferenceCategory android:title="@string/section_status">
+        <Preference
+            android:key="connection_status"
+            android:title="@string/connection_status_title"
+            android:summary="@string/status_loading"
+            android:selectable="false" />
+
+        <Preference
+            android:key="capability_status"
+            android:title="@string/capability_status_title"
+            android:summary="@string/status_loading"
+            android:selectable="false" />
+
+        <Preference
+            android:key="channel_status"
+            android:title="@string/channel_status_title"
+            android:summary="@string/status_loading"
+            android:selectable="false" />
+
+        <Preference
+            android:key="refresh_status"
+            android:title="@string/refresh_status_title"
+            android:summary="@string/refresh_status_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/section_country">
+        <Preference
+            android:key="country_status"
+            android:title="@string/country_status_title"
+            android:summary="@string/status_loading"
+            android:selectable="false" />
+
+        <EditTextPreference
+            android:key="country_code"
+            android:title="@string/country_code_title"
+            android:dialogTitle="@string/country_code_dialog_title"
+            android:summary="@string/country_code_summary" />
+
+        <Preference
+            android:key="apply_country"
+            android:title="@string/apply_country_title"
+            android:summary="@string/apply_country_summary" />
+
+        <Preference
+            android:key="clear_country"
+            android:title="@string/clear_country_title"
+            android:summary="@string/clear_country_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/section_profiles">
+        <Preference
+            android:key="profile_status"
+            android:title="@string/profile_status_title"
+            android:summary="@string/status_loading"
+            android:selectable="false" />
+
+        <Preference
+            android:key="apply_stock_profile"
+            android:title="@string/apply_stock_profile_title"
+            android:summary="@string/apply_stock_profile_summary" />
+
+        <Preference
+            android:key="restore_overlays"
+            android:title="@string/restore_overlays_title"
+            android:summary="@string/restore_overlays_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/section_framework">
+        <SwitchPreferenceCompat
+            android:key="config_6ghz"
+            android:title="@string/config_6ghz_title"
+            android:summary="@string/config_6ghz_summary"
+            android:persistent="false" />
+
+        <SwitchPreferenceCompat
+            android:key="config_softap_6ghz"
+            android:title="@string/config_softap_6ghz_title"
+            android:summary="@string/config_softap_6ghz_summary"
+            android:persistent="false" />
+
+        <SwitchPreferenceCompat
+            android:key="config_softap_dfs"
+            android:title="@string/config_softap_dfs_title"
+            android:summary="@string/config_softap_dfs_summary"
+            android:persistent="false" />
+
+        <SwitchPreferenceCompat
+            android:key="config_softap_beamformee"
+            android:title="@string/config_softap_beamformee_title"
+            android:summary="@string/config_softap_beamformee_summary"
+            android:persistent="false" />
+
+        <SwitchPreferenceCompat
+            android:key="config_softap_beamformer"
+            android:title="@string/config_softap_beamformer_title"
+            android:summary="@string/config_softap_beamformer_summary"
+            android:persistent="false" />
+
+        <SwitchPreferenceCompat
+            android:key="config_softap_11ax"
+            android:title="@string/config_softap_11ax_title"
+            android:summary="@string/config_softap_11ax_summary"
+            android:persistent="false" />
+
+        <SwitchPreferenceCompat
+            android:key="config_softap_owe"
+            android:title="@string/config_softap_owe_title"
+            android:summary="@string/config_softap_owe_summary"
+            android:persistent="false" />
+
+        <SwitchPreferenceCompat
+            android:key="config_softap_owe_transition"
+            android:title="@string/config_softap_owe_transition_title"
+            android:summary="@string/config_softap_owe_transition_summary"
+            android:persistent="false" />
+
+        <SwitchPreferenceCompat
+            android:key="config_driver_reg_event"
+            android:title="@string/config_driver_reg_event_title"
+            android:summary="@string/config_driver_reg_event_summary"
+            android:persistent="false" />
+
+        <SwitchPreferenceCompat
+            android:key="config_softap_dynamic_country"
+            android:title="@string/config_softap_dynamic_country_title"
+            android:summary="@string/config_softap_dynamic_country_summary"
+            android:persistent="false" />
+
+        <SwitchPreferenceCompat
+            android:key="config_sta_dynamic_country"
+            android:title="@string/config_sta_dynamic_country_title"
+            android:summary="@string/config_sta_dynamic_country_summary"
+            android:persistent="false" />
+
+        <SwitchPreferenceCompat
+            android:key="config_force_softap_restart"
+            android:title="@string/config_force_softap_restart_title"
+            android:summary="@string/config_force_softap_restart_summary"
+            android:persistent="false" />
+
+        <SwitchPreferenceCompat
+            android:key="config_auto_bridged_softap"
+            android:title="@string/config_auto_bridged_softap_title"
+            android:summary="@string/config_auto_bridged_softap_summary"
+            android:persistent="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/section_diagnostics">
+        <SwitchPreferenceCompat
+            android:key="verbose_logging"
+            android:title="@string/verbose_logging_title"
+            android:summary="@string/verbose_logging_summary"
+            android:persistent="false" />
+
+        <SwitchPreferenceCompat
+            android:key="scan_throttle"
+            android:title="@string/scan_throttle_title"
+            android:summary="@string/scan_throttle_summary"
+            android:persistent="false" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

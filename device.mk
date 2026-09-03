@@ -38,6 +38,11 @@ PRODUCT_VENDOR_PROPERTIES += \
 PRODUCT_COPY_FILES += \
     device/xiaomi/haotian/configs/displayconfig/display_id_4630946654109872275.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/displayconfig/display_id_4630946654109872275.xml
 
+# Xiaomi Camera directly references android.media.AudioParaManger. Expose only that small
+# compatibility surface on the boot class path instead of importing HyperOS' miui-framework.jar.
+PRODUCT_BOOT_JARS += \
+    haotian-ozo-camera-compat
+
 # MiuiCamera permissions
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/permissions/default-permissions-miuicamera.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/default-permissions/default-permissions-miuicamera.xml \

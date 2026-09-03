@@ -1,0 +1,11 @@
+// SPDX-FileCopyrightText: 2026 The Evolution X Project
+// SPDX-License-Identifier: Apache-2.0
+
+// Minimal source-built replacement for the OZO surface that Xiaomi Camera
+// normally obtains from HyperOS' much larger miui-framework.jar.
+java_library {
+    name: "haotian-ozo-camera-compat",
+    srcs: ["src/**/*.java"],
+    installable: true,
+    platform_apis: true,
+}

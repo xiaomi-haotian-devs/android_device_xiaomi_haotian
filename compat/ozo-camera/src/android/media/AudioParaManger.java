@@ -6,12 +6,11 @@
 package android.media;
 
 import android.content.Context;
+import android.media.audiozoomfx.OzoController;
 import android.os.SystemProperties;
 import android.util.Log;
 
 import java.lang.ref.WeakReference;
-
-import org.xiaomi.haotian.camera.audio.OzoController;
 
 /**
  * Haotian-only compatibility implementation of Xiaomi's misspelled

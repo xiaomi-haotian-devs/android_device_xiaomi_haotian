@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.xiaomi.haotian.camera.audio;
+package android.media.audiozoomfx;
 
 import android.media.AudioManager;
 import android.media.AudioParaManger;

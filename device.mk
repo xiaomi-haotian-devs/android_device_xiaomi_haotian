@@ -40,6 +40,9 @@ PRODUCT_COPY_FILES += \
 
 # Xiaomi Camera directly references android.media.AudioParaManger. Expose only that small
 # compatibility surface on the boot class path instead of importing HyperOS' miui-framework.jar.
+PRODUCT_PACKAGES += \
+    haotian-ozo-camera-compat
+
 PRODUCT_BOOT_JARS += \
     haotian-ozo-camera-compat
 

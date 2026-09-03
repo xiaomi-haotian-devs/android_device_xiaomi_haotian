@@ -50,6 +50,7 @@ public final class WifiLabFragment extends SettingsBasePreferenceFragment {
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
 
     private WifiManager wifiManager;
+    private WifiFrameworkConfigClient frameworkConfig;
     private Preference connectionStatus;
     private Preference capabilityStatus;
     private Preference channelStatus;
@@ -85,6 +86,7 @@ public final class WifiLabFragment extends SettingsBasePreferenceFragment {
         if (wifiManager == null) {
             throw new IllegalStateException("Wi-Fi service is unavailable");
         }
+        frameworkConfig = new WifiFrameworkConfigClient(wifiManager);
 
         connectionStatus = requirePreference(KEY_CONNECTION_STATUS);
         capabilityStatus = requirePreference(KEY_CAPABILITY_STATUS);
@@ -96,32 +98,32 @@ public final class WifiLabFragment extends SettingsBasePreferenceFragment {
         scanThrottle = requirePreference(KEY_SCAN_THROTTLE);
 
         configs = new ConfigEntry[] {
-                config("config_6ghz", WifiManager.WIFI_FRAMEWORK_CONFIG_6GHZ_SUPPORT, true),
+                config("config_6ghz", WifiFrameworkConfigClient.CONFIG_6GHZ_SUPPORT, true),
                 config("config_softap_6ghz",
-                        WifiManager.WIFI_FRAMEWORK_CONFIG_SOFTAP_6GHZ_SUPPORT, true),
+                        WifiFrameworkConfigClient.CONFIG_SOFTAP_6GHZ_SUPPORT, true),
                 config("config_softap_dfs",
-                        WifiManager.WIFI_FRAMEWORK_CONFIG_SOFTAP_ACS_INCLUDE_DFS, true),
+                        WifiFrameworkConfigClient.CONFIG_SOFTAP_ACS_INCLUDE_DFS, true),
                 config("config_softap_beamformee",
-                        WifiManager.WIFI_FRAMEWORK_CONFIG_SOFTAP_HE_SU_BEAMFORMEE, true),
+                        WifiFrameworkConfigClient.CONFIG_SOFTAP_HE_SU_BEAMFORMEE, true),
                 config("config_softap_beamformer",
-                        WifiManager.WIFI_FRAMEWORK_CONFIG_SOFTAP_HE_SU_BEAMFORMER, true),
+                        WifiFrameworkConfigClient.CONFIG_SOFTAP_HE_SU_BEAMFORMER, true),
                 config("config_softap_11ax",
-                        WifiManager.WIFI_FRAMEWORK_CONFIG_SOFTAP_IEEE80211AX, true),
+                        WifiFrameworkConfigClient.CONFIG_SOFTAP_IEEE80211AX, true),
                 config("config_softap_owe",
-                        WifiManager.WIFI_FRAMEWORK_CONFIG_SOFTAP_OWE, true),
+                        WifiFrameworkConfigClient.CONFIG_SOFTAP_OWE, true),
                 config("config_softap_owe_transition",
-                        WifiManager.WIFI_FRAMEWORK_CONFIG_SOFTAP_OWE_TRANSITION, true),
+                        WifiFrameworkConfigClient.CONFIG_SOFTAP_OWE_TRANSITION, true),
                 config("config_driver_reg_event",
-                        WifiManager.WIFI_FRAMEWORK_CONFIG_DRIVER_REG_CHANGED_EVENT, true),
+                        WifiFrameworkConfigClient.CONFIG_DRIVER_REG_CHANGED_EVENT, true),
                 config("config_softap_dynamic_country",
-                        WifiManager.WIFI_FRAMEWORK_CONFIG_SOFTAP_DYNAMIC_COUNTRY_CODE, true),
+                        WifiFrameworkConfigClient.CONFIG_SOFTAP_DYNAMIC_COUNTRY_CODE, true),
                 config("config_sta_dynamic_country",
-                        WifiManager.WIFI_FRAMEWORK_CONFIG_STA_DYNAMIC_COUNTRY_CODE, true),
+                        WifiFrameworkConfigClient.CONFIG_STA_DYNAMIC_COUNTRY_CODE, true),
                 config("config_force_softap_restart",
-                        WifiManager.WIFI_FRAMEWORK_CONFIG_FORCE_SOFTAP_RESTART_ON_COUNTRY_CODE,
+                        WifiFrameworkConfigClient.CONFIG_FORCE_SOFTAP_RESTART_ON_COUNTRY_CODE,
                         false),
                 config("config_auto_bridged_softap",
-                        WifiManager.WIFI_FRAMEWORK_CONFIG_AUTO_UPGRADE_TO_BRIDGED_SOFTAP, false),
+                        WifiFrameworkConfigClient.CONFIG_AUTO_UPGRADE_TO_BRIDGED_SOFTAP, false),
         };
 
         countryCode.setOnBindEditTextListener(editText -> {
@@ -246,10 +248,12 @@ public final class WifiLabFragment extends SettingsBasePreferenceFragment {
             final boolean verbose = readVerboseLogging();
             final boolean throttle = readScanThrottle();
             final boolean[] values = new boolean[configs.length];
-            boolean hookAvailable = true;
+            boolean hookAvailable = frameworkConfig.isAvailable();
             try {
-                for (int i = 0; i < configs.length; i++) {
-                    values[i] = wifiManager.getWifiFrameworkConfigForTest(configs[i].id);
+                if (hookAvailable) {
+                    for (int i = 0; i < configs.length; i++) {
+                        values[i] = frameworkConfig.get(configs[i].id);
+                    }
                 }
             } catch (RuntimeException | LinkageError e) {
                 hookAvailable = false;
@@ -291,8 +295,7 @@ public final class WifiLabFragment extends SettingsBasePreferenceFragment {
             if (TextUtils.isEmpty(ssid) || WifiManager.UNKNOWN_SSID.equals(ssid)) {
                 ssid = getString(R.string.status_not_connected);
             }
-            String standard = ScanResult.wifiStandardToString(info.getWifiStandard());
-            if (TextUtils.isEmpty(standard)) standard = getString(R.string.value_unknown);
+            String standard = wifiStandardToString(info.getWifiStandard());
             return getString(R.string.connection_status_format, ssid, info.getFrequency(),
                     info.getRssi(), info.getLinkSpeed(), standard);
         } catch (RuntimeException e) {
@@ -390,6 +393,18 @@ public final class WifiLabFragment extends SettingsBasePreferenceFragment {
         return getString(value ? R.string.value_yes : R.string.value_no);
     }
 
+    private String wifiStandardToString(int standard) {
+        return switch (standard) {
+            case ScanResult.WIFI_STANDARD_LEGACY -> "Legacy";
+            case ScanResult.WIFI_STANDARD_11N -> "802.11n";
+            case ScanResult.WIFI_STANDARD_11AC -> "802.11ac";
+            case ScanResult.WIFI_STANDARD_11AX -> "802.11ax";
+            case ScanResult.WIFI_STANDARD_11AD -> "802.11ad";
+            case ScanResult.WIFI_STANDARD_11BE -> "802.11be";
+            default -> getString(R.string.value_unknown);
+        };
+    }
+
     private void applyCountry() {
         final String country = normalizeCountry(countryCode.getText());
         if (!isValidCountry(country)) {
@@ -412,7 +427,7 @@ public final class WifiLabFragment extends SettingsBasePreferenceFragment {
     private void applyStockProfile() {
         executeOperation(R.string.profile_applied, () -> {
             for (ConfigEntry entry : configs) {
-                wifiManager.setWifiFrameworkConfigForTest(entry.id, entry.stockValue);
+                frameworkConfig.set(entry.id, entry.stockValue);
             }
         });
     }
@@ -420,7 +435,7 @@ public final class WifiLabFragment extends SettingsBasePreferenceFragment {
     private void restoreSourceOverlays() {
         executeOperation(R.string.overrides_restored, () -> {
             for (ConfigEntry entry : configs) {
-                wifiManager.clearWifiFrameworkConfigForTest(entry.id);
+                frameworkConfig.clear(entry.id);
             }
             wifiManager.clearOverrideCountryCode();
             requestedCountry = null;
@@ -431,7 +446,7 @@ public final class WifiLabFragment extends SettingsBasePreferenceFragment {
         entry.preference.setEnabled(false);
         executor.execute(() -> {
             try {
-                wifiManager.setWifiFrameworkConfigForTest(entry.id, value);
+                frameworkConfig.set(entry.id, value);
                 mainHandler.post(() -> {
                     if (!isAdded()) return;
                     entry.preference.setChecked(value);
@@ -521,7 +536,8 @@ public final class WifiLabFragment extends SettingsBasePreferenceFragment {
     }
 
     private void showFailure(Throwable error) {
-        if (error instanceof LinkageError) {
+        if (error instanceof LinkageError
+                || error instanceof WifiFrameworkConfigClient.UnavailableException) {
             toast(R.string.framework_hook_unavailable);
         } else {
             Toast.makeText(requireContext(),

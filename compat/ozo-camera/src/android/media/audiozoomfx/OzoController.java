@@ -470,7 +470,7 @@ public final class OzoController {
             index = 3;
         }
 
-        if (mRecordType == 0 || mRecordType == 2 || mRecordType == 4
+        if (mRecordType == 0 || mRecordType == 1 || mRecordType == 4
                 || mRecordType == 5 || mRecordType == 6) {
             index += 8;
         }

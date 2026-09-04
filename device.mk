@@ -55,6 +55,7 @@ PRODUCT_COPY_FILES += \
 # Xiaomi Gallery is kept as a secondary gallery for MiuiCamera review and the
 # stock editing suite. It intentionally does not override Google Photos.
 PRODUCT_PACKAGES += \
+    HaotianGalleryVideoCompat \
     MIUIGallery \
     MiMediaEditor \
     MiuiExtraPhoto

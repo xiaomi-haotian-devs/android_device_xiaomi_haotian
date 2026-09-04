@@ -53,9 +53,10 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/permissions/privapp-permissions-miuicamera.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-miuicamera.xml
 
 # Xiaomi Gallery is kept as a secondary gallery for MiuiCamera review and the
-# stock editing suite. It intentionally does not override Google Photos.
+# stock editing suite. MediaViewer supplies its private video playback, frame
+# extraction and video-edit handoff without overriding Google Photos.
 PRODUCT_PACKAGES += \
-    HaotianGalleryVideoCompat \
+    MediaViewer \
     MIUIGallery \
     MiMediaEditor \
     MiuiExtraPhoto

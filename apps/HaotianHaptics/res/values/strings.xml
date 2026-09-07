@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Xiaomi haptic settings</string>
+    <string name="settings_summary">Haptic strength profile, subtle feedback and previews</string>
+    <string name="style_title">Haptic profile</string>
+    <string name="style_soft">Soft</string>
+    <string name="style_balanced">Balanced</string>
+    <string name="style_crisp">Crisp</string>
+    <string name="enhance_title">Enhance subtle feedback</string>
+    <string name="enhance_summary">Make quiet feedback more noticeable while preserving gradual changes in strength</string>
+    <string name="scope_summary">Device-wide tuning. Calls, notifications and keyboard switches and intensity remain in system settings. Effects shared by multiple interactions are adjusted together.</string>
+    <string name="owner_only">Only the device owner can change device-wide haptic tuning.</string>
+    <string name="previews_title">Try haptic effects</string>
+    <string name="preview_click">Click</string>
+    <string name="preview_tick">Light tick</string>
+    <string name="preview_ramp">Gradually increasing ticks</string>
+    <string name="preview_waveform">Soft–strong–soft vibration</string>
+    <string name="preview_summary">Previews follow system vibration settings. Leaving this page stops the preview.</string>
+    <string name="reset_title">Restore default tuning</string>
+    <string name="reset_summary">Balanced profile with subtle feedback enhancement</string>
+    <string name="write_failed">Could not apply haptic tuning</string>
+    <string name="preview_failed">This vibration effect is unavailable</string>
+    <string-array name="style_entries">
+        <item>@string/style_soft</item><item>@string/style_balanced</item><item>@string/style_crisp</item>
+    </string-array>
+    <string-array name="style_values" translatable="false">
+        <item>soft</item><item>balanced</item><item>crisp</item>
+    </string-array>
+</resources>

@@ -1,0 +1,39 @@
+// SPDX-FileCopyrightText: 2026 The Xiaomi haotian developers
+// SPDX-License-Identifier: Apache-2.0
+
+package {
+    default_applicable_licenses: ["haotian_qti_euicc_license"],
+}
+
+license {
+    name: "haotian_qti_euicc_license",
+    visibility: [":__subpackages__"],
+    license_kinds: ["SPDX-license-identifier-Apache-2.0"],
+    license_text: ["LICENSE"],
+}
+
+android_app {
+    name: "HaotianQtiEuicc",
+    certificate: "platform",
+    privileged: true,
+    system_ext_specific: true,
+    platform_apis: true,
+    srcs: [
+        "src/**/*.aidl",
+        "src/**/*.java",
+    ],
+    aidl: {
+        local_include_dirs: ["src"],
+    },
+    required: [
+        "haotian-lpa-permissions",
+        "haotian-qti-lpa-components",
+        "uimlpaservice",
+        "libjni_aidl_service",
+        "uimlpalibrary",
+    ],
+    privapp_allowlist: "privapp-permissions-haotian-qti-euicc.xml",
+    optimize: {
+        enabled: true,
+    },
+}

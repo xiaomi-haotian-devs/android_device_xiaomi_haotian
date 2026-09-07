@@ -1,0 +1,16 @@
+# Haotian's Synaptics controller exposes raw frames through /dev/xiaomi-touch. The recovery-only
+# THP service uses Xiaomi's stock userspace HAL and algorithm to turn them into Linux input events.
+allow recovery input_device:chr_file rw_file_perms;
+allow recovery proc_tp_file:file r_file_perms;
+allow recovery proc_tp_lockdown:file r_file_perms;
+allow recovery self:capability sys_nice;
+allow recovery sysfs_touch_hostprocess:file rw_file_perms;
+allow recovery sysfs_touch_suspend:file rw_file_perms;
+allow recovery sysfs_tp_virtual_prox:file rw_file_perms;
+allow recovery touchfeature_device:chr_file rw_file_perms;
+
+# The prebuilt selects its algorithm defaults using the stock read-only touch properties. It also
+# attempts to rewrite persist.vendor.hostprocess.user_type, but that update is nonessential and is
+# deliberately not granted to the coredomain recovery process.
+get_prop(recovery, vendor_touch_hostprocess_prop)
+get_prop(recovery, vendor_touchfeature_prop)

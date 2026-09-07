@@ -5,20 +5,94 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
+# Use a device-specific multi-HAL list which retains the common UDFPS sub-HAL and adds the
+# AirPods head tracker sub-HAL.
+SM8750_SENSORS_HAL_CONFIG := device/xiaomi/haotian/configs/sensors/hals.conf
+
 # Inherit from sm8650-common
 $(call inherit-product, device/xiaomi/sm8750-common/common.mk)
 
 # Get non-open-source specific aspects
 $(call inherit-product, vendor/xiaomi/haotian/haotian-vendor.mk)
 
+# Keep Google's LUI and APDU LPA for a removable eUICC in physical slot 2.
+# Telephony reuses the modem-owned ISD-R channel configured by the framework
+# overlay. Keep slot 2 out of non_removable_euicc_slots so Telephony can
+# continue to detect either a pSIM or an eUICC from the inserted card at runtime.
+PRODUCT_PACKAGES += \
+    EuiccGoogle \
+    XiaomiEuicc
+
+# BtHelper is excluded before the common Evolution product is inherited in
+# lineage_haotian.mk. PRODUCT_PACKAGES -= cannot remove a package contributed
+# by another inherited product because product variables are merged later.
+
 ifeq ($(TARGET_INCLUDE_FIRMWARE),true)
 $(call inherit-product, vendor/xiaomi/haotian/firmware.mk)
 endif
 
+# Boot-only transparent artwork above the existing EvoX bootanimation.
+PRODUCT_PACKAGES += bootanim_overlay
+
 # Display
 PRODUCT_PACKAGES += \
     FrameworkResOverlayHaotian \
+    LineageSDKOverlayHaotian \
     SystemUIOverlayHaotian
+
+# Read-only display pipeline diagnostics for LTPO development. The tool creates no Surface and
+# does not subscribe to VSYNC, so observing the counters does not keep the panel at a high rate.
+PRODUCT_PACKAGES_DEBUG += \
+    haotian-refresh-debug
+
+# Minimal Gatekeeper/FBE support for the built-in recovery.  The daemon mounts metadata-encrypted
+# /data and installs DE keys automatically; CE credentials are supplied interactively over ADB.
+PRODUCT_PACKAGES += \
+    haotian-recovery-decrypt \
+    haotian-recovery-gatekeeper \
+    haotian-recovery-keymint \
+    haotian-recovery-libGPreqcancel \
+    haotian-recovery-libGPreqcancel_svc \
+    haotian-recovery-libQSEEComAPI \
+    haotian-recovery-libdiag \
+    haotian-recovery-libdrmtime \
+    haotian-recovery-libdrmfs \
+    haotian-recovery-libgpt \
+    haotian-recovery-libkeymasterdeviceutils \
+    haotian-recovery-libkeymasterutils \
+    haotian-recovery-libminkdescriptor \
+    haotian-recovery-libops \
+    haotian-recovery-libqcbor \
+    haotian-recovery-libqisl \
+    haotian-recovery-libqtigatekeeper \
+    haotian-recovery-libqtikeymint \
+    haotian-recovery-librpmb \
+    haotian-recovery-libseclog \
+    haotian-recovery-libspl \
+    haotian-recovery-libssd \
+    haotian-recovery-libtime_genoff \
+    haotian-recovery-libtouchreport \
+    haotian-recovery-libtouchreport_alg \
+    haotian-recovery-libtouchreport_hal \
+    haotian-recovery-qseecomd \
+    haotian-recovery-touch \
+    haotian-recovery-firmware.fstab \
+    haotian-recovery-security.xml
+
+# Xiaomi DisplayFeature is the sole owner of panel color processing. Do not expose or start
+# Lineage LiveDisplay, whose color-temperature matrices would otherwise stack with EyeCare and
+# True Tone when enabled.
+
+# Xiaomi's face HAL stores templates and performs matching inside the MiTEE
+# trusted VM. Sense remains installed as the alternate software backend.
+PRODUCT_PACKAGES += \
+    libcamera_metadata_miface \
+    libmiface_noop
+
+PRODUCT_SYSTEM_PROPERTIES += \
+    persist.sys.face.backend=sense \
+    persist.sys.face.miface.strength=weak \
+    ro.face.miface.available=true
 
 # Keep the stock camera provider in its dedicated cgroup after init starts it.
 PRODUCT_PACKAGES += \
@@ -28,15 +102,44 @@ PRODUCT_PACKAGES += \
 # be enabled by the user from the haotian charging settings page.
 PRODUCT_PACKAGES += \
     HaotianCharging \
-    haotian-charging-service
+    HaotianAudio \
+    HaotianAirPods \
+    HaotianMiBuds \
+    HaotianSony \
+    haotian-charging-service \
+    sensors.haotian_headtracker
 
 PRODUCT_VENDOR_PROPERTIES += \
+    ro.vendor.all_modes.colorpick_adjust=true \
     persist.vendor.batteryantiaging=0 \
     persist.vendor.haotian.batteryantiaging=0 \
-    persist.vendor.haotian.fast_charge=0
+    persist.vendor.haotian.fast_charge=0 \
+    persist.vendor.mifaced.fastlaunch=false \
+    ro.vendor.miface.started=true
+
+# Xiaomi's OZO recording controller reads these from mi_ext on stock. system_ext is the
+# equivalent partition in this tree, so keep the original names and haotian device UUID.
+PRODUCT_SYSTEM_EXT_PROPERTIES += \
+    ro.audio.audiozoom=true \
+    ro.audio.ozo.channelmask.in=true \
+    ro.ozo.uuid.parm=CC3BBB96-CE6D-415D-9FE4-9C3A987175F2
+
+# AirPods expose their secondary Classic ATT bearer and Apple-style Smart Routing behavior only
+# when the phone's SDP Device ID identifies an Apple-vendor peer. Set the same public Device ID
+# fields used by LibrePods' runtime hook at ROM build time, avoiding an injected hook in the
+# Bluetooth process.
+PRODUCT_SYSTEM_PROPERTIES += \
+    bluetooth.device_id.vendor_id=76 \
+    bluetooth.device_id.vendor_id_source=1
 
 PRODUCT_COPY_FILES += \
-    device/xiaomi/haotian/configs/displayconfig/display_id_4630946654109872275.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/displayconfig/display_id_4630946654109872275.xml
+    device/xiaomi/haotian/configs/displayconfig/display_id_4630946654109872275.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/displayconfig/display_id_4630946654109872275.xml \
+    device/xiaomi/sm8750-common/rootdir/etc/ueventd.qcom.rc:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/etc/ueventd.rc \
+    vendor/xiaomi/haotian/proprietary/odm/firmware/haotian_syna_thp_config.ini:$(TARGET_COPY_OUT_RECOVERY)/root/lib/firmware/haotian_syna_thp_config.ini \
+    vendor/xiaomi/haotian/proprietary/odm/firmware/synaptics_spi_haotian.img:$(TARGET_COPY_OUT_RECOVERY)/root/lib/firmware/synaptics_spi_haotian.img \
+    $(LOCAL_PATH)/configs/permissions/evolution.software.compact_window.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/evolution.software.compact_window.xml \
+    $(LOCAL_PATH)/configs/permissions/privapp-permissions-haotian-audio.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-permissions-haotian-audio.xml \
+    $(LOCAL_PATH)/configs/permissions/unavailable-feature-livedisplay.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/unavailable-feature-livedisplay.xml
 
 # Xiaomi Camera directly references android.media.AudioParaManger. Expose only that small
 # compatibility surface on the boot class path instead of importing HyperOS' miui-framework.jar.
@@ -82,6 +185,7 @@ PRODUCT_PACKAGES += \
     HaotianStNfcExtensionService \
     HaotianUpTsmService \
     HaotianXiaomiAccount \
+    HaotianXiaomiAccountBridge \
     XiaomiCtaBroker \
     com.st.android.nfc_extensions \
     com.st.android.nfc_extensions_16 \
@@ -102,6 +206,7 @@ PRODUCT_SYSTEM_PROPERTIES += \
 
 PRODUCT_COPY_FILES += \
     packages/modules/Nfc/NfcNci/com.android.nfc.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-haotian-nfc.xml \
+    $(LOCAL_PATH)/configs/sysconfig/haotian-wallet-app-links.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/haotian-wallet-app-links.xml \
     $(LOCAL_PATH)/configs/nfc/hal_uuid_map_haotian.xml:$(TARGET_COPY_OUT_VENDOR)/etc/hal_uuid_map_haotian.xml \
     vendor/xiaomi/haotian/stock-nfc/permissions/hiddenapi-package-whitelist-haotian-nfc.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/hiddenapi-package-whitelist-haotian-nfc.xml \
     vendor/xiaomi/haotian/stock-nfc/permissions/com.st.android.nfc_extensions.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/com.st.android.nfc_extensions.xml \
@@ -120,6 +225,7 @@ PRODUCT_PACKAGES += \
 
 # Vibrator
 PRODUCT_PACKAGES += \
+    HaotianHaptics \
     android.hardware.vibrator-service.xiaomi-sm8750
 
 # Soong namespaces

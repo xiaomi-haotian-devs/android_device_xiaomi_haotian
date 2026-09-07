@@ -1,0 +1,8 @@
+type haotian_mibuds_app, domain, coredomain;
+
+app_domain(haotian_mibuds_app)
+bluetooth_domain(haotian_mibuds_app)
+
+# Android BluetoothSocket and the signature-protected HaotianAudio provider bridge.
+allow haotian_mibuds_app app_api_service:service_manager find;
+allow haotian_mibuds_app system_api_service:service_manager find;

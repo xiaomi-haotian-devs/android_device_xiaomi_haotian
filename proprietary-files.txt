@@ -1,6 +1,112 @@
 ## All proprietary files from this list, unless pinned and noted otherwise,
 ## are from Xiaomi 15 Pro (OS3.0.302.0.WOBCNXM).
 
+# OZO Audio
+odm/etc/ozosdk.license
+
+# MiTEE and Xiaomi face
+odm/bin/hw/mifaced
+odm/bin/tee-supplicant
+odm/etc/init/miface.rc;MAKE_COPY_RULE_ONLY
+odm/etc/init/miface_start_wait_mitee_boot_completed.rc;MAKE_COPY_RULE_ONLY
+odm/etc/init/tee-supplicant.rc;MAKE_COPY_RULE_ONLY
+odm/etc/vintf/manifest/android.hardware.biometrics.face-v4.xml
+odm/etc/vintf/manifest/vendor.xiaomi.hardware.aek.xml
+odm/lib64/libmiface.so
+odm/lib64/libteecli.so
+odm/lib64/vendor.qti.qvirt-V1-ndk.so
+odm/mitee/ta/a3ba6512-6e0e-4065-93165e4a7d04ca08.ta;MAKE_COPY_RULE_ONLY
+product/bin/vendor.qti.qvirt-service;MAKE_COPY_RULE_ONLY
+product/etc/init/vendor.qti.qvirt-service.rc;MAKE_COPY_RULE_ONLY
+product/etc/vintf/manifest/vendor.qti.qvirt-service.xml
+product/firmware/vm-system/system.img;MAKE_COPY_RULE_ONLY
+product/lib64/vendor.qti.qvirt-V1-ndk.so;MAKE_COPY_RULE_ONLY
+system_ext/bin/qcrosvm;MAKE_COPY_RULE_ONLY
+system_ext/etc/seccomp_policy/qcrosvm.policy;MAKE_COPY_RULE_ONLY
+vendor/etc/qvirtmgr-vndr.json;MAKE_COPY_RULE_ONLY
+vendor/lib64/vendor.xiaomi.hardware.aek-V1-ndk.so
+
+# qcrosvm is a stock Rust 1.83 binary. Keep its complete Rust ABI closure private
+# instead of replacing the platform's Rust 1.88 dylibs.
+system/lib64/libacpi_tables.dylib.so:product/lib64/qvirt-1.83/libacpi_tables.dylib.so;MAKE_COPY_RULE_ONLY
+product/lib64/libaho_corasick.dylib.so:product/lib64/qvirt-1.83/libaho_corasick.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libandroid_audio.dylib.so:product/lib64/qvirt-1.83/libandroid_audio.dylib.so;MAKE_COPY_RULE_ONLY
+product/lib64/libandroid_logger.dylib.so:product/lib64/qvirt-1.83/libandroid_logger.dylib.so;MAKE_COPY_RULE_ONLY
+product/lib64/libanyhow.dylib.so:product/lib64/qvirt-1.83/libanyhow.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libargh.dylib.so:product/lib64/qvirt-1.83/libargh.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libasync_task.dylib.so:product/lib64/qvirt-1.83/libasync_task.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libaudio_streams.dylib.so:product/lib64/qvirt-1.83/libaudio_streams.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libaudio_util.dylib.so:product/lib64/qvirt-1.83/libaudio_util.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libballoon_control.dylib.so:product/lib64/qvirt-1.83/libballoon_control.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libbase_rust.dylib.so:product/lib64/qvirt-1.83/libbase_rust.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libbit_field_crosvm.dylib.so:product/lib64/qvirt-1.83/libbit_field_crosvm.dylib.so;MAKE_COPY_RULE_ONLY
+product/lib64/libbitflags.dylib.so:product/lib64/qvirt-1.83/libbitflags.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libbytes.dylib.so:product/lib64/qvirt-1.83/libbytes.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libcdisk_spec_proto.dylib.so:product/lib64/qvirt-1.83/libcdisk_spec_proto.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libchrono.dylib.so:product/lib64/qvirt-1.83/libchrono.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libcrc32fast.dylib.so:product/lib64/qvirt-1.83/libcrc32fast.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libcros_async.dylib.so:product/lib64/qvirt-1.83/libcros_async.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libcros_fdt.dylib.so:product/lib64/qvirt-1.83/libcros_fdt.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libcrypto_generic.dylib.so:product/lib64/qvirt-1.83/libcrypto_generic.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libdevices.dylib.so:product/lib64/qvirt-1.83/libdevices.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libdisk.dylib.so:product/lib64/qvirt-1.83/libdisk.dylib.so;MAKE_COPY_RULE_ONLY
+product/lib64/libenv_filter.dylib.so:product/lib64/qvirt-1.83/libenv_filter.dylib.so;MAKE_COPY_RULE_ONLY
+product/lib64/libenv_logger.dylib.so:product/lib64/qvirt-1.83/libenv_logger.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/liberrno.dylib.so:product/lib64/qvirt-1.83/liberrno.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libfastrand.dylib.so:product/lib64/qvirt-1.83/libfastrand.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libfuse_rust.dylib.so:product/lib64/qvirt-1.83/libfuse_rust.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libfutures_channel.dylib.so:product/lib64/qvirt-1.83/libfutures_channel.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libfutures_core.dylib.so:product/lib64/qvirt-1.83/libfutures_core.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libfutures_util.dylib.so:product/lib64/qvirt-1.83/libfutures_util.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libgetrandom.dylib.so:product/lib64/qvirt-1.83/libgetrandom.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libgfxstream_backend.so:product/lib64/qvirt-1.83/libgfxstream_backend.so;MAKE_COPY_RULE_ONLY
+system/lib64/libgpu_display.dylib.so:product/lib64/qvirt-1.83/libgpu_display.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libhypervisor.dylib.so:product/lib64/qvirt-1.83/libhypervisor.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libio_uring.dylib.so:product/lib64/qvirt-1.83/libio_uring.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libjail.dylib.so:product/lib64/qvirt-1.83/libjail.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libkvm_sys.dylib.so:product/lib64/qvirt-1.83/libkvm_sys.dylib.so;MAKE_COPY_RULE_ONLY
+product/lib64/liblibc.dylib.so:product/lib64/qvirt-1.83/liblibc.dylib.so;MAKE_COPY_RULE_ONLY
+product/lib64/liblog_rust.dylib.so:product/lib64/qvirt-1.83/liblog_rust.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/liblz4_flex.dylib.so:product/lib64/qvirt-1.83/liblz4_flex.dylib.so;MAKE_COPY_RULE_ONLY
+product/lib64/libmemchr.dylib.so:product/lib64/qvirt-1.83/libmemchr.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libmetrics_generic.dylib.so:product/lib64/qvirt-1.83/libmetrics_generic.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libminijail_rust.dylib.so:product/lib64/qvirt-1.83/libminijail_rust.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libnet_sys.dylib.so:product/lib64/qvirt-1.83/libnet_sys.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libnet_util.dylib.so:product/lib64/qvirt-1.83/libnet_util.dylib.so;MAKE_COPY_RULE_ONLY
+product/lib64/libnix.dylib.so:product/lib64/qvirt-1.83/libnix.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libnom.dylib.so:product/lib64/qvirt-1.83/libnom.dylib.so;MAKE_COPY_RULE_ONLY
+product/lib64/libonce_cell.dylib.so:product/lib64/qvirt-1.83/libonce_cell.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libp9.dylib.so:product/lib64/qvirt-1.83/libp9.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libprotobuf.dylib.so:product/lib64/qvirt-1.83/libprotobuf.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libprotobuf_support.dylib.so:product/lib64/qvirt-1.83/libprotobuf_support.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/librand_core.dylib.so:product/lib64/qvirt-1.83/librand_core.dylib.so;MAKE_COPY_RULE_ONLY
+product/lib64/libregex.dylib.so:product/lib64/qvirt-1.83/libregex.dylib.so;MAKE_COPY_RULE_ONLY
+product/lib64/libregex_syntax.dylib.so:product/lib64/qvirt-1.83/libregex_syntax.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libresources.dylib.so:product/lib64/qvirt-1.83/libresources.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/librustix.dylib.so:product/lib64/qvirt-1.83/librustix.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/librutabaga_gfx.dylib.so:product/lib64/qvirt-1.83/librutabaga_gfx.dylib.so;MAKE_COPY_RULE_ONLY
+product/lib64/libryu.dylib.so:product/lib64/qvirt-1.83/libryu.dylib.so;MAKE_COPY_RULE_ONLY
+product/lib64/libserde.dylib.so:product/lib64/qvirt-1.83/libserde.dylib.so;MAKE_COPY_RULE_ONLY
+product/lib64/libserde_json.dylib.so:product/lib64/qvirt-1.83/libserde_json.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libserde_keyvalue.dylib.so:product/lib64/qvirt-1.83/libserde_keyvalue.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libsimplelog.dylib.so:product/lib64/qvirt-1.83/libsimplelog.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libsnapshot_crosvm.dylib.so:product/lib64/qvirt-1.83/libsnapshot_crosvm.dylib.so;MAKE_COPY_RULE_ONLY
+product/lib64/libstd.dylib.so:product/lib64/qvirt-1.83/libstd.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libswap.dylib.so:product/lib64/qvirt-1.83/libswap.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libsync_rust.dylib.so:product/lib64/qvirt-1.83/libsync_rust.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libtempfile.dylib.so:product/lib64/qvirt-1.83/libtempfile.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libtermcolor.dylib.so:product/lib64/qvirt-1.83/libtermcolor.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libusb_sys.dylib.so:product/lib64/qvirt-1.83/libusb_sys.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libusb_util.dylib.so:product/lib64/qvirt-1.83/libusb_util.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libuuid.dylib.so:product/lib64/qvirt-1.83/libuuid.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libv4l2r.dylib.so:product/lib64/qvirt-1.83/libv4l2r.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libvhost.dylib.so:product/lib64/qvirt-1.83/libvhost.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libvirtio_media.dylib.so:product/lib64/qvirt-1.83/libvirtio_media.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libvm_control.dylib.so:product/lib64/qvirt-1.83/libvm_control.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libvm_memory.dylib.so:product/lib64/qvirt-1.83/libvm_memory.dylib.so;MAKE_COPY_RULE_ONLY
+system/lib64/libvmm_vhost.dylib.so:product/lib64/qvirt-1.83/libvmm_vhost.dylib.so;MAKE_COPY_RULE_ONLY
+product/lib64/libzerocopy.dylib.so:product/lib64/qvirt-1.83/libzerocopy.dylib.so;MAKE_COPY_RULE_ONLY
+
 # Battery anti-aging (locally controlled; disabled by default)
 odm/etc/charger/BAA_config_common.json
 odm/etc/charger/BAA_config_haotian.json
@@ -2930,6 +3036,7 @@ odm/etc/display/G_Com_Gary_Gain.csv
 odm/etc/display/qdcm_calib_data_xiaomi_o2_42_02_0a_cmd_mode_dsc_dsi_panel.json
 odm/etc/display/R_Com_Gary_Gain.csv
 odm/etc/mdss_dsi_o2_42_02_0a_dsc_cmd_mi.xml
+odm/etc/spr_cfg_xiaomi_o2_42_02_0a_cmd_mode_dsc_dsi_panel.xml
 
 # Dolby Vision
 odm/vendor/etc/videobox.json
@@ -3073,9 +3180,13 @@ odm/etc/touch/gameturbotool-fastinput.json
 odm/etc/touch/gameturbotool.json
 
 # Touchscreen
+odm/firmware/film_model.tflite
+odm/firmware/glove_model.tflite
 odm/firmware/haotian_syna_thp_config.ini
 odm/firmware/haotian_test_limits_S3910P.csv
+odm/firmware/smooth.tflite
 odm/firmware/synaptics_spi_haotian.img
+odm/firmware/water_check.tflite
 
 # MiuiCamera
 product/etc/device_features/haotian.xml|bb84587795e27e42dc7800cec7c8992caa2d5832

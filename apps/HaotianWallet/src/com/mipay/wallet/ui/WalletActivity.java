@@ -38,11 +38,12 @@ import android.widget.Toast;
 import com.mipay.wallet.R;
 
 /**
- * Local-only launcher for Xiaomi Smart Cards.
+ * Privacy-focused launcher for Xiaomi Smart Cards.
  *
- * This activity deliberately has no network permission and contains no
- * analytics or advertising integration. All card operations are delegated to
- * the separately installed com.miui.tsmclient backend after an explicit tap.
+ * This activity contains no analytics or advertising integration. The wallet's only direct
+ * network operation is a user-confirmed download of the optional scan-payment rule snapshot;
+ * all card operations are delegated to the separately installed com.miui.tsmclient backend
+ * after an explicit tap.
  */
 public final class WalletActivity extends Activity {
     private static final long AUTHENTICATION_GRACE_PERIOD_MS = 3000L;
@@ -345,6 +346,15 @@ public final class WalletActivity extends Activity {
         addFeature(features, R.drawable.ic_card, R.string.mi_pay,
                 R.string.mi_pay_desc, v -> openUri(URI_MIPAY));
 
+        Space paymentGap = new Space(this);
+        body.addView(paymentGap, new LinearLayout.LayoutParams(1, dp(18)));
+        LinearLayout paymentGroup = vertical();
+        paymentGroup.setBackground(rounded(surface, 20));
+        paymentGroup.setElevation(dp(1));
+        body.addView(paymentGroup, matchWrap());
+        addSettingsRow(paymentGroup, R.drawable.ic_qr_scan, R.string.qr_scan_pay,
+                R.string.qr_scan_pay_desc, v -> openQrScanner(), false);
+
         return scroll;
     }
 
@@ -373,7 +383,7 @@ public final class WalletActivity extends Activity {
         addSettingsRow(group, R.drawable.ic_privacy, R.string.privacy,
                 R.string.privacy_desc, v -> showPrivacy(), true);
 
-        String version = "6.113.1.5728.2741-haotian5";
+        String version = "6.113.1.5728.2741-haotian6";
         try {
             version = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
         } catch (Exception ignored) {
@@ -649,6 +659,10 @@ public final class WalletActivity extends Activity {
 
     private void openSmartCardSettings() {
         openUri(URI_SMART_CARD_SETTINGS);
+    }
+
+    private void openQrScanner() {
+        launch(new Intent(this, QrScannerActivity.class));
     }
 
     private void openAccountSettings() {

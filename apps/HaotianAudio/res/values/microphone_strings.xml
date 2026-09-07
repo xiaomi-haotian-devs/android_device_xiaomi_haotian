@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="microphone_app_name">Microphone</string>
+    <string name="microphone_configuration_category">Recording configuration</string>
+    <string name="microphone_recording_mode_title">Recording mode</string>
+    <string name="microphone_mode_standard">Follow application</string>
+    <string name="microphone_mode_omni">Omnidirectional</string>
+    <string name="microphone_mode_front">Front direction</string>
+    <string name="microphone_mode_back">Rear direction</string>
+    <string name="microphone_mode_dual">Front and rear</string>
+    <string name="microphone_mode_audio_zoom">Audio zoom</string>
+    <string name="microphone_mode_spatial">Spatial recording</string>
+    <string name="microphone_mode_saved_waiting">%1$s · saved; waiting for the OZO engine</string>
+    <string name="microphone_wind_reduction_title">Wind-noise reduction</string>
+    <string name="microphone_wind_reduction_summary">Request the stock OZO wind-noise filter for supported camera recordings</string>
+    <string name="microphone_source_tracking_title">Track sound source</string>
+    <string name="microphone_source_tracking_summary">Move the audio-zoom focus with the camera focus region</string>
+    <string name="microphone_focus_width_title">Directional width (degrees)</string>
+
+    <string name="microphone_live_status_category">Live input status · refreshes every second</string>
+    <string name="microphone_capture_status_title">Active recording</string>
+    <string name="microphone_input_format_title">Input format</string>
+    <string name="microphone_active_device_title">Input device</string>
+    <string name="microphone_ozo_status_title">Stock OZO components</string>
+    <string name="microphone_route_status_title">Microphone route</string>
+    <string name="microphone_capture_inactive">No application is recording</string>
+    <string name="microphone_input_format_inactive">No active input stream</string>
+    <string name="microphone_active_device_none">No input device is routed</string>
+    <string name="microphone_capture_active_format">%1$s · %2$s · session %3$d · %4$s</string>
+    <string name="microphone_capture_audible">delivered to application</string>
+    <string name="microphone_capture_silenced">silenced by capture policy</string>
+    <string name="microphone_input_format_active_format">Application: %1$s\nDevice: %2$s</string>
+    <string name="microphone_ozo_status_format">Effect %1$s · service %2$s · license %3$s · four-mic flag %4$s</string>
+    <string name="microphone_route_inactive">Idle; the physical route is selected when recording starts</string>
+    <string name="microphone_route_four_channel">Four-channel device capture (%1$d channels) · OZO %2$s</string>
+    <string name="microphone_route_channel_format">%1$d-channel device capture · OZO %2$s</string>
+    <string name="microphone_ozo_active">active on this stream</string>
+    <string name="microphone_ozo_not_active">not active</string>
+    <string name="microphone_active_device_unknown">Input device details unavailable</string>
+    <string name="microphone_builtin_mic">Built-in microphone</string>
+    <string name="microphone_device_format">%1$s · type %2$d</string>
+    <string name="microphone_device_address_format">%1$s · type %2$d · %3$s</string>
+    <string name="microphone_source_mic">Microphone</string>
+    <string name="microphone_source_camcorder">Camera</string>
+    <string name="microphone_source_voice_recognition">Voice recognition</string>
+    <string name="microphone_source_voice_communication">Voice communication</string>
+    <string name="microphone_source_unprocessed">Unprocessed input</string>
+    <string name="microphone_source_number">Audio source %1$d</string>
+    <string name="microphone_unknown_application">unknown application</string>
+
+    <string name="microphone_physical_category">Physical microphone mapping</string>
+    <string name="microphone_top_title">Top microphone</string>
+    <string name="microphone_top_summary">AMIC1 · ADC1 · top edge</string>
+    <string name="microphone_bottom_aux_title">Bottom auxiliary microphone</string>
+    <string name="microphone_bottom_aux_summary">AMIC3 · ADC3 · bottom edge</string>
+    <string name="microphone_back_title">Rear camera microphone</string>
+    <string name="microphone_back_summary">AMIC5 · ADC4 · camera side</string>
+    <string name="microphone_bottom_main_title">Bottom main microphone</string>
+    <string name="microphone_bottom_main_summary">AMIC4 · ADC2 · bottom edge</string>
+    <string name="microphone_physical_status_format">%1$s · %2$s</string>
+    <string name="microphone_physical_idle">idle</string>
+    <string name="microphone_physical_active">active in the four-channel route</string>
+    <string name="microphone_physical_subset_unknown">active route; framework does not identify the selected physical subset</string>
+    <string name="microphone_footer">The four microphone identities come from Xiaomi’s haotian mixer route. This page only reports actual framework state; idle microphones are not opened merely for testing.</string>
+</resources>

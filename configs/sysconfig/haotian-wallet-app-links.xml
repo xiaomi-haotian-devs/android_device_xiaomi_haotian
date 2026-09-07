@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The wallet is a platform-signed product app. Approve only the HTTPS domains declared by its
+     autoVerify filters so the system QR scanner can route stable UnionPay links directly. -->
+<config>
+    <app-link package="com.mipay.wallet" />
+</config>

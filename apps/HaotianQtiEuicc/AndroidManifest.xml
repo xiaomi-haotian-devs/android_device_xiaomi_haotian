@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2026 The Xiaomi haotian developers
+     SPDX-License-Identifier: Apache-2.0
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.lineageos.haotian.qtilpa">
+    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EMBEDDED_SUBSCRIPTIONS" />
+    <uses-permission android:name="com.qti.permission.USE_UIM_LPA_SERVICE" />
+
+    <application
+        android:allowBackup="false"
+        android:hasCode="true"
+        android:label="Haotian Qualcomm eUICC bridge"
+        android:supportsRtl="true">
+        <service
+            android:name=".QtiEuiccService"
+            android:directBootAware="true"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_EUICC_SERVICE">
+            <intent-filter android:priority="101">
+                <action android:name="android.service.euicc.EuiccService" />
+            </intent-filter>
+        </service>
+    </application>
+</manifest>

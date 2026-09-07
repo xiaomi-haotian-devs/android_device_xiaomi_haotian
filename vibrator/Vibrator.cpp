@@ -8,6 +8,7 @@
 
 #include "Vibrator.h"
 
+#include <android-base/properties.h>
 #include <android/binder_status.h>
 #include <dirent.h>
 #include <fcntl.h>
@@ -16,14 +17,17 @@
 #include <sys/ioctl.h>
 #include <unistd.h>
 
+#include <algorithm>
 #include <array>
 #include <cerrno>
 #include <chrono>
+#include <cmath>
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
 #include <iterator>
 #include <thread>
+#include <utility>
 
 namespace aidl {
 namespace android {
@@ -49,16 +53,18 @@ constexpr uint16_t kWaveformQuickFall = 8;
 constexpr int32_t kMaxTimeoutMs = UINT16_MAX;
 constexpr int32_t kComposeDelayMaxMs = 1000;
 constexpr int32_t kComposeSizeMax = 16;
-constexpr int32_t kDoubleClickPulseMs = 12;
+constexpr int32_t kDoubleClickPulseMs = 40;
 constexpr int32_t kDoubleClickPeriodMs = 55;
-constexpr int32_t kGestureTickDurationMs = 16;
-constexpr int32_t kKeyboardTickDurationMs = 10;
-constexpr int32_t kEffectCleanupDelayMs = 80;
+// Provisional RAM playback estimates from warm-device mailbox traces. These
+// exclude hibernation latency; observed completion, not these estimates, owns
+// stop.
+constexpr int32_t kGestureTickDurationMs = 40;
+constexpr int32_t kKeyboardTickDurationMs = 35;
 constexpr int32_t kCachedEffectMaxDurationMs = 40;
-constexpr int32_t kVibeStateStartTimeoutMs = 40;
+constexpr size_t kEffectCacheMaxSize = 16;
 constexpr int32_t kVibeStateStopSlackMs = 80;
+constexpr int32_t kVibeStartTimeoutMs = 100;
 constexpr int32_t kVibeStatePollStepMs = 2;
-constexpr int kVibeStateStopped = 0;
 constexpr int kVibeStateHaptic = 1;
 
 constexpr uint8_t kLightGainPct = 40;
@@ -111,9 +117,17 @@ bool Vibrator::CachedEffectKey::operator<(const CachedEffectKey &other) const {
 Vibrator::Vibrator() {
   std::lock_guard lock(mLock);
   openInputLocked();
+  mWorker = std::thread(&Vibrator::workerLoop, this);
 }
 
 Vibrator::~Vibrator() {
+  {
+    std::lock_guard lock(mLock);
+    mStopping = true;
+    cancelSequenceLocked();
+  }
+  mCondition.notify_all();
+  mWorker.join();
   std::lock_guard lock(mLock);
   eraseEffectLocked();
   eraseCachedEffectsLocked();
@@ -182,6 +196,7 @@ bool Vibrator::openInputLocked() {
     mInputName = name;
     mHasCustom = testBit(FF_CUSTOM, ffBits);
     mHasGain = testBit(FF_GAIN, ffBits);
+    mHasSine = testBit(FF_SINE, ffBits);
     const char *eventName = strrchr(path.c_str(), '/');
     eventName = eventName == nullptr ? path.c_str() : eventName + 1;
     mVibeStatePath =
@@ -204,6 +219,17 @@ int Vibrator::uploadCachedWaveformLocked(const CachedEffectKey &key) {
   auto cached = mEffectCache.find(key);
   if (cached != mEffectCache.end()) {
     return cached->second;
+  }
+
+  // Playback stops the preceding effect before requesting a cache entry.
+  // Bound kernel FF slots as well as userspace memory for continuously varying
+  // scales.
+  if (mEffectCache.size() >= kEffectCacheMaxSize) {
+    auto victim = mEffectCache.begin();
+    if (TEMP_FAILURE_RETRY(ioctl(mFd, EVIOCRMFF, victim->second)) < 0) {
+      return -errno;
+    }
+    mEffectCache.erase(victim);
   }
 
   int16_t customData[] = {
@@ -241,9 +267,9 @@ void Vibrator::preloadCachedEffectsLocked() {
 
   mPreloadedEffects = true;
   const std::array<CachedEffectKey, 7> kPreloadEffects = {{
-      {kWaveformClick, 12, kLightGainPct},
-      {kWaveformClick, 12, kMediumGainPct},
-      {kWaveformClick, 12, kStrongGainPct},
+      {kWaveformClick, kGestureTickDurationMs, kLightGainPct},
+      {kWaveformClick, kGestureTickDurationMs, kMediumGainPct},
+      {kWaveformClick, kGestureTickDurationMs, kStrongGainPct},
       {kWaveformClick, kGestureTickDurationMs, 75},
       {kWaveformClick, kGestureTickDurationMs, kGestureTickGainPct},
       {kWaveformClick, kGestureTickDurationMs, 92},
@@ -283,8 +309,6 @@ int Vibrator::eraseEffectLocked() {
 
   int effect = mCurrentEffect;
   bool cached = mCurrentEffectCached;
-  mCurrentEffect = kInvalidEffect;
-  mCurrentEffectCached = false;
 
   input_event stop = {};
   stop.type = EV_FF;
@@ -295,9 +319,12 @@ int Vibrator::eraseEffectLocked() {
     int error = written < 0 ? errno : EIO;
     ALOGW("Failed to stop FF effect %d before cleanup: %s", effect,
           strerror(error));
+    return -error;
   }
 
   if (cached) {
+    mCurrentEffect = kInvalidEffect;
+    mCurrentEffectCached = false;
     return 0;
   }
 
@@ -307,6 +334,8 @@ int Vibrator::eraseEffectLocked() {
     return -error;
   }
 
+  mCurrentEffect = kInvalidEffect;
+  mCurrentEffectCached = false;
   return 0;
 }
 
@@ -432,8 +461,16 @@ int Vibrator::playSineLocked(int32_t timeoutMs, uint8_t level) {
   if (!openInputLocked()) {
     return -ENODEV;
   }
+  if (!mHasSine) {
+    return -ENOTSUP;
+  }
 
   int ret = eraseEffectLocked();
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = setGainLocked(level);
   if (ret != 0) {
     return ret;
   }
@@ -512,103 +549,247 @@ int Vibrator::readVibeState() const {
   return static_cast<int>(state);
 }
 
-bool Vibrator::pollVibeState(int expectedState, int32_t timeoutMs) const {
-  auto deadline =
-      std::chrono::steady_clock::now() + std::chrono::milliseconds(timeoutMs);
-  do {
-    if (readVibeState() == expectedState) {
-      return true;
-    }
-    std::this_thread::sleep_for(
-        std::chrono::milliseconds(kVibeStatePollStepMs));
-  } while (std::chrono::steady_clock::now() < deadline);
-
-  return readVibeState() == expectedState;
+int Vibrator::cancelSequenceLocked() {
+  mActive = false;
+  mPulses.clear();
+  mNextPulse = 0;
+  mCallback.reset();
+  mPlaybackPending = false;
+  mHardwareSequence = false;
+  mCondition.notify_all();
+  return eraseEffectLocked();
 }
 
-void Vibrator::completeEffectAsync(
-    const std::shared_ptr<IVibratorCallback> &callback, int32_t durationMs,
-    uint64_t generation, bool useVibeState) {
-  std::thread([this, callback, durationMs, generation, useVibeState] {
-    bool completed = false;
-    if (useVibeState && mHasVibeState &&
-        pollVibeState(kVibeStateHaptic, kVibeStateStartTimeoutMs)) {
-      completed =
-          pollVibeState(kVibeStateStopped, durationMs + kEffectCleanupDelayMs +
-                                               kVibeStateStopSlackMs);
-    }
+void Vibrator::trackPlaybackLocked(int32_t durationMs, int32_t initialDelayMs) {
+  const auto now = std::chrono::steady_clock::now();
+  mPlaybackPending = true;
+  mSawStart = false;
+  mStartDeadline =
+      now + std::chrono::milliseconds(initialDelayMs + kVibeStartTimeoutMs);
+  mFallbackEnd = mStartDeadline + std::chrono::milliseconds(durationMs);
+  mPlaybackDeadline =
+      mFallbackEnd + std::chrono::milliseconds(kVibeStateStopSlackMs);
+}
 
-    if (!completed) {
-      std::this_thread::sleep_for(std::chrono::milliseconds(durationMs));
-    }
+bool Vibrator::playbackCompleteLocked() {
+  if (!mPlaybackPending)
+    return true;
+  const auto now = std::chrono::steady_clock::now();
+  const int state = readVibeState();
+  if (state == 0)
+    mSawIdle = true;
+  if (state == kVibeStateHaptic && mSawIdle)
+    mSawStart = true;
+  if (mSawStart && state == 0) {
+    mPlaybackPending = false;
+    return true;
+  }
+  // An idle value without a witnessed start is not a completion. Allow the
+  // asynchronous driver to wake and play before the timed fallback can stop it.
+  if ((!mSawStart && now >= mFallbackEnd) || now >= mPlaybackDeadline) {
+    ALOGW("Haptic completion timeout: started=%d state=%d", mSawStart, state);
+    mPlaybackPending = false;
+    return true;
+  }
+  return false;
+}
 
-    if (mGeneration.load() != generation) {
-      return;
-    }
+int Vibrator::playCompositionLocked(const std::vector<Pulse> &pulses,
+                                    int32_t durationMs) {
+  if (!mHasCustom || !mHasGain || mOwtRejected || pulses.empty())
+    return -ENOTSUP;
+  // CS40L26 composite OWT: 24-bit big-endian DSP words in 32-bit containers.
+  // Header = padding, section count, repeat. Each section = amplitude, RAM
+  // index, repeat, flags, 16-bit post-delay. No private Xiaomi effect IDs.
+  const size_t count = pulses.size() + (pulses.front().startMs > 0 ? 1 : 0);
+  std::vector<int16_t> data((4 + count * 8) / sizeof(int16_t), 0);
+  auto *bytes = reinterpret_cast<uint8_t *>(data.data());
+  bytes[2] = static_cast<uint8_t>(count);
+  size_t offset = 4;
+  auto append = [&](uint8_t gain, uint16_t wave, int32_t delay) {
+    bytes[offset + 1] = gain;
+    bytes[offset + 2] = static_cast<uint8_t>(wave);
+    bytes[offset + 6] = static_cast<uint8_t>(delay >> 8);
+    bytes[offset + 7] = static_cast<uint8_t>(delay);
+    offset += 8;
+  };
+  if (pulses.front().startMs > 0)
+    append(0, 0, pulses.front().startMs);
+  for (size_t i = 0; i < pulses.size(); ++i) {
+    const auto &pulse = pulses[i];
+    const int32_t nextStart =
+        i + 1 < pulses.size() ? pulses[i + 1].startMs : durationMs;
+    append(pulse.gainPct, pulse.waveformIndex,
+           nextStart - pulse.startMs - pulse.durationMs);
+  }
+  ff_effect effect = {};
+  effect.type = FF_PERIODIC;
+  effect.id = kInvalidEffect;
+  effect.u.periodic.waveform = FF_CUSTOM;
+  effect.u.periodic.custom_data = data.data();
+  effect.u.periodic.custom_len = data.size();
+  // Firmware owns section durations. A nonzero replay length can truncate OWT.
+  effect.replay.length = 0;
+  if (TEMP_FAILURE_RETRY(ioctl(mFd, EVIOCSFF, &effect)) < 0) {
+    const int error = errno;
+    if (error == EINVAL || error == ENOTSUP)
+      mOwtRejected = true;
+    return -error;
+  }
+  mCurrentEffect = effect.id;
+  mCurrentEffectCached = false;
+  // Per-section gains already contain calibration. Do not scale them twice.
+  int ret = setGainLocked(100);
+  if (ret != 0)
+    return ret;
+  input_event play = {};
+  play.type = EV_FF;
+  play.code = effect.id;
+  play.value = 1;
+  const auto written = TEMP_FAILURE_RETRY(write(mFd, &play, sizeof(play)));
+  return written == static_cast<ssize_t>(sizeof(play))
+             ? 0
+             : -(written < 0 ? errno : EIO);
+}
 
+int Vibrator::startSequenceLocked(
+    std::vector<Pulse> pulses, int32_t durationMs,
+    const std::shared_ptr<IVibratorCallback> &callback) {
+  int ret = cancelSequenceLocked();
+  if (ret != 0) {
+    return ret;
+  }
+  if (!pulses.empty() && !openInputLocked())
+    return -ENODEV;
+  mSawIdle = readVibeState() == 0;
+  if (pulses.size() > 1) {
+    ret = playCompositionLocked(pulses, durationMs);
+    if (ret == 0) {
+      mHardwareSequence = true;
+      trackPlaybackLocked(durationMs + static_cast<int32_t>(pulses.size()) * 50,
+                          pulses.front().startMs);
+      mSequenceStart = std::chrono::steady_clock::now();
+      mSequenceEnd = mSequenceStart + std::chrono::milliseconds(durationMs);
+      mPulses = std::move(pulses);
+      mNextPulse = mPulses.size();
+      mCallback = callback;
+      mActive = true;
+      mCondition.notify_all();
+      return 0;
+    }
+    ALOGW("OWT composition unavailable (%s); using serialized playback",
+          strerror(-ret));
+    ret = eraseEffectLocked();
+    if (ret != 0)
+      return ret;
+  }
+  // Return errors for the first immediate pulse to the Binder caller.
+  size_t nextPulse = 0;
+  if (!pulses.empty() && pulses.front().startMs == 0) {
+    const auto &pulse = pulses.front();
+    ret =
+        playHapticLocked(pulse.waveformIndex, pulse.durationMs, pulse.gainPct);
+    if (ret != 0) {
+      eraseEffectLocked();
+      return ret;
+    }
+    nextPulse = 1;
+    trackPlaybackLocked(pulse.durationMs);
+  }
+  mSequenceStart = std::chrono::steady_clock::now();
+  mSequenceEnd = mSequenceStart + std::chrono::milliseconds(durationMs);
+  mPulses = std::move(pulses);
+  mNextPulse = nextPulse;
+  mCallback = callback;
+  mActive = true;
+  mCondition.notify_all();
+  return 0;
+}
+
+void Vibrator::workerLoop() {
+  using namespace std::chrono;
+  std::unique_lock lock(mLock);
+  while (!mStopping) {
+    if (!mActive) {
+      mCondition.wait(lock, [this] { return mStopping || mActive; });
+      continue;
+    }
+    if (mPlaybackPending) {
+      if (!playbackCompleteLocked()) {
+        mCondition.wait_for(lock, milliseconds(kVibeStatePollStepMs));
+        continue;
+      }
+      // Software fallback follows actual completion, then the requested pause.
+      // Never interrupt a still-starting pulse to meet an estimated deadline.
+      if (!mHardwareSequence && mNextPulse > 0) {
+        const auto &previous = mPulses[mNextPulse - 1];
+        const auto nominalEnd =
+            mSequenceStart +
+            milliseconds(previous.startMs + previous.durationMs);
+        const auto actualEnd = steady_clock::now();
+        if (actualEnd > nominalEnd) {
+          const auto drift = actualEnd - nominalEnd;
+          mSequenceStart += drift;
+          mSequenceEnd += drift;
+        }
+      }
+    }
+    auto deadline = mSequenceEnd;
+    if (mNextPulse < mPulses.size()) {
+      deadline = mSequenceStart + milliseconds(mPulses[mNextPulse].startMs);
+    }
+    if (steady_clock::now() < deadline) {
+      // Every wakeup re-evaluates the current sequence, including cancellation.
+      mCondition.wait_until(lock, deadline);
+      continue;
+    }
+    if (mNextPulse < mPulses.size()) {
+      const auto pulse = mPulses[mNextPulse++];
+      mSawIdle = readVibeState() == 0;
+      int ret = playHapticLocked(pulse.waveformIndex, pulse.durationMs,
+                                 pulse.gainPct);
+      if (ret != 0) {
+        ALOGE("Failed to play composed pulse: %s", strerror(-ret));
+        // Terminate the failed sequence and release the framework's completion
+        // wait.
+        mNextPulse = mPulses.size();
+        mSequenceEnd = steady_clock::now();
+        eraseEffectLocked();
+      } else {
+        trackPlaybackLocked(pulse.durationMs);
+      }
+      continue;
+    }
+    auto callback = mCallback;
+    int ret = cancelSequenceLocked();
+    if (ret != 0) {
+      ALOGE("Failed to clean up completed haptic effect: %s", strerror(-ret));
+    }
+    // Cleanup precedes notification: a re-entrant client may start the next
+    // effect.
+    lock.unlock();
     if (callback != nullptr && !callback->onComplete().isOk()) {
       ALOGE("Failed to notify vibration completion");
     }
-
-    if (!completed) {
-      std::this_thread::sleep_for(
-          std::chrono::milliseconds(kEffectCleanupDelayMs));
-    }
-
-    if (mGeneration.load() != generation) {
-      return;
-    }
-
-    {
-      std::lock_guard lock(mLock);
-      if (mGeneration.load() != generation) {
-        return;
-      }
-
-      int ret = eraseEffectLocked();
-      if (ret != 0) {
-        ALOGE("Failed to clean up completed haptic effect: %s", strerror(-ret));
-      }
-    }
-  }).detach();
-}
-
-void Vibrator::scheduleFollowupHaptic(uint64_t generation, int32_t delayMs,
-                                      uint16_t waveformIndex,
-                                      int32_t durationMs, uint8_t gainPct) {
-  std::thread([this, generation, delayMs, waveformIndex, durationMs, gainPct] {
-    std::this_thread::sleep_for(std::chrono::milliseconds(delayMs));
-    if (mGeneration.load() != generation) {
-      return;
-    }
-
-    std::lock_guard lock(mLock);
-    if (mGeneration.load() != generation) {
-      return;
-    }
-
-    int ret = playHapticLocked(waveformIndex, durationMs, gainPct);
-    if (ret != 0) {
-      ALOGE("Failed to play follow-up haptic pulse: %s", strerror(-ret));
-    }
-  }).detach();
+    lock.lock();
+  }
 }
 
 int32_t Vibrator::durationForEffect(Effect effect) const {
   switch (effect) {
   case Effect::CLICK:
-    return 12;
+    return 40;
   case Effect::TICK:
   case Effect::TEXTURE_TICK:
     return kGestureTickDurationMs;
   case Effect::DOUBLE_CLICK:
     return kDoubleClickPeriodMs + kDoubleClickPulseMs;
   case Effect::THUD:
-    return 32;
+    return 40;
   case Effect::POP:
-    return 16;
+    return 40;
   case Effect::HEAVY_CLICK:
-    return 18;
+    return 40;
   default:
     return 0;
   }
@@ -636,11 +817,11 @@ uint8_t Vibrator::gainForEffect(Effect effect, EffectStrength strength) const {
   if (effect == Effect::TICK || effect == Effect::TEXTURE_TICK) {
     switch (strength) {
     case EffectStrength::LIGHT:
-      return 75;
+      return tuneGain(75, 1.0f);
     case EffectStrength::MEDIUM:
-      return kGestureTickGainPct;
+      return tuneGain(kGestureTickGainPct, 1.0f);
     case EffectStrength::STRONG:
-      return 92;
+      return tuneGain(92, 1.0f);
     default:
       return 0;
     }
@@ -683,7 +864,7 @@ uint8_t Vibrator::gainForEffect(Effect effect, EffectStrength strength) const {
     gain = 92;
   }
 
-  return static_cast<uint8_t>(gain);
+  return tuneGain(static_cast<uint8_t>(gain), 1.0f);
 }
 
 int32_t Vibrator::durationForPrimitive(CompositePrimitive primitive) const {
@@ -691,12 +872,13 @@ int32_t Vibrator::durationForPrimitive(CompositePrimitive primitive) const {
   case CompositePrimitive::NOOP:
     return 0;
   case CompositePrimitive::CLICK:
-    return 12;
+    return 40;
   case CompositePrimitive::THUD:
-    return 32;
+    return 40;
   case CompositePrimitive::QUICK_RISE:
+    return 30;
   case CompositePrimitive::QUICK_FALL:
-    return 16;
+    return 40;
   case CompositePrimitive::LIGHT_TICK:
     return kGestureTickDurationMs;
   case CompositePrimitive::LOW_TICK:
@@ -731,72 +913,72 @@ uint8_t Vibrator::gainForPrimitive(CompositePrimitive primitive,
     return 0;
   }
 
-  if (primitive == CompositePrimitive::LIGHT_TICK) {
-    return kGestureTickGainPct;
-  }
-  if (primitive == CompositePrimitive::LOW_TICK && scale >= 0.95f) {
-    return kKeyboardTickGainPct;
-  }
-
-  int gain = static_cast<int>(kStrongGainPct * scale);
+  // Preserve tuned full-scale gains while allowing AOSP's entire scale range.
+  // LIGHT_TICK is the HAL name for framework PRIMITIVE_TICK (both ID 7).
+  int fullScaleGain = kStrongGainPct;
   switch (primitive) {
   case CompositePrimitive::LIGHT_TICK:
-    gain += 8;
+    fullScaleGain = kGestureTickGainPct;
     break;
   case CompositePrimitive::LOW_TICK:
-    gain -= 4;
+    fullScaleGain = kKeyboardTickGainPct;
     break;
   case CompositePrimitive::THUD:
-    gain += 8;
+    fullScaleGain += 8;
     break;
   default:
     break;
   }
 
-  if (primitive == CompositePrimitive::LIGHT_TICK ||
-      primitive == CompositePrimitive::LOW_TICK) {
-    if (gain < 45) {
-      gain = 45;
-    }
-  } else if (gain < 30) {
-    gain = 30;
-  }
+  return tuneGain(static_cast<uint8_t>(fullScaleGain), scale);
+}
 
-  if (gain > 92) {
-    gain = 92;
-  }
-
-  return static_cast<uint8_t>(gain);
+uint8_t Vibrator::tuneGain(uint8_t fullScaleGain, float scale) const {
+  if (scale <= 0.0f)
+    return 0;
+  const std::string style = ::android::base::GetProperty(
+      "persist.sys.haotian.haptics.style", "balanced");
+  const bool enhance = ::android::base::GetBoolProperty(
+      "persist.sys.haotian.haptics.enhance", true);
+  const float multiplier = style == "soft"    ? 0.8f
+                           : style == "crisp" ? 1.1f
+                                              : 1.0f;
+  // Continuous, monotonic compression preserves silence and ramp ordering.
+  // Unlike a fixed minimum gain, this does not flatten all quiet primitives.
+  const float response =
+      std::pow(std::clamp(scale, 0.0f, 1.0f), enhance ? 0.5f : 1.0f);
+  return static_cast<uint8_t>(
+      std::clamp(std::lround(fullScaleGain * multiplier * response), 1L, 92L));
 }
 
 ndk::ScopedAStatus Vibrator::getCapabilities(int32_t *_aidl_return) {
+  std::lock_guard lock(mLock);
+  openInputLocked();
   *_aidl_return = IVibrator::CAP_ON_CALLBACK | IVibrator::CAP_PERFORM_CALLBACK |
                   IVibrator::CAP_COMPOSE_EFFECTS;
+  if (mHasGain) {
+    *_aidl_return |= IVibrator::CAP_AMPLITUDE_CONTROL;
+  }
   return ndk::ScopedAStatus::ok();
 }
 
 ndk::ScopedAStatus Vibrator::off() {
   std::lock_guard lock(mLock);
-  mGeneration++;
-  int ret = eraseEffectLocked();
+  int ret = cancelSequenceLocked();
   return ret == 0 ? ndk::ScopedAStatus::ok() : serviceError(ret);
 }
 
 ndk::ScopedAStatus
 Vibrator::on(int32_t timeoutMs,
              const std::shared_ptr<IVibratorCallback> &callback) {
-  uint64_t generation;
-  {
-    std::lock_guard lock(mLock);
-    generation = ++mGeneration;
-    int ret = playHapticLocked(kWaveformLong, timeoutMs, kStrongGainPct);
-    if (ret != 0) {
-      return serviceError(ret);
-    }
+  if (timeoutMs <= 0 || timeoutMs > kMaxTimeoutMs) {
+    return ndk::ScopedAStatus::fromExceptionCode(EX_ILLEGAL_ARGUMENT);
   }
-
-  completeEffectAsync(callback, timeoutMs, generation, true);
-  return ndk::ScopedAStatus::ok();
+  std::lock_guard lock(mLock);
+  int ret = startSequenceLocked(
+      {{0, kWaveformLong, timeoutMs, tuneGain(kStrongGainPct, 1.0f)}},
+      timeoutMs, callback);
+  return ret == 0 ? ndk::ScopedAStatus::ok() : serviceError(ret);
 }
 
 ndk::ScopedAStatus
@@ -810,27 +992,21 @@ Vibrator::perform(Effect effect, EffectStrength strength,
     return unsupported();
   }
 
-  uint64_t generation;
-  {
-    std::lock_guard lock(mLock);
-    generation = ++mGeneration;
-    int ret = playHapticLocked(
-        waveformIndex,
-        effect == Effect::DOUBLE_CLICK ? kDoubleClickPulseMs : durationMs,
-        gainPct);
-    if (ret != 0) {
-      return serviceError(ret);
-    }
-  }
-
+  std::vector<Pulse> pulses = {
+      {0, waveformIndex,
+       effect == Effect::DOUBLE_CLICK ? kDoubleClickPulseMs : durationMs,
+       gainPct}};
   if (effect == Effect::DOUBLE_CLICK) {
-    scheduleFollowupHaptic(generation, kDoubleClickPeriodMs, waveformIndex,
-                           kDoubleClickPulseMs, gainPct);
+    pulses.push_back(
+        {kDoubleClickPeriodMs, waveformIndex, kDoubleClickPulseMs, gainPct});
   }
-
+  std::lock_guard lock(mLock);
+  int ret = startSequenceLocked(std::move(pulses), durationMs, callback);
+  if (ret != 0) {
+    *_aidl_return = 0;
+    return serviceError(ret);
+  }
   *_aidl_return = durationMs;
-  completeEffectAsync(callback, durationMs, generation,
-                      effect != Effect::DOUBLE_CLICK);
   return ndk::ScopedAStatus::ok();
 }
 
@@ -842,8 +1018,22 @@ Vibrator::getSupportedEffects(std::vector<Effect> *_aidl_return) {
   return ndk::ScopedAStatus::ok();
 }
 
-ndk::ScopedAStatus Vibrator::setAmplitude(float /*amplitude*/) {
-  return unsupported();
+ndk::ScopedAStatus Vibrator::setAmplitude(float amplitude) {
+  if (!std::isfinite(amplitude) || amplitude <= 0.0f || amplitude > 1.0f) {
+    return ndk::ScopedAStatus::fromExceptionCode(EX_ILLEGAL_ARGUMENT);
+  }
+  std::lock_guard lock(mLock);
+  if (!openInputLocked()) {
+    return serviceError(ENODEV);
+  }
+  if (!mHasGain) {
+    return unsupported();
+  }
+  // This Xiaomi CS40L26 driver accepts percent gains, not evdev's usual 0xffff.
+  // Match on() at amplitude=1, including the selected device-wide profile.
+  const auto gain = tuneGain(kStrongGainPct, amplitude);
+  int ret = setGainLocked(gain);
+  return ret == 0 ? ndk::ScopedAStatus::ok() : serviceError(ret);
 }
 
 ndk::ScopedAStatus Vibrator::setExternalControl(bool /*enabled*/) {
@@ -888,11 +1078,12 @@ Vibrator::compose(const std::vector<CompositeEffect> &composite,
   }
 
   int32_t totalDurationMs = 0;
-  int32_t playableEffects = 0;
-  bool hasDelayedEffect = false;
+  std::vector<Pulse> pulses;
+  pulses.reserve(composite.size());
   for (const CompositeEffect &effect : composite) {
     if (effect.delayMs < 0 || effect.delayMs > kComposeDelayMaxMs ||
-        effect.scale < 0.0f || effect.scale > 1.0f) {
+        !std::isfinite(effect.scale) || effect.scale < 0.0f ||
+        effect.scale > 1.0f) {
       return ndk::ScopedAStatus::fromExceptionCode(EX_ILLEGAL_ARGUMENT);
     }
 
@@ -902,45 +1093,17 @@ Vibrator::compose(const std::vector<CompositeEffect> &composite,
       return unsupported();
     }
 
-    if (effect.primitive != CompositePrimitive::NOOP && effect.scale > 0.0f) {
-      playableEffects++;
-      hasDelayedEffect =
-          hasDelayedEffect || effect.delayMs > 0 || totalDurationMs > 0;
+    totalDurationMs += effect.delayMs;
+    uint8_t gainPct = gainForPrimitive(effect.primitive, effect.scale);
+    if (gainPct > 0) {
+      pulses.push_back({totalDurationMs, waveformForPrimitive(effect.primitive),
+                        primitiveDuration, gainPct});
     }
-
-    totalDurationMs += effect.delayMs + primitiveDuration;
+    totalDurationMs += primitiveDuration;
   }
-
-  uint64_t generation;
-  int32_t startMs = 0;
-  {
-    std::lock_guard lock(mLock);
-    generation = ++mGeneration;
-    for (const CompositeEffect &effect : composite) {
-      startMs += effect.delayMs;
-
-      uint8_t gainPct = gainForPrimitive(effect.primitive, effect.scale);
-      if (effect.primitive != CompositePrimitive::NOOP && gainPct > 0) {
-        uint16_t waveformIndex = waveformForPrimitive(effect.primitive);
-        int32_t durationMs = durationForPrimitive(effect.primitive);
-        if (startMs == 0) {
-          int ret = playHapticLocked(waveformIndex, durationMs, gainPct);
-          if (ret != 0) {
-            return serviceError(ret);
-          }
-        } else {
-          scheduleFollowupHaptic(generation, startMs, waveformIndex, durationMs,
-                                 gainPct);
-        }
-      }
-
-      startMs += durationForPrimitive(effect.primitive);
-    }
-  }
-
-  completeEffectAsync(callback, totalDurationMs, generation,
-                      playableEffects == 1 && !hasDelayedEffect);
-  return ndk::ScopedAStatus::ok();
+  std::lock_guard lock(mLock);
+  int ret = startSequenceLocked(std::move(pulses), totalDurationMs, callback);
+  return ret == 0 ? ndk::ScopedAStatus::ok() : serviceError(ret);
 }
 
 ndk::ScopedAStatus

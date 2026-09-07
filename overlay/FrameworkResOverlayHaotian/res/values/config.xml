@@ -7,11 +7,31 @@
     -->
     <string-array name="config_deviceSpecificSystemServices" translatable="false">
         <item>com.android.server.haotian.MiuiSedcCompatService</item>
+        <item>com.android.server.haotian.XiaomiDisplayFeatureService</item>
+        <item>com.android.server.haotian.XiaomiWirelessChargingService</item>
     </string-array>
+
+    <!-- Stock ufs_qcom exposes Xiaomi's read-only Extended User Area status here. -->
+    <string name="config_primaryStorageExtensionSysfsPath" translatable="false">/sys/devices/platform/soc/1d84000.ufshc/ufseua</string>
+
+    <!-- The stock panel pipeline consumes Xiaomi DisplayFeature commands and both physical ALSes. -->
+    <bool name="config_xiaomiDisplayFeatureAvailable">true</bool>
+    <bool name="config_xiaomiDualLightSensorAvailable">true</bool>
+    <bool name="config_xiaomiDynamicRefreshRateAvailable">true</bool>
+    <bool name="config_disableRefreshRateThermalThrottling">true</bool>
+
+    <!-- Xiaomi EyeCare/TrueTone own the panel color temperature; do not stack Night Display. -->
+    <bool name="config_nightDisplayAvailable">false</bool>
 
     <!-- Use HyperOS-style, independently configurable hardware-key shortcuts. -->
     <bool name="config_deviceKeyShortcutsEnabled">true</bool>
     <integer name="config_doubleTapPowerGestureMode">0</integer>
+
+    <!-- HyperOS retains 150 media indices and moves ten indices per volume-key press. -->
+    <integer name="config_audio_music_vol_key_step">10</integer>
+
+    <!-- The Qualcomm UIM stack retains ISD-R on channel 1 for removable eUICCs. -->
+    <integer name="config_euiccModemOwnedChannel">1</integer>
 
     <!-- Stock haotian center punch-hole safe geometry at 1440x3200, in physical pixels. -->
     <string name="config_mainBuiltInDisplayCutout" translatable="false">M 0,0 H -40.5 V 169 H 40.5 V 0 H 0 Z</string>
@@ -31,7 +51,11 @@
     <item name="config_screenBrightnessSettingMinimumFloat" format="float" type="dimen">0.0</item>
     <item name="config_screenBrightnessSettingMaximumFloat" format="float" type="dimen">1.0</item>
 
-    <!-- HyperOS haotian auto-brightness lux curve, kept as nits for AOSP physical mapping. -->
+    <!--
+         Exact haotian HyperOS OS3.0.302.0 curve from
+         product/overlay/AospFrameworkResOverlay.apk. There are 128 lux boundaries and 129 nit
+         values, as required by BrightnessMappingStrategy.
+    -->
     <integer-array name="config_autoBrightnessLevels">
         <item>1</item>
         <item>2</item>
@@ -305,9 +329,10 @@
         <item>4000</item>
     </integer-array>
 
-    <!-- Tuned for AOSP's AutomaticBrightnessController. HyperOS uses additional
-         private small-brightening logic, so its raw hysteresis values are too
-         conservative when used directly on Lineage. Values are tenths of a percent. -->
+    <!-- HyperOS has a second private small-brightening threshold. Keep the translated
+         brightening side responsive for AOSP, while using stock haotian's darkening
+         hysteresis verbatim to reject transient front-ALS drops. Values are tenths of a
+         percent. -->
     <integer-array name="config_ambientBrighteningThresholds">
         <item>2</item>
         <item>6</item>
@@ -320,14 +345,14 @@
     </integer-array>
 
     <integer-array name="config_ambientDarkeningThresholds">
+        <item>800</item>
+        <item>800</item>
         <item>500</item>
         <item>500</item>
-        <item>350</item>
-        <item>300</item>
-        <item>250</item>
-        <item>200</item>
-        <item>200</item>
-        <item>200</item>
+        <item>500</item>
+        <item>500</item>
+        <item>500</item>
+        <item>500</item>
     </integer-array>
 
     <array name="config_screenThresholdLevels">

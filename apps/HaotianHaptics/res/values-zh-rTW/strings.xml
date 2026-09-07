@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">小米震動設定</string>
+    <string name="settings_summary">觸感風格、細微回饋增強與效果預覽</string>
+    <string name="style_title">觸感風格</string>
+    <string name="style_soft">輕柔</string>
+    <string name="style_balanced">均衡</string>
+    <string name="style_crisp">清脆</string>
+    <string name="enhance_title">細微觸感增強</string>
+    <string name="enhance_summary">增強較弱回饋的可感知程度，同時保留強弱漸變</string>
+    <string name="scope_summary">此處調校對整台裝置生效。來電、通知、鍵盤的開關和分類強度仍由系統設定管理。多個互動共用的效果會一起調整。</string>
+    <string name="owner_only">只有裝置擁有者可以修改整機觸感調校。</string>
+    <string name="previews_title">體驗震動效果</string>
+    <string name="preview_click">點擊</string>
+    <string name="preview_tick">輕觸</string>
+    <string name="preview_ramp">逐漸增強的連續輕觸</string>
+    <string name="preview_waveform">弱—強—弱震動</string>
+    <string name="preview_summary">預覽遵循系統震動設定，離開頁面即停止。</string>
+    <string name="reset_title">恢復預設調校</string>
+    <string name="reset_summary">均衡風格，開啟細微觸感增強</string>
+    <string name="write_failed">無法套用觸感調校</string>
+    <string name="preview_failed">此震動效果無法使用</string>
+</resources>

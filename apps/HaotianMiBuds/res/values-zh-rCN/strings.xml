@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">小米耳机</string>
+    <string name="disconnected">连接兼容的小米耳机后可使用这些控制</string>
+    <string name="connecting">正在连接耳机控制…</string>
+    <string name="authenticating">正在验证耳机…</string>
+    <string name="ready">已连接</string>
+    <string name="applying">正在应用并回读设置…</string>
+    <string name="retrying">正在等待重连；其他耳机应用可能正在占用控制连接</string>
+    <string name="refresh">刷新 / 重新连接</string>
+    <string name="earbud_rendering">耳机端渲染</string>
+    <string name="immersive_sound">耳机沉浸声</string>
+    <string name="immersive_sound_summary">由耳机内部渲染，与 HaotianAudio 手机端渲染相互独立</string>
+    <string name="local_head_tracking">耳机端头部跟踪</string>
+    <string name="local_head_tracking_summary">沉浸声关闭时也会保留耳机中的偏好</string>
+    <string name="phone_rendering">手机端渲染</string>
+    <string name="open_haotian_audio">HaotianAudio 空间音频</string>
+    <string name="open_haotian_audio_summary">请先关闭耳机沉浸声以避免重复处理，再选择手机端空间渲染和动态头部跟踪</string>
+    <string name="state_unavailable">正在等待耳机回读确认</string>
+    <string name="operation_error">无法应用设置：%1$s</string>
+</resources>

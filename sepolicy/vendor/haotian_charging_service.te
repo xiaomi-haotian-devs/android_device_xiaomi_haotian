@@ -17,3 +17,5 @@ set_prop(haotian_charging_service, vendor_haotian_charging_prop)
 allow haotian_charging_service sysfs_thermal:file w_file_perms;
 allow haotian_charging_service vendor_sysfs_qcom_battery:dir r_dir_perms;
 allow haotian_charging_service vendor_sysfs_qcom_battery:file rw_file_perms;
+allow haotian_charging_service vendor_sysfs_xm_power:dir r_dir_perms;
+allow haotian_charging_service vendor_sysfs_xm_power:file r_file_perms;

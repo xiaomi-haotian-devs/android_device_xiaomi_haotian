@@ -6,6 +6,7 @@
 
 import os
 import shutil
+import sys
 from functools import partial
 from pathlib import Path
 
@@ -87,6 +88,27 @@ def _replace_miuicamera_launcher_icons(
             icon_root / icon_name,
             Path(tmp_dir) / 'res' / icon_name,
         )
+
+
+def _harden_miuicamera_privacy(
+    _ctx,
+    _file,
+    file_path: str,
+    *args,
+    tmp_dir: str | None = None,
+    **kwargs,
+):
+    """Disable MiuiCamera's OneTrack and MiPush entry points after apktool unpack."""
+    if tmp_dir is None:
+        raise ValueError('MiuiCamera privacy patch requires an apktool temp dir')
+
+    run_cmd([
+        sys.executable,
+        str(Path(module.vendor_path) / 'patch-xiaomi-privacy.py'),
+        'MiuiCamera',
+        file_path,
+        tmp_dir,
+    ])
 
 
 def lib_fixup_campostproc_system(
@@ -193,6 +215,17 @@ def _harden_generated_private_libraries():
 
     blueprint.write_text(data)
 
+
+def _restore_generated_recovery_prebuilts():
+    """Restore recovery-only vendor modules after extract-utils regenerates Android.bp."""
+    blueprint = Path(module.vendor_path).parent / 'sm8750-common' / 'Android.bp'
+    data = blueprint.read_text()
+    marker = 'build = ["recovery-prebuilts.bp"]'
+    if marker in data:
+        return
+
+    blueprint.write_text(data.rstrip() + '\n\n' + marker + '\n')
+
 namespace_imports = [
     'device/xiaomi/haotian',
     'device/xiaomi/sm8750-common',
@@ -203,6 +236,84 @@ namespace_imports = [
 ]
 
 blob_fixups: blob_fixups_user_type = {
+    'odm/lib64/libmiface.so': blob_fixup()
+        # MiSight is HyperOS telemetry. Keep the ABI call local and inert.
+        .replace_needed('libmisight.so', 'libmiface_noop.so'),
+    'odm/etc/init/miface.rc': blob_fixup()
+        # haotian ships mifaced on ODM only; the vendor variant is for other SKUs.
+        .regex_replace(
+            r'(?ms)\nservice vendor\.miface .*?\n    disabled\n?',
+            '',
+        )
+        # CameraService returns Android 16 metadata tags which Xiaomi's older
+        # vendor metadata table rejects. Interpose the current AOSP table only
+        # inside mifaced; the global camera stack keeps its existing ABI.
+        .regex_replace(
+            '    group system\n    disabled',
+            '    group system\n'
+            '    setenv LD_PRELOAD /odm/lib64/libcamera_metadata_miface.so\n'
+            '    disabled',
+        ),
+    'odm/etc/init/miface_start_wait_mitee_boot_completed.rc': blob_fixup()
+        .regex_replace(
+            'on property:ro.vendor.miface.started=true && '
+            'property:sys.boot_completed=1 && '
+            'property:vendor.mitee_vm.boot_completed=1',
+            'on property:ro.vendor.miface.started=true && '
+            'property:persist.sys.face.backend=xiaomi && '
+            'property:sys.boot_completed=1 && '
+            'property:vendor.mitee_vm.boot_completed=1',
+        )
+        .regex_replace(r'(?m)^\s*start vendor\.miface\n?', '')
+        .regex_replace(
+            r'\n+\Z',
+            '\n\non property:persist.sys.face.backend=sense\n'
+            '    stop odm.miface\n',
+        ),
+    'odm/etc/init/tee-supplicant.rc': blob_fixup()
+        # Never relax kernel log access.  Keep the UFS RPMB BSG node at 0660:
+        # ueventd owns it as system:system and tee-supplicant is in that group.
+        .regex_replace(r'(?m)^\s*chmod 0666 /dev/kmsg\n?', '')
+        # Do not recursively relabel or change ownership of the whole persist
+        # mount.  MiTEE only owns its dedicated subtree.
+        .regex_replace(
+            r'(?ms)\non fs\n.*?(?=\n# after firmware_mounts_complete)',
+            '\non fs\n'
+            '    chmod 0660 /dev/0:0:0:49476\n',
+        )
+        .regex_replace(
+            'on firmware_mounts_complete',
+            'on firmware_mounts_complete && '
+            'property:persist.sys.face.backend=xiaomi',
+        )
+        .regex_replace(
+            r'\n+\Z',
+            '\n\non property:persist.sys.face.backend=xiaomi\n'
+            '    mkdir /mnt/vendor/persist/mitee 0775 root system\n'
+            '    mkdir /mnt/vendor/persist/mitee/data 0775 root system\n'
+            '    restorecon_recursive /mnt/vendor/persist/mitee\n'
+            '    mkdir /data/vendor/mitee 0755 system system\n'
+            '    restorecon_recursive /data/vendor/mitee\n'
+            '\n'
+            'on property:persist.sys.face.backend=sense\n'
+            '    stop tee-supplicant\n',
+        ),
+    'product/etc/init/vendor.qti.qvirt-service.rc': blob_fixup()
+        .regex_replace(
+            r'(?m)^  disabled$',
+            '  disabled\n'
+            '  setenv LD_LIBRARY_PATH '
+            '/product/lib64/qvirt-1.83:/system/lib64:'
+            '/product/lib64:/system_ext/lib64',
+        )
+        .regex_replace(
+            r'\n+\Z',
+            '\n\non property:persist.sys.face.backend=xiaomi\n'
+            '  start vendor.qvirtservice\n'
+            '\n'
+            'on property:persist.sys.face.backend=sense\n'
+            '  stop vendor.qvirtservice\n',
+        ),
     'vendor/etc/init/vendor.xiaomi.hardware.batteryantiaging-service.rc':
         blob_fixup()
         # The user-facing charging page is the sole authority for enabling
@@ -212,6 +323,7 @@ blob_fixups: blob_fixups_user_type = {
     'system/priv-app/MiuiCamera/MiuiCamera.apk': blob_fixup()
         .apktool_unpack('patches/MiuiCamera')
         .patch_dir('patches/MiuiCamera')
+        .call(_harden_miuicamera_privacy)
         .call(_replace_miuicamera_launcher_icons)
         .apktool_pack()
         .stripzip(),
@@ -353,26 +465,6 @@ blob_fixups: blob_fixups_user_type = {
     ): blob_fixup()
         .replace_needed('android.frameworks.cameraservice.device-V2-ndk.so', 'android.frameworks.cameraservice.device-V3-ndk.so')
         .replace_needed('android.frameworks.cameraservice.service-V2-ndk.so', 'android.frameworks.cameraservice.service-V3-ndk.so'),
-    'odm/etc/camera/xiaomi/ecoMetaExtensionExt.json': blob_fixup()
-        # Force Xiaomi's eco engine to keep third-party JPEG_R disabled even
-        # when /data/property still carries an older persisted value of 1.
-        .regex_replace(
-            r'("Signature":"MiviThirdJpegr"[\s\S]*?"Name": "persist\.vendor\.camera\.sdk\.third\.jpegr\.enable",\s*"Value": )\["", "0"\]',
-            r'\1["", "0", "1"]'
-        )
-        .regex_replace(
-            r'("Signature":"MiviThirdJpegr"[\s\S]*?"Name": "persist\.vendor\.camera\.sdk\.third\.jpegr\.enable",\s*"Value": )"1"',
-            r'\1"0"'
-        ),
-    'odm/etc/camera/mihal_overlap/overlap_config.json': blob_fixup()
-        .regex_replace(
-            r'"CAMX__JPEGR_STREAM_CONFIG_SIZES_3Party_FRONT": \[[\s\S]*?\n    \],',
-            '"CAMX__JPEGR_STREAM_CONFIG_SIZES_3Party_FRONT": [],'
-        )
-        .regex_replace(
-            r'"CAMX__JPEGR_STREAM_CONFIG_SIZES_3Party_REAR": \[[\s\S]*?\n    \],',
-            '"CAMX__JPEGR_STREAM_CONFIG_SIZES_3Party_REAR": [],'
-        ),
     'odm/etc/sensors/config/sm8750_tcs3720_fb.json': blob_fixup()
         .regex_replace(
             r'"near_threshold":\{ "type": "flt", "ver": "[0-9]+",\n          "data": "(?:140\.0|105\.0|105)"\n        \}',
@@ -404,3 +496,4 @@ if __name__ == '__main__':
     )
     utils.run()
     _harden_generated_private_libraries()
+    _restore_generated_recovery_prebuilts()

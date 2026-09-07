@@ -1,0 +1,4 @@
+/(product|system/product)/firmware/vm-system(/.*)? u:object_r:vendor_vm_qti_system_file:s0
+
+# Same SurfaceFlinger/allocator access and init transition as the platform bootanimation.
+/(system_ext|system/system_ext)/bin/bootanim_overlay u:object_r:bootanim_exec:s0

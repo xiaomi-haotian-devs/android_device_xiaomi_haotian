@@ -29,8 +29,9 @@ public final class BootCompletedReceiver extends BroadcastReceiver {
 
         try {
             context.startService(new Intent(context, EdgeSuppressionService.class));
+            context.startService(new Intent(context, TouchControlService.class));
         } catch (IllegalStateException e) {
-            Log.e(TAG, "Failed to start edge suppression service", e);
+            Log.e(TAG, "Failed to start touch services", e);
         }
     }
 }

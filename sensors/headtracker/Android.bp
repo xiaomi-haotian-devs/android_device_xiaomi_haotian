@@ -1,0 +1,31 @@
+//
+// SPDX-FileCopyrightText: 2026 The Xiaomi haotian developers
+// SPDX-License-Identifier: Apache-2.0
+//
+
+package {
+    default_applicable_licenses: ["Android-Apache-2.0"],
+}
+
+cc_library_shared {
+    name: "sensors.haotian_headtracker",
+    vendor: true,
+    relative_install_path: "hw",
+    srcs: ["HaotianHeadTrackerSubHal.cpp"],
+    header_libs: [
+        "android.hardware.sensors@2.X-multihal.header",
+        "android.hardware.sensors@2.X-shared-utils",
+        "libhardware_headers",
+    ],
+    cpp_std: "c++20",
+    shared_libs: [
+        "android.hardware.sensors@2.0-ScopedWakelock",
+        "android.hardware.sensors@2.0",
+        "android.hardware.sensors@2.1",
+        "libcutils",
+        "libhidlbase",
+        "liblog",
+        "libutils",
+    ],
+    cflags: ["-Wall", "-Werror"],
+}

@@ -1,0 +1,3 @@
+# HaotianAudio is referenced by the vendor Sensors and OZO HAL policy. Keep only the type
+# declaration public; all app-side permissions remain private to system_ext.
+type haotian_audio_app, domain;

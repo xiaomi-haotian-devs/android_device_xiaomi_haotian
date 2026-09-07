@@ -3,3 +3,11 @@ ro.vendor.nfc.    u:object_r:vendor_haotian_nfc_prop:s0 prefix
 persist.vendor.batteryantiaging u:object_r:vendor_batteryantiaging_prop:s0 exact bool
 persist.vendor.haotian.batteryantiaging u:object_r:vendor_haotian_charging_prop:s0 exact bool
 persist.vendor.haotian.fast_charge u:object_r:vendor_haotian_charging_prop:s0 exact bool
+
+vendor.teefs_state u:object_r:vendor_mitee_prop:s0 exact string
+vendor.mitee_vm.boot_completed u:object_r:vendor_mitee_prop:s0 exact string
+vendor.mitee_vm.rpmb_state u:object_r:vendor_mitee_prop:s0 exact string
+ro.vendor.miface. u:object_r:vendor_miface_prop:s0 prefix
+persist.vendor.miface. u:object_r:vendor_miface_prop:s0 prefix
+persist.vendor.mifaced. u:object_r:vendor_miface_prop:s0 prefix
+vendor.miface. u:object_r:vendor_miface_prop:s0 prefix

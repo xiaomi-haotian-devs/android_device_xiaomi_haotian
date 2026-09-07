@@ -1,0 +1,55 @@
+// SPDX-FileCopyrightText: 2026 The Xiaomi haotian developers
+// SPDX-License-Identifier: Apache-2.0
+
+// Qualcomm Android 16 modem-LPA userspace components. These are intentionally
+// device-scoped: haotian exposes the matching stable AIDL HAL but its stock CN
+// product image omits the product-side service.
+
+android_app_import {
+    name: "uimlpaservice",
+    apk: "product/app/uimlpaservice/uimlpaservice.apk",
+    certificate: "platform",
+    dex_preopt: {
+        enabled: false,
+    },
+    product_specific: true,
+}
+
+dex_import {
+    name: "uimlpalibrary",
+    jars: ["product/framework/uimlpalibrary.jar"],
+    product_specific: true,
+}
+
+prebuilt_etc {
+    name: "haotian-lpa-permissions",
+    src: "product/etc/permissions/lpa.xml",
+    filename: "lpa.xml",
+    sub_dir: "permissions",
+    product_specific: true,
+}
+
+prebuilt_etc {
+    name: "haotian-qti-lpa-components",
+    src: "product/etc/sysconfig/haotian-qti-lpa-components.xml",
+    sub_dir: "sysconfig",
+    product_specific: true,
+}
+
+cc_prebuilt_library_shared {
+    name: "libjni_aidl_service",
+    srcs: ["product/lib64/libjni_aidl_service.so"],
+    compile_multilib: "64",
+    strip: {
+        none: true,
+    },
+    shared_libs: [
+        "libbinder_ndk",
+        "libc++",
+        "libc",
+        "libdl",
+        "liblog",
+        "libm",
+    ],
+    product_specific: true,
+}

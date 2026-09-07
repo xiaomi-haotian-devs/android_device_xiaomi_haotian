@@ -1,3 +1,8 @@
+# Bluetooth
+# Advertise the phone/smartphone device class, not the stack's unclassified fallback.
+# Values are decimal bytes: service class 0x5A, major class 0x02, minor class 0x0C.
+bluetooth.device.class_of_device=90,2,12
+
 # MiuiCamera
 persist.vendor.camera.privapp.list=org.codeaurora.snapcam,com.android.camera
 ro.com.google.lens.oem_camera_package=com.android.camera

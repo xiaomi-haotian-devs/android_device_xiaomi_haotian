@@ -1,0 +1,12 @@
+typeattribute haotian_audio_app coredomain;
+
+app_domain(haotian_audio_app)
+
+# Framework and native audio services used by AudioManager, Spatializer and AudioEffect.
+allow haotian_audio_app app_api_service:service_manager find;
+allow haotian_audio_app system_api_service:service_manager find;
+allow haotian_audio_app audioserver_service:service_manager find;
+
+# The Sensors HAL connects to HaotianAudio's abstract local socket and receives the read-only
+# pose-ring file descriptor. This attribute is required for the intentional core/vendor socket.
+typeattribute haotian_audio_app socket_between_core_and_vendor_violators;

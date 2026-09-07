@@ -1,4 +1,12 @@
 /vendor/bin/hw/android\.hardware\.vibrator-service\.xiaomi-sm8750 u:object_r:hal_vibrator_default_exec:s0
+/odm/bin/hw/mifaced u:object_r:hal_miface_default_exec:s0
+/odm/bin/tee-supplicant u:object_r:tee_exec:s0
+/odm/mitee/ta(/.*)? u:object_r:mitee_ta_file:s0
+/dev/tee0 u:object_r:mitee_client_device:s0
+/dev/teepriv0 u:object_r:mitee_client_device:s0
+/data/vendor/face(/.*)? u:object_r:face_vendor_data_file:s0
+/data/vendor/mitee(/.*)? u:object_r:tee_data_file:s0
+/mnt/vendor/persist/mitee(/.*)? u:object_r:mitee_sfs_file:s0
 /vendor/bin/hw/haotian-charging-service u:object_r:haotian_charging_service_exec:s0
 /(vendor|odm)/etc/charger(/.*)? u:object_r:batteryantiaging_cfg_file:s0
 /vendor/bin/hw/vendor\.xiaomi\.hardware\.batteryantiaging-service u:object_r:hal_batteryantiaging_default_exec:s0

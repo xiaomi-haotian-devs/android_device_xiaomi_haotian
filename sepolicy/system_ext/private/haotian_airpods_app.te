@@ -1,0 +1,10 @@
+type haotian_airpods_app, domain, coredomain;
+
+app_domain(haotian_airpods_app)
+bluetooth_domain(haotian_airpods_app)
+
+# System APIs back Bluetooth control, media control, jobs, notifications and telecom state.
+allow haotian_airpods_app app_api_service:service_manager find;
+allow haotian_airpods_app system_api_service:service_manager find;
+allow haotian_airpods_app audioserver_service:service_manager find;
+allow haotian_airpods_app radio_service:service_manager find;

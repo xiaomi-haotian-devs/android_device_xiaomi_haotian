@@ -10,6 +10,11 @@
     -->
     <item name="udfps_icon_size" format="float" type="dimen">8960</item>
 
+    <!-- Keep the HAL's 184px optical/touch area, but use HyperOS' 64dp
+         lockscreen affordance around it. At 600dpi this is 240 physical px. -->
+    <dimen name="udfps_device_entry_visual_size">240px</dimen>
+    <dimen name="udfps_device_entry_foreground_size">184px</dimen>
+
     <!-- HyperOS uses an animation canvas equal to two thirds of the panel width. -->
     <dimen name="udfps_animation_size">960px</dimen>
 

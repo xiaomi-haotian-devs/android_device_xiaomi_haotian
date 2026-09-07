@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- HaotianAudio owns immersive rendering, mode selection and head tracking. Hiding the
+         framework control prevents it from writing a second, conflicting Spatializer policy. -->
+    <bool name="config_showSpatialAudioInVolumePanel">false</bool>
+</resources>

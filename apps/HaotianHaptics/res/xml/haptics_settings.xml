@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference android:key="scope" android:summary="@string/scope_summary" android:selectable="false" />
+    <ListPreference android:key="style" android:title="@string/style_title"
+        android:entries="@array/style_entries" android:entryValues="@array/style_values"
+        android:persistent="false" />
+    <SwitchPreferenceCompat android:key="enhance" android:title="@string/enhance_title"
+        android:summary="@string/enhance_summary" android:persistent="false" />
+    <Preference android:key="reset" android:title="@string/reset_title" android:summary="@string/reset_summary" />
+    <PreferenceCategory android:title="@string/previews_title">
+        <Preference android:summary="@string/preview_summary" android:selectable="false" />
+        <Preference android:key="click" android:title="@string/preview_click" />
+        <Preference android:key="tick" android:title="@string/preview_tick" />
+        <Preference android:key="ramp" android:title="@string/preview_ramp" />
+        <Preference android:key="waveform" android:title="@string/preview_waveform" />
+    </PreferenceCategory>
+</PreferenceScreen>

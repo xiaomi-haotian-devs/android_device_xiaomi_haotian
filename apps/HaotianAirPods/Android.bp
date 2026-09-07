@@ -1,0 +1,52 @@
+// SPDX-FileCopyrightText: 2026 The Xiaomi haotian developers
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+package {
+    default_applicable_licenses: ["haotian_airpods_license"],
+}
+
+license {
+    name: "haotian_airpods_license",
+    visibility: [":__subpackages__"],
+    license_kinds: ["SPDX-license-identifier-GPL-3.0-or-later"],
+    license_text: ["LICENSE"],
+}
+
+android_app {
+    name: "HaotianAirPods",
+    defaults: ["SettingsLibDefaults"],
+    certificate: "platform",
+    privileged: true,
+    system_ext_specific: true,
+    platform_apis: true,
+    srcs: [
+        "src/**/*.java",
+        "src/**/*.aidl",
+        ":haotian_audio_control_api_sources",
+        ":haotian_headphone_provider_api_sources",
+    ],
+    aidl: {
+        include_dirs: ["device/xiaomi/haotian/apps/HaotianAudio/src"],
+        local_include_dirs: ["src"],
+    },
+    resource_dirs: ["res"],
+    static_libs: [
+        "androidx.core_core",
+        "androidx.preference_preference",
+        "BtHelperAirPodsResources",
+        "SettingsLib",
+    ],
+    required: ["default-permissions-haotian-airpods"],
+    privapp_allowlist: "privapp-permissions-haotian-airpods.xml",
+    optimize: {
+        enabled: true,
+    },
+}
+
+prebuilt_etc {
+    name: "default-permissions-haotian-airpods",
+    relative_install_path: "default-permissions",
+    src: "default-permissions-haotian-airpods.xml",
+    filename_from_src: true,
+    system_ext_specific: true,
+}

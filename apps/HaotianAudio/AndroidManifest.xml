@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.xiaomi.haotian.audio">
+
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_ROUTING" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.MODIFY_DEFAULT_AUDIO_EFFECTS" />
+    <uses-permission android:name="android.permission.MANAGE_KEY_GESTURES" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+    <uses-permission android:name="org.xiaomi.haotian.audio.permission.CONTROL_AUDIO" />
+    <uses-permission
+        android:name="org.xiaomi.haotian.audio.permission.BIND_HEADPHONE_PROVIDER" />
+
+    <permission
+        android:name="org.xiaomi.haotian.audio.permission.OPEN_SETTINGS"
+        android:protectionLevel="signature" />
+
+    <permission
+        android:name="org.xiaomi.haotian.audio.permission.CONTROL_AUDIO"
+        android:protectionLevel="signature" />
+
+    <permission
+        android:name="org.xiaomi.haotian.audio.permission.BIND_HEADPHONE_PROVIDER"
+        android:protectionLevel="signature" />
+
+    <queries>
+        <intent>
+            <action android:name="org.xiaomi.haotian.audio.action.HEADPHONE_POSE_PROVIDER" />
+        </intent>
+    </queries>
+
+    <application
+        android:name=".HaotianAudioApplication"
+        android:allowBackup="false"
+        android:defaultToDeviceProtectedStorage="true"
+        android:directBootAware="true"
+        android:label="@string/app_name"
+        android:persistent="true"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.SubSettingsBase.Expressive"
+        android:usesNonSdkApi="true">
+
+        <activity
+            android:name=".AudioSettingsActivity"
+            android:exported="true"
+            android:permission="org.xiaomi.haotian.audio.permission.OPEN_SETTINGS">
+            <intent-filter>
+                <action android:name="org.xiaomi.haotian.audio.action.SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".MicrophoneSettingsActivity"
+            android:exported="true"
+            android:label="@string/microphone_app_name"
+            android:permission="org.xiaomi.haotian.audio.permission.OPEN_SETTINGS">
+            <intent-filter>
+                <action android:name="org.xiaomi.haotian.audio.action.MICROPHONE_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".HeadTrackingDebugActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".PersonalAudioSettingsActivity$SoundId"
+            android:exported="false" />
+        <activity
+            android:name=".PersonalAudioSettingsActivity$HearingCompensation"
+            android:exported="false" />
+        <activity
+            android:name=".PersonalAudioSettingsActivity$EarCanal"
+            android:exported="false" />
+        <activity
+            android:name=".PersonalAudioSettingsActivity$HeadsetModel"
+            android:exported="false" />
+
+        <service
+            android:name=".HaotianAudioService"
+            android:directBootAware="true"
+            android:exported="true"
+            android:permission="org.xiaomi.haotian.audio.permission.CONTROL_AUDIO"
+            android:singleUser="true"
+            android:stopWithTask="false" />
+
+        <receiver
+            android:name=".AudioRestoreReceiver"
+            android:directBootAware="true"
+            android:exported="true"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED"
+            android:singleUser="true">
+            <intent-filter>
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

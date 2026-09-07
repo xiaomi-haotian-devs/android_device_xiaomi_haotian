@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sony 耳机</string>
+    <string name="noise_tile">Sony 噪声控制</string>
+    <string name="noise_control">噪声控制</string>
+    <string name="noise_mode">噪声控制模式</string>
+    <string name="ambient_level">环境声等级</string>
+    <string name="focus_voice">聚焦语音</string>
+    <string name="adaptive_ambient">自适应环境声</string>
+    <string name="adaptive_sensitivity">自适应灵敏度</string>
+    <string name="noise_button">NC/AMB 按钮切换顺序</string>
+    <string name="speak_to_chat">智能免摘</string>
+    <string name="speech_sensitivity">语音检测灵敏度</string>
+    <string name="speech_timeout">交谈结束后恢复</string>
+    <string name="sound">声音</string>
+    <string name="eq_preset">均衡器预设</string>
+    <string name="clear_bass">Clear Bass</string>
+    <string name="eq_band">频段 %1$d</string>
+    <string name="dsee">DSEE</string>
+    <string name="listening_mode">声音效果</string>
+    <string name="room_size">背景音乐空间大小</string>
+    <string name="system">系统</string>
+    <string name="auto_power_off">自动关机</string>
+    <string name="wearing_power">摘下后自动关机</string>
+    <string name="auto_pause">摘下耳机时暂停</string>
+    <string name="head_gestures">头部手势</string>
+    <string name="voice_guidance">语音提示</string>
+    <string name="voice_volume">语音提示音量</string>
+    <string name="audio_priority">蓝牙连接质量</string>
+    <string name="power_off">关闭耳机</string>
+    <string name="power_off_confirm">要关闭已连接的 Sony 耳机吗？</string>
+    <string name="controls">按钮与行为</string>
+    <string name="headset_setting">耳机设置</string>
+    <string name="left_control">左侧控制</string>
+    <string name="right_control">右侧控制</string>
+    <string name="custom_control">自定义按钮</string>
+    <string name="unknown_value">耳机报告值：%1$d</string>
+    <string name="devices">连接设备</string>
+    <string name="devices_note">这里管理与耳机配对的设备。可用操作取决于耳机固件。</string>
+    <string name="pairing_mode">配对新设备</string>
+    <string name="automatic_source_switch">允许自动切换播放设备</string>
+    <string name="paired_device">已配对设备</string>
+    <string name="forget_device">忘记已配对设备</string>
+    <string name="forget_device_confirm">要从耳机中删除此配对吗？之后需要重新配对该设备。</string>
+    <string name="safe_listening">聆听音量</string>
+    <string name="safe_preview">聆听音量预览</string>
+    <string name="sound_pressure">耳机报告的声压级</string>
+    <string name="sound_pressure_value">%1$d dB</string>
+    <string name="operation_error">无法应用设置：%1$s</string>
+    <string name="battery_format">%1$s：%2$d%%</string>
+    <string name="firmware_format">固件：%1$s</string>
+    <string name="charging">正在充电</string>
+    <string name="connected">已连接</string>
+    <string name="disconnected">连接兼容的 Sony 耳机后即可使用这些控制</string>
+    <string name="connect_requested">请连接此 Sony 设备以使用其控制</string>
+    <string name="connecting">正在连接耳机控制…</string>
+    <string name="syncing">正在读取耳机设置…</string>
+    <string name="applying">正在应用并核对设置…</string>
+    <string name="retrying">等待重新连接。其他 Sony 控制应用可能正在使用连接。</string>
+    <string name="refresh">刷新 / 重新连接</string>
+    <string name="playing">正在播放</string>
+    <string name="spatial_audio">空间音频</string>
+    <string name="spatial_audio_summary">打开 HaotianAudio 管理当前音频输出</string>
+    <string name="tracking_visualization">头部追踪可视化</string>
+    <string name="audio_unavailable">HaotianAudio 不可用</string>
+    <string-array name="battery_parts">
+        <item>耳机</item>
+        <item>左耳</item>
+        <item>右耳</item>
+        <item>充电盒</item>
+    </string-array>
+    <string-array name="noise_modes">
+        <item>关闭</item>
+        <item>降噪</item>
+        <item>环境声</item>
+    </string-array>
+    <string-array name="adaptive_levels">
+        <item>低</item>
+        <item>标准</item>
+        <item>高</item>
+    </string-array>
+    <string-array name="speech_levels">
+        <item>自动</item>
+        <item>低</item>
+        <item>高</item>
+    </string-array>
+    <string-array name="speech_timeouts">
+        <item>短</item>
+        <item>中</item>
+        <item>长</item>
+        <item>直到手动恢复</item>
+    </string-array>
+    <string-array name="noise_button_modes">
+        <item>降噪 / 环境声 / 关闭</item>
+        <item>降噪 / 环境声</item>
+        <item>降噪 / 关闭</item>
+        <item>环境声 / 关闭</item>
+    </string-array>
+    <string-array name="listening_modes">
+        <item>标准</item>
+        <item>背景音乐</item>
+        <item>影院</item>
+    </string-array>
+    <string-array name="room_sizes">
+        <item>小</item>
+        <item>中</item>
+        <item>大</item>
+    </string-array>
+    <string-array name="power_timeouts">
+        <item>禁用</item>
+        <item>5 分钟</item>
+        <item>15 分钟</item>
+        <item>30 分钟</item>
+        <item>60 分钟</item>
+        <item>180 分钟</item>
+    </string-array>
+    <string-array name="wearing_modes">
+        <item>禁用 / 使用定时器</item>
+        <item>摘下后关机</item>
+    </string-array>
+    <string-array name="audio_priorities">
+        <item>音质优先</item>
+        <item>连接稳定性优先</item>
+    </string-array>
+    <string-array name="assignable_actions">
+        <item>无</item>
+        <item>播放控制</item>
+        <item>噪声控制</item>
+        <item>噪声控制与快速访问</item>
+        <item>曲目控制</item>
+        <item>语音识别</item>
+        <item>Google 助理</item>
+        <item>Amazon Alexa</item>
+        <item>腾讯小微</item>
+        <item>Microsoft Cortana</item>
+        <item>快速访问</item>
+    </string-array>
+    <string-array name="device_actions">
+        <item>连接</item>
+        <item>断开连接</item>
+        <item>切换至此设备播放</item>
+        <item>忘记配对</item>
+    </string-array>
+    <string-array name="eq_presets">
+        <item>关闭</item>
+        <item>摇滚</item>
+        <item>流行</item>
+        <item>爵士</item>
+        <item>舞曲</item>
+        <item>电子舞曲</item>
+        <item>节奏布鲁斯 / 嘻哈</item>
+        <item>原声</item>
+        <item>明亮</item>
+        <item>激昂</item>
+        <item>柔和</item>
+        <item>舒缓</item>
+        <item>人声</item>
+        <item>高音</item>
+        <item>低音</item>
+        <item>语音</item>
+        <item>厚重</item>
+        <item>清晰</item>
+        <item>强劲</item>
+        <item>轻柔</item>
+        <item>游戏</item>
+        <item>FPS 1</item>
+        <item>FPS 2</item>
+        <item>FPS 3</item>
+        <item>自定义</item>
+        <item>自定义 1</item>
+        <item>自定义 2</item>
+        <item>自定义 3</item>
+        <item>自定义 4</item>
+        <item>自定义 5</item>
+    </string-array>
+</resources>
+

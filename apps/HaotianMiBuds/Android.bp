@@ -1,0 +1,79 @@
+// SPDX-FileCopyrightText: 2026 The Xiaomi haotian developers
+// SPDX-License-Identifier: Apache-2.0
+
+package {
+    default_applicable_licenses: ["haotian_mibuds_license"],
+}
+
+license {
+    name: "haotian_mibuds_license",
+    visibility: [":__subpackages__"],
+    license_kinds: ["SPDX-license-identifier-Apache-2.0"],
+    license_text: [
+        "LICENSE",
+        "NOTICE",
+        "third_party/jieli/LICENSE",
+    ],
+}
+
+// This is the only binary retained from the upstream Jieli SDK. It provides the
+// four small mutual-authentication JNI primitives used by RcspAuth (plus the
+// CryptoUtil registration required by JNI_OnLoad); transport, framing,
+// commands, state and UI integration remain local source.
+cc_prebuilt_library_shared {
+    name: "libhaotian_mibuds_jl_bluetooth",
+    stem: "libjl_bluetooth",
+    srcs: ["third_party/jieli/arm64-v8a/libjl_bluetooth.so"],
+    compile_multilib: "64",
+    shared_libs: [
+        "libandroid",
+        "libc",
+        "libdl",
+        "liblog",
+        "libm",
+    ],
+    stl: "none",
+    strip: {
+        none: true,
+    },
+    system_ext_specific: true,
+    visibility: [":__subpackages__"],
+}
+
+android_app {
+    name: "HaotianMiBuds",
+    defaults: ["SettingsLibDefaults"],
+    certificate: "platform",
+    privileged: true,
+    system_ext_specific: true,
+    platform_apis: true,
+    srcs: [
+        "src/**/*.java",
+        "src/**/*.aidl",
+        ":haotian_headphone_provider_api_sources",
+    ],
+    aidl: {
+        include_dirs: ["device/xiaomi/haotian/apps/HaotianAudio/src"],
+        local_include_dirs: ["src"],
+    },
+    resource_dirs: ["res"],
+    static_libs: [
+        "androidx.preference_preference",
+        "SettingsLib",
+    ],
+    jni_libs: ["libhaotian_mibuds_jl_bluetooth"],
+    required: ["default-permissions-haotian-mibuds"],
+    privapp_allowlist: "privapp-permissions-haotian-mibuds.xml",
+    optimize: {
+        enabled: true,
+        proguard_flags_files: ["proguard.flags"],
+    },
+}
+
+prebuilt_etc {
+    name: "default-permissions-haotian-mibuds",
+    relative_install_path: "default-permissions",
+    src: "default-permissions-haotian-mibuds.xml",
+    filename_from_src: true,
+    system_ext_specific: true,
+}

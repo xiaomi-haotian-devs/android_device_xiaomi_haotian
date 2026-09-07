@@ -1,0 +1,17 @@
+# MiTEE's normal-world supplicant stores its encrypted SFS state in persist
+# and loads only the dedicated TA directory from ODM.
+allow tee mitee_sfs_file:dir create_dir_perms;
+allow tee mitee_sfs_file:file create_file_perms;
+r_dir_file(tee, mitee_ta_file)
+allow tee mitee_client_device:chr_file rw_file_perms;
+set_prop(tee, vendor_mitee_prop)
+
+# MiTEE's supplicant is a client of the product qvirt AIDL service.  The
+# common Qualcomm tee policy only enables vendor Binder for legacy TEE
+# services, while qvirt is registered with the framework service manager.
+binder_use(tee)
+hal_client_domain(tee, vendor_hal_qvirtservice)
+
+# qvirt normally owns the VM device, but the stock MiTEE policy also permits
+# the supplicant to open it while negotiating the protected VM session.
+allow tee vendor_gunyah_chr_device:chr_file rw_file_perms;

@@ -1,0 +1,11 @@
+<resources>
+    <string name="playback">播放控制</string>
+    <string name="now_playing">正在播放</string>
+    <string name="headphone_volume">耳机音量</string>
+    <string name="play">播放</string>
+    <string name="pause">暂停</string>
+    <string name="next_track">下一曲</string>
+    <string name="previous_track">上一曲</string>
+    <string name="start_preview">开始聆听音量预览</string>
+    <string name="stop_preview">停止聆听音量预览</string>
+</resources>

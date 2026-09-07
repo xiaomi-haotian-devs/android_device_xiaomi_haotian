@@ -1,0 +1,58 @@
+# These are recovery-only copies installed under /system. Run them in the recovery domain so the
+# normal Android /vendor binaries keep their vendor domains without creating mixed system/vendor
+# entrypoints in the platform policy.
+service vendor.qseecomd /system/bin/qseecomd
+    socket notify-topology stream 0660 system drmrpc
+    class core
+    user root
+    group root drmrpc
+    seclabel u:r:recovery:s0
+    disabled
+
+service vendor.keymint-qti /system/bin/hw/android.hardware.security.keymint-service-qti
+    class early_hal
+    user system
+    group system drmrpc
+    seclabel u:r:recovery:s0
+    disabled
+
+service vendor.gatekeeper_default /system/bin/hw/android.hardware.gatekeeper-service-qti
+    class early_hal
+    user system
+    group system
+    seclabel u:r:recovery:s0
+    disabled
+
+service haotian-recovery-decryptd /system/bin/haotian-recovery-decrypt --daemon
+    class core
+    user root
+    group root system reserved_disk
+    seclabel u:r:recovery:s0
+    # Recovery adbd may run as either root or shell. The daemon remains the
+    # only process that verifies credentials and maintenance challenges.
+    socket haotian_recovery_ce stream 0660 root shell
+    disabled
+
+# QSEE still needs the active slot's modem firmware, as in Xiaomi's recovery init. This does not
+# mount the vendor logical partition and does not interfere with updating the inactive slot.
+on init
+    setprop ro.recovery.adb.credential_gate true
+    # These are the three security properties shipped by Xiaomi in vendor/build.prop.  Recovery
+    # does not load vendor/build.prop, so provide the same values before starting the HALs.
+    setprop vendor.keymint.retry_timer 5
+    setprop vendor.gatekeeper.disable_spu true
+    setprop vendor.gatekeeper.is_security_level_spu 0
+
+on fs
+    mount_all /system/etc/haotian-recovery-firmware.fstab --early
+    mount none /vendor/firmware_mnt/image /vendor/firmware bind rec
+
+# Start only QSEE first.  Xiaomi's KeyMint reads vendor.sys.listeners.registered; do not race the
+# HAL or the first metadata-key operation against listener registration.
+on late-init
+    start vendor.qseecomd
+
+on property:vendor.sys.listeners.registered=true
+    start vendor.keymint-qti
+    start vendor.gatekeeper_default
+    start haotian-recovery-decryptd

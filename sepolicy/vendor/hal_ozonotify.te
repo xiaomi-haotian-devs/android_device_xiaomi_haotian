@@ -1,0 +1,2 @@
+# HaotianAudio only probes the read-only OZO notification service for microphone diagnostics.
+hal_client_domain(haotian_audio_app, hal_ozonotify)

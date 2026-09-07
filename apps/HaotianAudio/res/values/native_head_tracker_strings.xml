@@ -1,0 +1,3 @@
+<resources>
+    <string name="head_tracking_native_latency_note">Native Android head tracker. Above: sensor sample age and sensor-to-audioserver delivery time. This path bypasses the app shared-memory producer; its stage timings and end-to-end audio latency are unavailable. Play spatialized audio with head tracking enabled to receive samples.</string>
+</resources>

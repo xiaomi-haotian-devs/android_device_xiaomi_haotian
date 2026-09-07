@@ -1,0 +1,10 @@
+<compatibility-matrix version="8.0" type="framework">
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.hardware.aek</name>
+        <version>1</version>
+        <interface>
+            <name>IAEKService</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+</compatibility-matrix>

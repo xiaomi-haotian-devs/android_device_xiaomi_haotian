@@ -1,0 +1,14 @@
+# HaotianAudio owns the shared-memory pose ring while a signature-trusted headphone companion
+# writes pose records through a duplicated descriptor. The Sensors HAL only writes three
+# diagnostic acknowledgement fields. The socket is a one-time fd/lifetime channel and high-rate
+# poses do not traverse it.
+# This is a deliberately bounded core/vendor socket bridge: the vendor Sensors HAL initiates the
+# connection, while the only explicit peer permission below is the dedicated HaotianAudio host.
+# Marking the initiating domain avoids the generic Treble neverallow; it does not grant any socket
+# access by itself.
+typeattribute hal_sensors_default socket_between_core_and_vendor_violators;
+allow hal_sensors_default haotian_audio_app:unix_stream_socket connectto;
+allow hal_sensors_default haotian_audio_app:fd use;
+allow haotian_audio_app hal_sensors_default:unix_stream_socket {
+    accept getattr getopt read setopt shutdown write
+};

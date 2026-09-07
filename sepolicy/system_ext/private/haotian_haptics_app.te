@@ -1,0 +1,6 @@
+type haotian_haptics_app, domain;
+typeattribute haotian_haptics_app coredomain;
+app_domain(haotian_haptics_app)
+allow haotian_haptics_app app_api_service:service_manager find;
+allow haotian_haptics_app system_api_service:service_manager find;
+set_prop(haotian_haptics_app, haotian_haptics_prop)

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sony 耳機</string>
+    <string name="noise_tile">Sony 噪音控制</string>
+    <string name="noise_control">噪音控制</string>
+    <string name="noise_mode">噪音控制模式</string>
+    <string name="ambient_level">環境音等級</string>
+    <string name="focus_voice">聚焦語音</string>
+    <string name="adaptive_ambient">自適應環境音</string>
+    <string name="adaptive_sensitivity">自適應靈敏度</string>
+    <string name="noise_button">NC/AMB 按鈕切換順序</string>
+    <string name="speak_to_chat">智慧免摘</string>
+    <string name="speech_sensitivity">語音偵測靈敏度</string>
+    <string name="speech_timeout">交談結束後恢復</string>
+    <string name="sound">聲音</string>
+    <string name="eq_preset">等化器預設</string>
+    <string name="clear_bass">Clear Bass</string>
+    <string name="eq_band">頻段 %1$d</string>
+    <string name="dsee">DSEE</string>
+    <string name="listening_mode">聲音效果</string>
+    <string name="room_size">背景音樂空間大小</string>
+    <string name="system">系統</string>
+    <string name="auto_power_off">自動關機</string>
+    <string name="wearing_power">取下後自動關機</string>
+    <string name="auto_pause">取下耳機時暫停</string>
+    <string name="head_gestures">頭部手勢</string>
+    <string name="voice_guidance">語音提示</string>
+    <string name="voice_volume">語音提示音量</string>
+    <string name="audio_priority">藍牙連線品質</string>
+    <string name="power_off">關閉耳機</string>
+    <string name="power_off_confirm">要關閉已連線的 Sony 耳機嗎？</string>
+    <string name="controls">按鈕與行為</string>
+    <string name="headset_setting">耳機設定</string>
+    <string name="left_control">左側控制</string>
+    <string name="right_control">右側控制</string>
+    <string name="custom_control">自訂按鈕</string>
+    <string name="unknown_value">耳機回報值：%1$d</string>
+    <string name="devices">連線裝置</string>
+    <string name="devices_note">這裡管理與耳機配對的裝置。可用操作取決於耳機韌體。</string>
+    <string name="pairing_mode">配對新裝置</string>
+    <string name="automatic_source_switch">允許自動切換播放裝置</string>
+    <string name="paired_device">已配對裝置</string>
+    <string name="forget_device">忘記已配對裝置</string>
+    <string name="forget_device_confirm">要從耳機中刪除此配對嗎？之後需要重新配對該裝置。</string>
+    <string name="safe_listening">聆聽音量</string>
+    <string name="safe_preview">聆聽音量預覽</string>
+    <string name="sound_pressure">耳機回報的聲壓級</string>
+    <string name="sound_pressure_value">%1$d dB</string>
+    <string name="operation_error">無法套用設定：%1$s</string>
+    <string name="battery_format">%1$s：%2$d%%</string>
+    <string name="firmware_format">韌體：%1$s</string>
+    <string name="charging">正在充電</string>
+    <string name="connected">已連線</string>
+    <string name="disconnected">連線相容的 Sony 耳機後即可使用這些控制</string>
+    <string name="connect_requested">請連線此 Sony 裝置以使用其控制</string>
+    <string name="connecting">正在連線耳機控制…</string>
+    <string name="syncing">正在讀取耳機設定…</string>
+    <string name="applying">正在套用並核對設定…</string>
+    <string name="retrying">等待重新連線。其他 Sony 控制應用程式可能正在使用連線。</string>
+    <string name="refresh">重新整理 / 重新連線</string>
+    <string name="playing">正在播放</string>
+    <string name="spatial_audio">空間音訊</string>
+    <string name="spatial_audio_summary">開啟 HaotianAudio 管理目前音訊輸出</string>
+    <string name="tracking_visualization">頭部追蹤視覺化</string>
+    <string name="audio_unavailable">HaotianAudio 無法使用</string>
+    <string-array name="battery_parts">
+        <item>耳機</item>
+        <item>左耳</item>
+        <item>右耳</item>
+        <item>充電盒</item>
+    </string-array>
+    <string-array name="noise_modes">
+        <item>關閉</item>
+        <item>降噪</item>
+        <item>環境音</item>
+    </string-array>
+    <string-array name="adaptive_levels">
+        <item>低</item>
+        <item>標準</item>
+        <item>高</item>
+    </string-array>
+    <string-array name="speech_levels">
+        <item>自動</item>
+        <item>低</item>
+        <item>高</item>
+    </string-array>
+    <string-array name="speech_timeouts">
+        <item>短</item>
+        <item>中</item>
+        <item>長</item>
+        <item>直到手動恢復</item>
+    </string-array>
+    <string-array name="noise_button_modes">
+        <item>降噪 / 環境音 / 關閉</item>
+        <item>降噪 / 環境音</item>
+        <item>降噪 / 關閉</item>
+        <item>環境音 / 關閉</item>
+    </string-array>
+    <string-array name="listening_modes">
+        <item>標準</item>
+        <item>背景音樂</item>
+        <item>電影院</item>
+    </string-array>
+    <string-array name="room_sizes">
+        <item>小</item>
+        <item>中</item>
+        <item>大</item>
+    </string-array>
+    <string-array name="power_timeouts">
+        <item>停用</item>
+        <item>5 分鐘</item>
+        <item>15 分鐘</item>
+        <item>30 分鐘</item>
+        <item>60 分鐘</item>
+        <item>180 分鐘</item>
+    </string-array>
+    <string-array name="wearing_modes">
+        <item>停用 / 使用計時器</item>
+        <item>取下後關機</item>
+    </string-array>
+    <string-array name="audio_priorities">
+        <item>音質優先</item>
+        <item>連線穩定性優先</item>
+    </string-array>
+    <string-array name="assignable_actions">
+        <item>無</item>
+        <item>播放控制</item>
+        <item>噪音控制</item>
+        <item>噪音控制與快速存取</item>
+        <item>曲目控制</item>
+        <item>語音辨識</item>
+        <item>Google 助理</item>
+        <item>Amazon Alexa</item>
+        <item>騰訊小微</item>
+        <item>Microsoft Cortana</item>
+        <item>快速存取</item>
+    </string-array>
+    <string-array name="device_actions">
+        <item>連線</item>
+        <item>中斷連線</item>
+        <item>切換至此裝置播放</item>
+        <item>忘記配對</item>
+    </string-array>
+    <string-array name="eq_presets">
+        <item>關閉</item>
+        <item>搖滾</item>
+        <item>流行</item>
+        <item>爵士</item>
+        <item>舞曲</item>
+        <item>電子舞曲</item>
+        <item>節奏藍調 / 嘻哈</item>
+        <item>原聲</item>
+        <item>明亮</item>
+        <item>激昂</item>
+        <item>柔和</item>
+        <item>舒緩</item>
+        <item>人聲</item>
+        <item>高音</item>
+        <item>低音</item>
+        <item>語音</item>
+        <item>厚重</item>
+        <item>清晰</item>
+        <item>強勁</item>
+        <item>輕柔</item>
+        <item>遊戲</item>
+        <item>FPS 1</item>
+        <item>FPS 2</item>
+        <item>FPS 3</item>
+        <item>自訂</item>
+        <item>自訂 1</item>
+        <item>自訂 2</item>
+        <item>自訂 3</item>
+        <item>自訂 4</item>
+        <item>自訂 5</item>
+    </string-array>
+</resources>
+

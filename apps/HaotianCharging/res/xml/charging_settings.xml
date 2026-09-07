@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/app_name">
+
+    <com.android.settingslib.widget.TopIntroPreference
+        android:key="page_intro"
+        android:title="@string/page_summary"
+        android:selectable="false" />
+
+    <PreferenceCategory android:title="@string/section_reverse">
+        <com.android.settingslib.widget.MainSwitchPreference
+            android:key="reverse_enable"
+            android:title="@string/reverse_title"
+            android:summary="@string/reverse_summary"
+            android:enabled="false" />
+
+        <ListPreference
+            android:key="reverse_threshold"
+            android:title="@string/reverse_threshold"
+            android:entries="@array/reverse_threshold_entries"
+            android:entryValues="@array/reverse_threshold_values"
+            android:enabled="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/section_protection">
+        <SwitchPreferenceCompat
+            android:key="anti_aging"
+            android:title="@string/anti_aging_title"
+            android:summary="@string/anti_aging_summary"
+            android:enabled="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/section_performance">
+        <SwitchPreferenceCompat
+            android:key="fast_charge"
+            android:title="@string/fast_charge_title"
+            android:summary="@string/fast_charge_summary"
+            android:enabled="false" />
+
+        <ListPreference
+            android:key="wireless_mode"
+            android:title="@string/wireless_mode_title"
+            android:summary="@string/wireless_mode_summary"
+            android:entries="@array/wireless_mode_entries"
+            android:entryValues="@array/wireless_mode_values"
+            android:enabled="false" />
+
+        <SwitchPreferenceCompat
+            android:key="bypass"
+            android:title="@string/bypass_title"
+            android:summary="@string/bypass_summary"
+            android:enabled="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/section_wireless_dock">
+        <SwitchPreferenceCompat
+            android:key="wireless_disable_nfc"
+            android:title="@string/wireless_disable_nfc_title"
+            android:summary="@string/wireless_disable_nfc_summary"
+            android:persistent="false" />
+
+        <Preference
+            android:key="wireless_status"
+            android:title="@string/wireless_status_title"
+            android:summary="@string/wireless_status_loading"
+            android:selectable="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/section_status">
+        <Preference
+            android:key="battery_status"
+            android:title="@string/battery_status_title"
+            android:summary="@string/status_loading"
+            android:selectable="false" />
+
+        <Preference
+            android:key="firmware_update"
+            android:title="@string/firmware_update"
+            android:summary="@string/firmware_update_summary" />
+
+        <Preference
+            android:key="reset_limits"
+            android:title="@string/reset_limits"
+            android:summary="@string/reset_limits_summary" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

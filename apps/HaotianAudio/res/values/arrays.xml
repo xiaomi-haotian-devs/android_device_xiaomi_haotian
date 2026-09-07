@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="microphone_mode_entries">
+        <item>@string/microphone_mode_standard</item>
+        <item>@string/microphone_mode_omni</item>
+        <item>@string/microphone_mode_front</item>
+        <item>@string/microphone_mode_back</item>
+        <item>@string/microphone_mode_dual</item>
+        <item>@string/microphone_mode_audio_zoom</item>
+        <item>@string/microphone_mode_spatial</item>
+    </string-array>
+
+    <string-array name="microphone_mode_values" translatable="false">
+        <item>standard</item>
+        <item>omni</item>
+        <item>front</item>
+        <item>back</item>
+        <item>dual</item>
+        <item>audio_zoom</item>
+        <item>spatial</item>
+    </string-array>
+
+    <string-array name="effect_entries">
+        <item>@string/effect_dolby</item>
+        <item>@string/effect_misound</item>
+        <item>@string/effect_original</item>
+    </string-array>
+    <string-array name="effect_values" translatable="false">
+        <item>dolby</item>
+        <item>misound</item>
+        <item>none</item>
+    </string-array>
+
+    <string-array name="dolby_profile_entries">
+        <item>@string/profile_dynamic</item>
+        <item>@string/profile_video</item>
+        <item>@string/profile_music</item>
+        <item>@string/profile_voice</item>
+    </string-array>
+    <string-array name="dolby_profile_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>8</item>
+    </string-array>
+
+    <string-array name="misound_profile_entries">
+        <item>@string/profile_smart</item>
+        <item>@string/profile_music</item>
+        <item>@string/profile_video</item>
+        <item>@string/profile_voice</item>
+    </string-array>
+    <string-array name="misound_profile_values" translatable="false">
+        <item>4</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="dolby_eq_entries">
+        <item>@string/eq_custom</item>
+        <item>@string/eq_rock</item>
+        <item>@string/eq_jazz</item>
+        <item>@string/eq_pop</item>
+        <item>@string/eq_classical</item>
+        <item>@string/eq_hip_hop</item>
+        <item>@string/eq_blues</item>
+        <item>@string/eq_electronic</item>
+        <item>@string/eq_metal</item>
+    </string-array>
+    <string-array name="dolby_eq_values" translatable="false">
+        <item>custom</item><item>rock</item><item>jazz</item><item>pop</item>
+        <item>classical</item><item>hip_hop</item><item>blues</item>
+        <item>electronic</item><item>metal</item>
+    </string-array>
+
+    <string-array name="misound_eq_entries">
+        <item>@string/eq_custom</item>
+        <item>@string/eq_flat</item>
+        <item>@string/eq_rock</item>
+        <item>@string/eq_jazz</item>
+        <item>@string/eq_pop</item>
+        <item>@string/eq_classical</item>
+        <item>@string/eq_hip_hop</item>
+        <item>@string/eq_blues</item>
+        <item>@string/eq_electronic</item>
+        <item>@string/eq_country</item>
+        <item>@string/eq_dance</item>
+        <item>@string/eq_metal</item>
+    </string-array>
+    <string-array name="misound_eq_values" translatable="false">
+        <item>custom</item><item>flat</item><item>rock</item><item>jazz</item>
+        <item>pop</item><item>classical</item><item>hip_hop</item><item>blues</item>
+        <item>electronic</item><item>country</item><item>dance</item><item>metal</item>
+    </string-array>
+
+    <string-array name="headset_model_entries">
+        <item>@string/headset_none</item>
+        <item>Mi Earbuds Basic (MEP100)</item>
+        <item>Mi Earbuds (MEP200)</item>
+        <item>Mi Piston 1</item>
+        <item>Mi Piston 2</item>
+        <item>@string/headset_general</item>
+        <item>@string/headset_general_inear</item>
+        <item>Mi Headphones (MK101)</item>
+        <item>Mi Headphones (MK301)</item>
+        <item>Mi Headphones (MK303)</item>
+        <item>Mi Headphones (MO701)</item>
+        <item>Mi Headphones (MR102)</item>
+        <item>Mi Headphones Pro HD</item>
+        <item>Mi Earphones (EM303)</item>
+        <item>Mi Earphones (EM304)</item>
+        <item>Mi Earphones (EM001)</item>
+        <item>Mi Earphones (EM007)</item>
+        <item>Mi Headphones (HM004)</item>
+        <item>Mi Earphones (EM006)</item>
+        <item>Mi Earphones (EM013)</item>
+        <item>Mi Earphones (EM015)</item>
+        <item>Mi Earphones (EM017)</item>
+        <item>Mi Earphones (EM018)</item>
+        <item>Mi Earphones (EM019)</item>
+        <item>Mi Earphones (EM031)</item>
+        <item>Mi Earphones (EM033)</item>
+    </string-array>
+    <string-array name="headset_model_values" translatable="false">
+        <item>0</item><item>1</item><item>2</item><item>3</item><item>4</item>
+        <item>5</item><item>6</item><item>7</item><item>8</item><item>9</item>
+        <item>10</item><item>11</item><item>12</item><item>13</item><item>14</item>
+        <item>15</item><item>16</item><item>17</item><item>18</item><item>19</item>
+        <item>20</item><item>21</item><item>22</item><item>23</item><item>24</item>
+        <item>25</item>
+    </string-array>
+</resources>

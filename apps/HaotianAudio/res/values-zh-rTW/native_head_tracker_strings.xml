@@ -1,0 +1,3 @@
+<resources>
+    <string name="head_tracking_native_latency_note">Android 原生頭部追蹤。上方顯示感測器樣本年齡和感測器到音訊服務的傳遞時間。這一路不經過應用程式共享記憶體，因此不顯示該通道的分段耗時，也不將其視為端到端音訊延遲。請播放空間音訊並啟用頭部追蹤以接收樣本。</string>
+</resources>

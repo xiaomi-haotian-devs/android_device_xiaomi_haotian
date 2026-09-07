@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mipay.wallet"
-    android:versionCode="20577695"
-    android:versionName="6.113.1.5728.2741-haotian5">
+    android:versionCode="20577696"
+    android:versionName="6.113.1.5728.2741-haotian6">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="com.miui.tsmclient.permission.TSM_GROUP" />
+
+    <uses-feature
+        android:name="android.hardware.camera.any"
+        android:required="false" />
 
     <queries>
         <package android:name="com.miui.tsmclient" />
+        <package android:name="com.miui.nextpay" />
         <package android:name="com.xiaomi.account" />
     </queries>
 
@@ -24,6 +32,41 @@
             android:name="com.mipay.wallet.ui.WalletActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.mipay.wallet.ui.QrScannerActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.mipay.wallet.ui.QrPaymentActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity-alias
+            android:name="com.mipay.wallet.ui.QrPaymentLinkActivity"
+            android:exported="true"
+            android:targetActivity="com.mipay.wallet.ui.QrPaymentActivity">
+            <!-- Only these stable UnionPay hosts are registered with Android. Cloud rules are
+                 deliberately limited to the wallet's own scanner. -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="qr.95516.com" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="trade.sdpay.mipay.com" />
+            </intent-filter>
+        </activity-alias>
 
         <activity-alias
             android:name="com.xiaomi.jr.app.MiFinanceActivity"

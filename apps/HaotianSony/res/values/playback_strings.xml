@@ -1,0 +1,11 @@
+<resources>
+    <string name="playback">Playback</string>
+    <string name="now_playing">Now playing</string>
+    <string name="headphone_volume">Headphone volume</string>
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="next_track">Next track</string>
+    <string name="previous_track">Previous track</string>
+    <string name="start_preview">Start listening level preview</string>
+    <string name="stop_preview">Stop listening level preview</string>
+</resources>

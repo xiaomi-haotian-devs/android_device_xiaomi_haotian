@@ -1,0 +1,2 @@
+allow system_server vendor_sysfs_ufseua:dir r_dir_perms;
+allow system_server vendor_sysfs_ufseua_ro:file r_file_perms;

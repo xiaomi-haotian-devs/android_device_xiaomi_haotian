@@ -10,6 +10,11 @@ KERNEL_PATH := $(DEVICE_PATH)-kernel
 # Inherit from sm8650-common
 include device/xiaomi/sm8750-common/BoardConfigCommon.mk
 
+# Xiaomi MiFace depends on the device-side AEK service. Keep the declaration
+# haotian-specific because the service is only shipped by this device tree.
+DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += \
+    $(DEVICE_PATH)/configs/vintf/compatibility_matrix.miface.xml
+
 # Keep the read-only dynamic partitions on ext4 for now, but share identical
 # blocks within each image to fit the physical super partition. This is also
 # understood by the A/B OTA releasetools.
@@ -17,6 +22,7 @@ BOARD_EXT4_SHARE_DUP_BLOCKS := true
 
 # Sepolicy
 BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
+SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/system_ext/public
 SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/system_ext/private
 
 # Display
@@ -35,6 +41,13 @@ PRODUCT_COPY_FILES += \
 
 # Kernel modules
 BOARD_VENDOR_RAMDISK_KERNEL_MODULES := $(wildcard $(KERNEL_PATH)/vendor_ramdisk/*.ko)
+# The Synaptics panel driver normally lives in vendor_dlkm, which is not available
+# when the recovery vendor ramdisk loads its module list. Keep the stock modules
+# in vendor_dlkm for Android and additionally package them into the vendor ramdisk
+# so recovery can create Xiaomi_Touch_Input_0 without mounting a dynamic partition.
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES += \
+    $(KERNEL_PATH)/vendor_dlkm/xiaomi_touch.ko \
+    $(KERNEL_PATH)/vendor_dlkm/synaptics_tcm2.ko
 BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(strip $(shell cat $(KERNEL_PATH)/vendor_ramdisk/modules.load))
 BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(strip $(shell cat $(KERNEL_PATH)/vendor_ramdisk/modules.load.recovery))
 BOARD_VENDOR_RAMDISK_KERNEL_MODULES_BLOCKLIST_FILE := $(KERNEL_PATH)/vendor_ramdisk/modules.blocklist

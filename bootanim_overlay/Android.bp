@@ -1,0 +1,46 @@
+package {
+    default_applicable_licenses: ["haotian_bootanim_overlay_license"],
+}
+
+license {
+    name: "haotian_bootanim_overlay_license",
+    license_kinds: ["SPDX-license-identifier-Apache-2.0"],
+    license_text: ["LICENSE"],
+}
+
+python_binary_host {
+    name: "haotian_bootanim_embed_png",
+    main: "tools/embed_png.py",
+    srcs: ["tools/embed_png.py"],
+}
+
+genrule {
+    name: "haotian_bootanim_embedded_assets",
+    tools: ["haotian_bootanim_embed_png"],
+    srcs: ["assets/*/*.png"],
+    out: ["embedded_assets.cpp"],
+    cmd: "$(location haotian_bootanim_embed_png) --out $(out) $(in)",
+}
+
+cc_binary {
+    name: "bootanim_overlay",
+    system_ext_specific: true,
+    srcs: [
+        "main.cpp",
+        ":haotian_bootanim_embedded_assets",
+    ],
+    local_include_dirs: ["."],
+    header_libs: ["jni_headers"],
+    init_rc: ["bootanim_overlay.rc"],
+    shared_libs: [
+        "libbase",
+        "libbinder",
+        "libgui",
+        "libjnigraphics",
+        "liblog",
+        "libui",
+        "libutils",
+    ],
+    cflags: ["-Wall", "-Wextra", "-Werror", "-Wno-deprecated-declarations"],
+    cpp_std: "c++20",
+}

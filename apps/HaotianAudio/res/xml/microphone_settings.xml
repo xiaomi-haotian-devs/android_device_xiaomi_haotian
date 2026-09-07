@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory android:title="@string/microphone_configuration_category">
+        <ListPreference
+            android:key="microphone_recording_mode"
+            android:title="@string/microphone_recording_mode_title"
+            android:entries="@array/microphone_mode_entries"
+            android:entryValues="@array/microphone_mode_values"
+            android:persistent="false" />
+
+        <SwitchPreferenceCompat
+            android:key="microphone_wind_reduction"
+            android:title="@string/microphone_wind_reduction_title"
+            android:summary="@string/microphone_wind_reduction_summary"
+            android:persistent="false" />
+
+        <SwitchPreferenceCompat
+            android:key="microphone_source_tracking"
+            android:title="@string/microphone_source_tracking_title"
+            android:summary="@string/microphone_source_tracking_summary"
+            android:persistent="false" />
+
+        <SeekBarPreference
+            android:key="microphone_focus_width"
+            android:title="@string/microphone_focus_width_title"
+            android:max="180"
+            app:min="20"
+            app:seekBarIncrement="5"
+            app:showSeekBarValue="true"
+            app:updatesContinuously="false"
+            android:persistent="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/microphone_live_status_category">
+        <Preference
+            android:key="microphone_capture_status"
+            android:title="@string/microphone_capture_status_title"
+            android:selectable="false" />
+        <Preference
+            android:key="microphone_input_format"
+            android:title="@string/microphone_input_format_title"
+            android:selectable="false" />
+        <Preference
+            android:key="microphone_active_device"
+            android:title="@string/microphone_active_device_title"
+            android:selectable="false" />
+        <Preference
+            android:key="microphone_ozo_status"
+            android:title="@string/microphone_ozo_status_title"
+            android:selectable="false" />
+        <Preference
+            android:key="microphone_route_status"
+            android:title="@string/microphone_route_status_title"
+            android:selectable="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/microphone_physical_category">
+        <Preference
+            android:key="microphone_top_status"
+            android:title="@string/microphone_top_title"
+            android:summary="@string/microphone_top_summary"
+            android:selectable="false" />
+        <Preference
+            android:key="microphone_bottom_aux_status"
+            android:title="@string/microphone_bottom_aux_title"
+            android:summary="@string/microphone_bottom_aux_summary"
+            android:selectable="false" />
+        <Preference
+            android:key="microphone_back_status"
+            android:title="@string/microphone_back_title"
+            android:summary="@string/microphone_back_summary"
+            android:selectable="false" />
+        <Preference
+            android:key="microphone_bottom_main_status"
+            android:title="@string/microphone_bottom_main_title"
+            android:summary="@string/microphone_bottom_main_summary"
+            android:selectable="false" />
+    </PreferenceCategory>
+
+    <Preference
+        android:summary="@string/microphone_footer"
+        android:selectable="false" />
+</PreferenceScreen>

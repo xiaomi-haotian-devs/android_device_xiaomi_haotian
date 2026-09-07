@@ -1,6 +1,9 @@
 service haotian-charging /vendor/bin/hw/haotian-charging-service
     class main
-    user system
+    # Xiaomi's wireless telemetry and smart_fv nodes are root:root 0660/0664.
+    # Keep access constrained by the dedicated SELinux domain and private
+    # Binder service, matching the stock batteryantiaging HAL's UID model.
+    user root
     group system
     disabled
 

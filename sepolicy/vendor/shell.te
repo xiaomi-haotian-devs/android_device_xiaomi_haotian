@@ -1,0 +1,6 @@
+# Read-only LTPO diagnostics used by haotian-refresh-debug. The normal shell already has Binder
+# access to SurfaceFlinger; these rules only expose the three displayfeature sysfs snapshots.
+userdebug_or_eng(`
+allow shell vendor_sysfs_displayfeature:dir r_dir_perms;
+allow shell vendor_sysfs_displayfeature:file r_file_perms;
+')

@@ -1,0 +1,2 @@
+# Device tuning is written by the system_ext settings app and read by the vendor HAL.
+system_public_prop(haotian_haptics_prop)

@@ -1,0 +1,7 @@
+# Platform-signed device companions. Package-specific entries must precede the generic
+# platform app mappings supplied by the platform policy.
+user=_app seinfo=platform isPrivApp=true name=org.xiaomi.haotian.haptics domain=haotian_haptics_app type=privapp_data_file levelFrom=user
+user=_app seinfo=platform isPrivApp=true name=org.xiaomi.haotian.audio domain=haotian_audio_app type=privapp_data_file levelFrom=user
+user=_app seinfo=platform isPrivApp=true name=org.xiaomi.haotian.airpods domain=haotian_airpods_app type=privapp_data_file levelFrom=user
+user=_app seinfo=platform isPrivApp=true name=org.xiaomi.haotian.mibuds domain=haotian_mibuds_app type=privapp_data_file levelFrom=user
+user=_app seinfo=platform isPrivApp=true name=org.xiaomi.haotian.sony domain=haotian_sony_app type=privapp_data_file levelFrom=user

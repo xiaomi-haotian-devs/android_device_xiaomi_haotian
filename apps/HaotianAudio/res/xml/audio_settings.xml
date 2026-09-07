@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:settings="http://schemas.android.com/apk/res-auto"
+    android:title="@string/app_name">
+
+    <com.android.settingslib.widget.TopIntroPreference
+        android:key="page_intro"
+        android:title="@string/page_summary"
+        android:selectable="false" />
+
+    <PreferenceCategory
+        android:key="effect_category"
+        android:title="@string/section_effect">
+        <Preference
+            android:key="active_output"
+            android:title="@string/active_output"
+            android:summary="@string/status_loading"
+            android:selectable="false" />
+
+        <ListPreference
+            android:key="effect_implementation"
+            android:title="@string/effect_implementation"
+            android:entries="@array/effect_entries"
+            android:entryValues="@array/effect_values"
+            android:persistent="false"
+            android:defaultValue="dolby" />
+
+        <SwitchPreferenceCompat
+            android:key="spatial_enabled"
+            android:title="@string/immersive_sound"
+            android:summary="@string/immersive_sound_summary"
+            android:persistent="false"
+            android:defaultValue="false" />
+
+        <SwitchPreferenceCompat
+            android:key="head_tracking_enabled"
+            android:title="@string/head_tracking"
+            android:summary="@string/head_tracking_unavailable"
+            android:persistent="false"
+            android:defaultValue="false" />
+
+        <Preference
+            android:key="head_tracking_debug"
+            android:title="@string/head_tracking_debug_title"
+            android:summary="@string/head_tracking_debug_summary"
+            android:persistent="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="dolby_category"
+        android:title="@string/section_dolby">
+        <ListPreference
+            android:key="dolby_profile"
+            android:title="@string/preset"
+            android:entries="@array/dolby_profile_entries"
+            android:entryValues="@array/dolby_profile_values"
+            android:persistent="false"
+            android:defaultValue="0" />
+        <ListPreference
+            android:key="dolby_eq_preset"
+            android:title="@string/graphic_equalizer"
+            android:entries="@array/dolby_eq_entries"
+            android:entryValues="@array/dolby_eq_values"
+            android:persistent="false"
+            android:defaultValue="custom" />
+        <Preference
+            android:key="dolby_eq_expand"
+            android:title="@string/section_equalizer"
+            android:summary="@string/equalizer_expand"
+            android:persistent="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:key="dolby_eq_category">
+        <com.android.settingslib.widget.ButtonPreference
+            android:key="dolby_eq_reset"
+            android:title="@string/equalizer_reset"
+            android:persistent="false"
+            settings:buttonPreferenceSize="normal"
+            settings:buttonPreferenceType="tonal" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="misound_category"
+        android:title="@string/section_misound">
+        <ListPreference
+            android:key="misound_profile"
+            android:title="@string/preset"
+            android:entries="@array/misound_profile_entries"
+            android:entryValues="@array/misound_profile_values"
+            android:persistent="false"
+            android:defaultValue="4" />
+        <SwitchPreferenceCompat
+            android:key="misound_virtual_surround"
+            android:title="@string/virtual_surround"
+            android:summary="@string/virtual_surround_summary"
+            android:persistent="false"
+            android:defaultValue="false" />
+        <ListPreference
+            android:key="misound_eq_preset"
+            android:title="@string/graphic_equalizer"
+            android:entries="@array/misound_eq_entries"
+            android:entryValues="@array/misound_eq_values"
+            android:persistent="false"
+            android:defaultValue="custom" />
+        <Preference
+            android:key="misound_eq_expand"
+            android:title="@string/section_equalizer"
+            android:summary="@string/equalizer_expand"
+            android:persistent="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:key="misound_eq_category">
+        <com.android.settingslib.widget.ButtonPreference
+            android:key="misound_eq_reset"
+            android:title="@string/equalizer_reset"
+            android:persistent="false"
+            settings:buttonPreferenceSize="normal"
+            settings:buttonPreferenceType="tonal" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/section_personal_audio">
+        <Preference
+            android:key="sound_id_status"
+            android:title="@string/sound_id"
+            android:summary="@string/personal_audio_not_configured" />
+        <Preference
+            android:key="hearing_profile_status"
+            android:title="@string/hearing_compensation"
+            android:summary="@string/personal_audio_not_configured" />
+        <Preference
+            android:key="ear_scan_status"
+            android:title="@string/ear_canal_scan"
+            android:summary="@string/personal_audio_not_configured" />
+        <Preference
+            android:key="headset_model_status"
+            android:title="@string/headset_model"
+            android:summary="@string/personal_audio_not_configured" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/effect_status">
+        <Preference
+            android:key="effect_status"
+            android:title="@string/effect_engine_status"
+            android:selectable="false" />
+        <Preference
+            android:key="input_audio_status"
+            android:title="@string/input_audio_status"
+            android:selectable="false" />
+        <Preference
+            android:key="output_audio_status"
+            android:title="@string/output_audio_status"
+            android:selectable="false" />
+        <Preference
+            android:key="spatial_audio_status"
+            android:title="@string/spatial_audio_status"
+            android:selectable="false" />
+        <Preference
+            android:key="personal_audio_status"
+            android:title="@string/personal_audio_status"
+            android:selectable="false" />
+    </PreferenceCategory>
+</PreferenceScreen>

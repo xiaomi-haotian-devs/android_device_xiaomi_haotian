@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.miui.securitycenter">
-    <uses-permission android:name="android.permission.GET_ACCOUNTS_PRIVILEGED" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
-
-    <queries>
-        <package android:name="com.miui.tsmclient" />
-    </queries>
 
     <permission
         android:name="com.miui.securitycenter.permission.SYSTEM_PERMISSION_DECLARE"
@@ -28,8 +23,6 @@
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_UNLOCKED" />
-                <action android:name="android.accounts.LOGIN_ACCOUNTS_CHANGED" />
-                <action android:name="android.accounts.action.VISIBLE_ACCOUNTS_CHANGED" />
             </intent-filter>
         </receiver>
 

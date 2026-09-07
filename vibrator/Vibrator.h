@@ -8,11 +8,15 @@
 
 #include <aidl/android/hardware/vibrator/BnVibrator.h>
 
-#include <atomic>
+#include <chrono>
+#include <condition_variable>
+#include <cstddef>
 #include <cstdint>
 #include <map>
+#include <memory>
 #include <mutex>
 #include <string>
+#include <thread>
 #include <vector>
 
 namespace aidl {
@@ -86,21 +90,45 @@ private:
                        uint8_t gainPct);
   int eraseEffectLocked();
   int readVibeState() const;
-  bool pollVibeState(int expectedState, int32_t timeoutMs) const;
-  void completeEffectAsync(const std::shared_ptr<IVibratorCallback> &callback,
-                           int32_t durationMs, uint64_t generation,
-                           bool useVibeState);
+  struct Pulse {
+    int32_t startMs;
+    uint16_t waveformIndex;
+    int32_t durationMs;
+    uint8_t gainPct;
+  };
+  int playCompositionLocked(const std::vector<Pulse> &pulses,
+                            int32_t durationMs);
+  void trackPlaybackLocked(int32_t durationMs, int32_t initialDelayMs = 0);
+  bool playbackCompleteLocked();
+  uint8_t tuneGain(uint8_t fullScaleGain, float scale) const;
+  int startSequenceLocked(std::vector<Pulse> pulses, int32_t durationMs,
+                          const std::shared_ptr<IVibratorCallback> &callback);
+  int cancelSequenceLocked();
+  void workerLoop();
   int32_t durationForEffect(Effect effect) const;
   int32_t durationForPrimitive(CompositePrimitive primitive) const;
   uint8_t gainForEffect(Effect effect, EffectStrength strength) const;
   uint8_t gainForPrimitive(CompositePrimitive primitive, float scale) const;
   uint16_t waveformForEffect(Effect effect) const;
   uint16_t waveformForPrimitive(CompositePrimitive primitive) const;
-  void scheduleFollowupHaptic(uint64_t generation, int32_t delayMs,
-                              uint16_t waveformIndex, int32_t durationMs,
-                              uint8_t gainPct);
-
   std::mutex mLock;
+  std::condition_variable mCondition;
+  std::thread mWorker;
+  bool mStopping = false;
+  bool mActive = false;
+  bool mHardwareSequence = false;
+  bool mPlaybackPending = false;
+  bool mSawIdle = false;
+  bool mSawStart = false;
+  bool mOwtRejected = false;
+  std::vector<Pulse> mPulses;
+  size_t mNextPulse = 0;
+  std::chrono::steady_clock::time_point mSequenceStart;
+  std::chrono::steady_clock::time_point mSequenceEnd;
+  std::chrono::steady_clock::time_point mStartDeadline;
+  std::chrono::steady_clock::time_point mPlaybackDeadline;
+  std::chrono::steady_clock::time_point mFallbackEnd;
+  std::shared_ptr<IVibratorCallback> mCallback;
   int mFd = -1;
   int16_t mCurrentEffect = -1;
   bool mCurrentEffectCached = false;
@@ -109,10 +137,10 @@ private:
   std::string mVibeStatePath;
   bool mHasCustom = false;
   bool mHasGain = false;
+  bool mHasSine = false;
   bool mHasVibeState = false;
   bool mPreloadedEffects = false;
   std::map<CachedEffectKey, int16_t> mEffectCache;
-  std::atomic<uint64_t> mGeneration{0};
 };
 
 } // namespace vibrator

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sony headphones</string>
+    <string name="noise_tile">Sony noise control</string>
+    <string name="noise_control">Noise control</string>
+    <string name="noise_mode">Listening mode</string>
+    <string name="ambient_level">Ambient sound level</string>
+    <string name="focus_voice">Focus on voice</string>
+    <string name="adaptive_ambient">Adaptive ambient sound</string>
+    <string name="adaptive_sensitivity">Adaptive sensitivity</string>
+    <string name="noise_button">NC/AMB button cycle</string>
+    <string name="speak_to_chat">Speak-to-Chat</string>
+    <string name="speech_sensitivity">Voice detection sensitivity</string>
+    <string name="speech_timeout">Resume after speaking</string>
+    <string name="sound">Sound</string>
+    <string name="eq_preset">Equalizer preset</string>
+    <string name="clear_bass">Clear Bass</string>
+    <string name="eq_band">Band %1$d</string>
+    <string name="dsee">DSEE</string>
+    <string name="listening_mode">Sound effect</string>
+    <string name="room_size">Background music room size</string>
+    <string name="system">System</string>
+    <string name="auto_power_off">Automatic power off</string>
+    <string name="wearing_power">Power off when removed</string>
+    <string name="auto_pause">Pause when headphones are removed</string>
+    <string name="head_gestures">Head gestures</string>
+    <string name="voice_guidance">Voice guidance</string>
+    <string name="voice_volume">Voice guidance volume</string>
+    <string name="audio_priority">Bluetooth connection quality</string>
+    <string name="power_off">Power off headphones</string>
+    <string name="power_off_confirm">Turn off the connected Sony headphones?</string>
+    <string name="controls">Buttons and behavior</string>
+    <string name="headset_setting">Headphone setting</string>
+    <string name="left_control">Left control</string>
+    <string name="right_control">Right control</string>
+    <string name="custom_control">Custom button</string>
+    <string name="unknown_value">Reported value: %1$d</string>
+    <string name="devices">Connected devices</string>
+    <string name="devices_note">These controls manage devices paired with the headphones. Support depends on the headphone firmware.</string>
+    <string name="pairing_mode">Pair a new device</string>
+    <string name="automatic_source_switch">Allow automatic playback switching</string>
+    <string name="paired_device">Paired device</string>
+    <string name="forget_device">Forget paired device</string>
+    <string name="forget_device_confirm">Remove this pairing from the headphones? You will need to pair that device again.</string>
+    <string name="safe_listening">Listening level</string>
+    <string name="safe_preview">Listening level preview</string>
+    <string name="sound_pressure">Headphone-reported sound level</string>
+    <string name="sound_pressure_value">%1$d dB</string>
+    <string name="operation_error">Could not apply setting: %1$s</string>
+    <string name="battery_format">%1$s: %2$d%%</string>
+    <string name="firmware_format">Firmware: %1$s</string>
+    <string name="charging">Charging</string>
+    <string name="connected">Connected</string>
+    <string name="disconnected">Connect compatible Sony headphones to use these controls</string>
+    <string name="connect_requested">Connect this Sony device to use its controls</string>
+    <string name="connecting">Connecting to headphone controls…</string>
+    <string name="syncing">Reading headphone settings…</string>
+    <string name="applying">Applying and checking settings…</string>
+    <string name="retrying">Waiting to reconnect. Another Sony control app may be using the connection.</string>
+    <string name="refresh">Refresh / reconnect</string>
+    <string name="playing">Playing audio</string>
+    <string name="spatial_audio">Spatial audio</string>
+    <string name="spatial_audio_summary">Open HaotianAudio for the current audio output</string>
+    <string name="tracking_visualization">Head tracking visualization</string>
+    <string name="audio_unavailable">HaotianAudio is unavailable</string>
+    <string-array name="battery_parts">
+        <item>Headphones</item>
+        <item>Left</item>
+        <item>Right</item>
+        <item>Case</item>
+    </string-array>
+    <string-array name="noise_modes">
+        <item>Off</item>
+        <item>Noise cancelling</item>
+        <item>Ambient sound</item>
+    </string-array>
+    <string-array name="adaptive_levels">
+        <item>Low</item>
+        <item>Standard</item>
+        <item>High</item>
+    </string-array>
+    <string-array name="speech_levels">
+        <item>Automatic</item>
+        <item>Low</item>
+        <item>High</item>
+    </string-array>
+    <string-array name="speech_timeouts">
+        <item>Short</item>
+        <item>Medium</item>
+        <item>Long</item>
+        <item>Until manually resumed</item>
+    </string-array>
+    <string-array name="noise_button_modes">
+        <item>Noise cancelling / Ambient / Off</item>
+        <item>Noise cancelling / Ambient</item>
+        <item>Noise cancelling / Off</item>
+        <item>Ambient / Off</item>
+    </string-array>
+    <string-array name="listening_modes">
+        <item>Standard</item>
+        <item>Background music</item>
+        <item>Cinema</item>
+    </string-array>
+    <string-array name="room_sizes">
+        <item>Small</item>
+        <item>Medium</item>
+        <item>Large</item>
+    </string-array>
+    <string-array name="power_timeouts">
+        <item>Disabled</item>
+        <item>5 minutes</item>
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>60 minutes</item>
+        <item>180 minutes</item>
+    </string-array>
+    <string-array name="wearing_modes">
+        <item>Disabled / use timer</item>
+        <item>Power off when removed</item>
+    </string-array>
+    <string-array name="audio_priorities">
+        <item>Priority on sound quality</item>
+        <item>Priority on stable connection</item>
+    </string-array>
+    <string-array name="assignable_actions">
+        <item>None</item>
+        <item>Playback</item>
+        <item>Noise control</item>
+        <item>Noise control and Quick Access</item>
+        <item>Track controls</item>
+        <item>Voice recognition</item>
+        <item>Google Assistant</item>
+        <item>Amazon Alexa</item>
+        <item>Tencent Xiaowei</item>
+        <item>Microsoft Cortana</item>
+        <item>Quick Access</item>
+    </string-array>
+    <string-array name="device_actions">
+        <item>Connect</item>
+        <item>Disconnect</item>
+        <item>Switch playback here</item>
+        <item>Forget pairing</item>
+    </string-array>
+    <string-array name="eq_presets">
+        <item>Off</item>
+        <item>Rock</item>
+        <item>Pop</item>
+        <item>Jazz</item>
+        <item>Dance</item>
+        <item>EDM</item>
+        <item>R&amp;B / Hip-hop</item>
+        <item>Acoustic</item>
+        <item>Bright</item>
+        <item>Excited</item>
+        <item>Mellow</item>
+        <item>Relaxed</item>
+        <item>Vocal</item>
+        <item>Treble</item>
+        <item>Bass</item>
+        <item>Speech</item>
+        <item>Heavy</item>
+        <item>Clear</item>
+        <item>Hard</item>
+        <item>Soft</item>
+        <item>Gaming</item>
+        <item>FPS 1</item>
+        <item>FPS 2</item>
+        <item>FPS 3</item>
+        <item>Custom</item>
+        <item>Custom 1</item>
+        <item>Custom 2</item>
+        <item>Custom 3</item>
+        <item>Custom 4</item>
+        <item>Custom 5</item>
+    </string-array>
+</resources>
+

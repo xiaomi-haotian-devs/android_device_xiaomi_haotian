@@ -1,0 +1,15 @@
+# Track the actual service lifetime, including play-until-complete ending parts.
+service bootanim_overlay /system_ext/bin/bootanim_overlay
+    class core animation
+    user graphics
+    group graphics
+    disabled
+    oneshot
+
+# The process itself rejects shutdown/post-boot invocations. sys.boot_completed
+# can be unset during boot, so do not require it to equal "0" in this trigger.
+on property:init.svc.bootanim=running
+    start bootanim_overlay
+
+on property:init.svc.bootanim=stopped
+    stop bootanim_overlay

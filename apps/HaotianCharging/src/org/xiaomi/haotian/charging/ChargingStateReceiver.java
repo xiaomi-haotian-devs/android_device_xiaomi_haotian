@@ -32,11 +32,26 @@ public final class ChargingStateReceiver extends BroadcastReceiver {
                     client.setBypassCharging(false);
                     preferences.edit().putBoolean(
                             ChargingSettingsActivity.PREF_BYPASS, false).apply();
-                    client.setWirelessQuietMode(preferences.getBoolean(
-                            ChargingSettingsActivity.PREF_WIRELESS_QUIET, false));
+                    if (Intent.ACTION_POWER_CONNECTED.equals(intent.getAction())) {
+                        // HyperOS waits for transmitter authentication before
+                        // sending its standard (4) or top-speed (7) request.
+                        Thread.sleep(3000);
+                    }
+                    int mode = preferences.contains(
+                            ChargingSettingsActivity.PREF_WIRELESS_MODE)
+                            ? preferences.getInt(
+                                    ChargingSettingsActivity.PREF_WIRELESS_MODE,
+                                    ChargingSettingsActivity.WIRELESS_MODE_STANDARD)
+                            : preferences.getBoolean(
+                                    ChargingSettingsActivity.PREF_WIRELESS_QUIET, false)
+                                    ? ChargingSettingsActivity.WIRELESS_MODE_QUIET
+                                    : ChargingSettingsActivity.WIRELESS_MODE_STANDARD;
+                    ChargingSettingsActivity.applyWirelessMode(client, mode);
                 }
             } catch (RemoteException e) {
                 Log.e(TAG, "Unable to restore local charging controls", e);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
             } finally {
                 result.finish();
             }

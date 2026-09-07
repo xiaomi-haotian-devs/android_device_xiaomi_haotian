@@ -1,0 +1,2 @@
+persist.sys.haotian.haptics.style u:object_r:haotian_haptics_prop:s0 exact enum soft balanced crisp
+persist.sys.haotian.haptics.enhance u:object_r:haotian_haptics_prop:s0 exact bool

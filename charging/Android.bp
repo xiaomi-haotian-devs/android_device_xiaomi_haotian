@@ -15,8 +15,7 @@ cc_binary {
     ],
     shared_libs: [
         "libbase",
-        "libbinder",
+        "libbinder_ndk",
         "liblog",
-        "libutils",
     ],
 }

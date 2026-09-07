@@ -7,6 +7,7 @@
 soong_namespace {
     imports: [
         "device/xiaomi/sm8750-common",
+        "vendor/xiaomi/sm8750-common",
     ],
 }
 
@@ -16,4 +17,110 @@ cc_library_shared {
     compile_multilib: "64",
     device_specific: true,
     stl: "none",
+}
+
+// libmiface only uses MiSight to submit diagnostic events. Export the one ABI
+// entry point it needs without bringing HyperOS telemetry into the system.
+cc_library_shared {
+    name: "libmiface_noop",
+    srcs: ["miface/NoopMiSight.cpp"],
+    compile_multilib: "64",
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wextra",
+    ],
+    device_specific: true,
+}
+
+// Xiaomi's vendor camera metadata implementation predates the Android 16 tags
+// returned by CameraService. Keep the newer metadata ABI local to mifaced so
+// the working camera stack and every other camera client remain unchanged.
+cc_library_shared {
+    name: "libcamera_metadata_miface",
+    whole_static_libs: ["libcamera_metadata"],
+    shared_libs: ["liblog"],
+    compile_multilib: "64",
+    double_loadable: true,
+    device_specific: true,
+}
+
+cc_binary {
+    name: "haotian-refresh-debug",
+    srcs: ["display/debug/haotian_refresh_debug.cpp"],
+    shared_libs: [
+        "libbinder",
+        "libutils",
+    ],
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wextra",
+    ],
+    cpp_std: "c++20",
+    system_ext_specific: true,
+}
+
+prebuilt_etc {
+    name: "haotian-recovery-firmware.fstab",
+    src: "recovery/haotian-recovery-firmware.fstab",
+    recovery: true,
+}
+
+prebuilt_etc {
+    name: "haotian-recovery-security.xml",
+    src: "recovery/haotian-recovery-security.xml",
+    sub_dir: "vintf/manifest",
+    recovery: true,
+}
+
+cc_binary {
+    name: "haotian-recovery-decrypt",
+    srcs: ["recovery/haotian_recovery_decrypt.cpp"],
+    defaults: [
+        "keymint_use_latest_hal_aidl_ndk_shared",
+    ],
+    recovery: true,
+    compile_multilib: "64",
+    cpp_std: "c++20",
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wextra",
+        "-Wno-deprecated-declarations",
+    ],
+    include_dirs: ["external/scrypt/lib/crypto"],
+    init_rc: ["recovery/haotian-recovery-decrypt.rc"],
+    shared_libs: [
+        "android.hardware.gatekeeper-V1-ndk",
+        "android.hardware.security.sharedsecret-V1-ndk",
+        "libbase",
+        "libbinder_ndk",
+        "libcrypto",
+        "libcutils",
+        "libkeymint_support",
+        "liblog",
+        "libsqlite",
+        "libziparchive",
+    ],
+    static_libs: [
+        "libdm",
+        "libext2_uuid",
+        "libotautil",
+        "libscrypt_static",
+    ],
+}
+
+cc_binary {
+    name: "haotian-recovery-touch",
+    srcs: ["recovery/haotian_recovery_touch.cpp"],
+    recovery: true,
+    compile_multilib: "64",
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wextra",
+    ],
+    init_rc: ["recovery/haotian-recovery-touch.rc"],
+    shared_libs: ["haotian-recovery-libtouchreport"],
 }

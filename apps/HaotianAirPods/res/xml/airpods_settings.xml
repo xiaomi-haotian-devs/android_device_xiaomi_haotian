@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory android:title="@string/status_category">
+        <Preference android:key="connection" android:selectable="false"
+            android:title="@string/connection" />
+        <Preference android:key="left" android:selectable="false"
+            android:icon="@drawable/ic_earbud_left" android:title="@string/left_airpod" />
+        <Preference android:key="right" android:selectable="false"
+            android:icon="@drawable/ic_earbud_right" android:title="@string/right_airpod" />
+        <Preference android:key="case" android:selectable="false"
+            android:icon="@drawable/ic_earbud_case" android:title="@string/charging_case" />
+    </PreferenceCategory>
+
+    <androidx.preference.EditTextPreference
+        android:key="device_name" android:persistent="false"
+        android:title="@string/device_name" />
+    <PreferenceScreen android:key="hearing_health" android:title="@string/hearing_health">
+        <PreferenceScreen android:key="hearing_protection_screen"
+            android:title="@string/hearing_protection">
+            <SwitchPreferenceCompat android:key="hearing_loud_sound_reduction"
+                android:persistent="false" android:title="@string/loud_sound_reduction"
+                android:summary="@string/loud_sound_reduction_description" />
+            <SwitchPreferenceCompat android:key="ppe" android:persistent="false"
+                android:title="@string/ppe" android:summary="@string/workspace_use_description" />
+        </PreferenceScreen>
+        <PreferenceScreen android:key="hearing_aid" android:title="@string/hearing_aid"
+            android:summary="@string/hearing_aid_description">
+            <SwitchPreferenceCompat android:key="hearing_aid_enabled"
+                android:persistent="false" android:title="@string/hearing_aid" />
+            <PreferenceScreen android:key="hearing_aid_adjustments"
+                android:title="@string/adjustments">
+                <SwitchPreferenceCompat android:key="hearing_aid_gain_swipe"
+                    android:persistent="false"
+                    android:title="@string/swipe_to_control_amplification"
+                    android:summary="@string/swipe_amplification_description" />
+                <SeekBarPreference android:key="hearing_aid_amplification"
+                    android:persistent="false" android:title="@string/amplification"
+                    android:summary="@string/bipolar_slider_summary" app:min="0"
+                    android:max="100" app:showSeekBarValue="true"
+                    app:updatesContinuously="false" />
+                <SeekBarPreference android:key="hearing_aid_balance"
+                    android:persistent="false" android:title="@string/balance"
+                    android:summary="@string/balance_slider_summary" app:min="0"
+                    android:max="100" app:showSeekBarValue="true"
+                    app:updatesContinuously="false" />
+                <SeekBarPreference android:key="hearing_aid_tone"
+                    android:persistent="false" android:title="@string/tone"
+                    android:summary="@string/tone_slider_summary" app:min="0"
+                    android:max="100" app:showSeekBarValue="true"
+                    app:updatesContinuously="false" />
+                <SeekBarPreference android:key="hearing_aid_ambient"
+                    android:persistent="false" android:title="@string/ambient_noise_reduction"
+                    app:min="0" android:max="100" app:showSeekBarValue="true"
+                    app:updatesContinuously="false" />
+                <SwitchPreferenceCompat android:key="hearing_aid_conversation_boost"
+                    android:persistent="false" android:title="@string/conversation_boost"
+                    android:summary="@string/conversation_boost_description" />
+            </PreferenceScreen>
+            <PreferenceScreen android:key="hearing_test"
+                android:title="@string/update_hearing_test"
+                android:summary="@string/hearing_test_value_instruction">
+                <PreferenceScreen android:key="hearing_test_left"
+                    android:title="@string/left_airpod">
+                    <SeekBarPreference android:key="hearing_test_left_1"
+                        android:persistent="false" android:title="@string/frequency_250"
+                        app:min="0" android:max="100" app:showSeekBarValue="true"
+                        app:updatesContinuously="false" />
+                    <SeekBarPreference android:key="hearing_test_left_2"
+                        android:persistent="false" android:title="@string/frequency_500"
+                        app:min="0" android:max="100" app:showSeekBarValue="true"
+                        app:updatesContinuously="false" />
+                    <SeekBarPreference android:key="hearing_test_left_3"
+                        android:persistent="false" android:title="@string/frequency_1000"
+                        app:min="0" android:max="100" app:showSeekBarValue="true"
+                        app:updatesContinuously="false" />
+                    <SeekBarPreference android:key="hearing_test_left_4"
+                        android:persistent="false" android:title="@string/frequency_2000"
+                        app:min="0" android:max="100" app:showSeekBarValue="true"
+                        app:updatesContinuously="false" />
+                    <SeekBarPreference android:key="hearing_test_left_5"
+                        android:persistent="false" android:title="@string/frequency_3000"
+                        app:min="0" android:max="100" app:showSeekBarValue="true"
+                        app:updatesContinuously="false" />
+                    <SeekBarPreference android:key="hearing_test_left_6"
+                        android:persistent="false" android:title="@string/frequency_4000"
+                        app:min="0" android:max="100" app:showSeekBarValue="true"
+                        app:updatesContinuously="false" />
+                    <SeekBarPreference android:key="hearing_test_left_7"
+                        android:persistent="false" android:title="@string/frequency_6000"
+                        app:min="0" android:max="100" app:showSeekBarValue="true"
+                        app:updatesContinuously="false" />
+                    <SeekBarPreference android:key="hearing_test_left_8"
+                        android:persistent="false" android:title="@string/frequency_8000"
+                        app:min="0" android:max="100" app:showSeekBarValue="true"
+                        app:updatesContinuously="false" />
+                </PreferenceScreen>
+                <PreferenceScreen android:key="hearing_test_right"
+                    android:title="@string/right_airpod">
+                    <SeekBarPreference android:key="hearing_test_right_1"
+                        android:persistent="false" android:title="@string/frequency_250"
+                        app:min="0" android:max="100" app:showSeekBarValue="true"
+                        app:updatesContinuously="false" />
+                    <SeekBarPreference android:key="hearing_test_right_2"
+                        android:persistent="false" android:title="@string/frequency_500"
+                        app:min="0" android:max="100" app:showSeekBarValue="true"
+                        app:updatesContinuously="false" />
+                    <SeekBarPreference android:key="hearing_test_right_3"
+                        android:persistent="false" android:title="@string/frequency_1000"
+                        app:min="0" android:max="100" app:showSeekBarValue="true"
+                        app:updatesContinuously="false" />
+                    <SeekBarPreference android:key="hearing_test_right_4"
+                        android:persistent="false" android:title="@string/frequency_2000"
+                        app:min="0" android:max="100" app:showSeekBarValue="true"
+                        app:updatesContinuously="false" />
+                    <SeekBarPreference android:key="hearing_test_right_5"
+                        android:persistent="false" android:title="@string/frequency_3000"
+                        app:min="0" android:max="100" app:showSeekBarValue="true"
+                        app:updatesContinuously="false" />
+                    <SeekBarPreference android:key="hearing_test_right_6"
+                        android:persistent="false" android:title="@string/frequency_4000"
+                        app:min="0" android:max="100" app:showSeekBarValue="true"
+                        app:updatesContinuously="false" />
+                    <SeekBarPreference android:key="hearing_test_right_7"
+                        android:persistent="false" android:title="@string/frequency_6000"
+                        app:min="0" android:max="100" app:showSeekBarValue="true"
+                        app:updatesContinuously="false" />
+                    <SeekBarPreference android:key="hearing_test_right_8"
+                        android:persistent="false" android:title="@string/frequency_8000"
+                        app:min="0" android:max="100" app:showSeekBarValue="true"
+                        app:updatesContinuously="false" />
+                </PreferenceScreen>
+            </PreferenceScreen>
+        </PreferenceScreen>
+    </PreferenceScreen>
+
+    <PreferenceCategory android:title="@string/noise_control">
+        <ListPreference android:key="noise_mode" android:persistent="false"
+            android:title="@string/listening_mode"
+            android:entries="@array/noise_mode_entries"
+            android:entryValues="@array/noise_mode_values"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/press_and_hold">
+        <PreferenceScreen android:key="left_press_screen" android:title="@string/left_airpod">
+            <ListPreference android:key="left_action" android:persistent="false"
+                android:title="@string/press_and_hold_action"
+                android:entries="@array/stem_action_entries"
+                android:entryValues="@array/stem_action_values"
+                app:useSimpleSummaryProvider="true" />
+            <MultiSelectListPreference android:key="press_hold_modes_left"
+                android:persistent="false" android:title="@string/listening_modes_for_press_hold"
+                android:summary="@string/select_at_least_two_modes"
+                android:entries="@array/noise_mode_entries"
+                android:entryValues="@array/noise_mode_bits" />
+        </PreferenceScreen>
+        <PreferenceScreen android:key="right_press_screen" android:title="@string/right_airpod">
+            <ListPreference android:key="right_action" android:persistent="false"
+                android:title="@string/press_and_hold_action"
+                android:entries="@array/stem_action_entries"
+                android:entryValues="@array/stem_action_values"
+                app:useSimpleSummaryProvider="true" />
+            <MultiSelectListPreference android:key="press_hold_modes_right"
+                android:persistent="false" android:title="@string/listening_modes_for_press_hold"
+                android:summary="@string/select_at_least_two_modes"
+                android:entries="@array/noise_mode_entries"
+                android:entryValues="@array/noise_mode_bits" />
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/call_controls">
+        <Preference android:key="answer_call" android:enabled="false"
+            android:title="@string/answer_call" android:summary="@string/press_once" />
+        <ListPreference android:key="mute_action" android:persistent="false"
+            android:title="@string/mute_unmute" android:entries="@array/mute_action_entries"
+            android:entryValues="@array/mute_action_values"
+            app:useSimpleSummaryProvider="true" />
+        <ListPreference android:key="hang_up_action" android:persistent="false"
+            android:title="@string/hang_up" android:entries="@array/hang_up_action_entries"
+            android:entryValues="@array/hang_up_action_values"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/audio_category">
+        <SwitchPreferenceCompat android:key="adaptive_volume" android:persistent="false"
+            android:title="@string/personalized_volume" />
+        <SwitchPreferenceCompat android:key="conversation_awareness" android:persistent="false"
+            android:title="@string/conversation_awareness" />
+        <PreferenceScreen android:key="conversation_awareness_options"
+            android:title="@string/conversation_awareness_options"
+            android:summary="@string/conversation_awareness_options_description">
+            <SwitchPreferenceCompat android:key="conversation_awareness_pause_music"
+                android:defaultValue="false"
+                android:title="@string/conversation_awareness_pause_music"
+                android:summary="@string/conversation_awareness_pause_music_description" />
+            <SwitchPreferenceCompat android:key="relative_conversation_awareness_volume"
+                android:defaultValue="true"
+                android:title="@string/relative_conversation_awareness_volume"
+                android:summary="@string/relative_conversation_awareness_volume_description" />
+            <SeekBarPreference android:key="conversation_awareness_volume"
+                android:defaultValue="43" android:title="@string/conversation_awareness_volume"
+                android:summary="@string/conversation_awareness_volume_description"
+                app:min="10" android:max="85" app:showSeekBarValue="true"
+                app:updatesContinuously="false" />
+        </PreferenceScreen>
+        <SwitchPreferenceCompat android:key="loud_sound_reduction" android:persistent="false"
+            android:title="@string/loud_sound_reduction"
+            android:summary="@string/loud_sound_reduction_description" />
+        <PreferenceScreen android:key="adaptive_strength_screen"
+            android:title="@string/adaptive_audio_strength">
+            <SeekBarPreference android:key="adaptive_strength" android:persistent="false"
+                android:title="@string/adaptive_audio_strength" app:min="0" android:max="100"
+                app:showSeekBarValue="true" app:updatesContinuously="false" />
+        </PreferenceScreen>
+        <PreferenceScreen android:key="equalizer" android:title="@string/equalizer">
+            <ListPreference android:key="custom_eq_mode" android:persistent="false"
+                android:title="@string/equalizer_mode"
+                android:entries="@array/equalizer_mode_entries"
+                android:entryValues="@array/equalizer_mode_values"
+                app:useSimpleSummaryProvider="true" />
+            <PreferenceCategory android:key="custom_eq_controls"
+                android:title="@string/custom_equalizer">
+                <SeekBarPreference android:key="custom_eq_low" android:persistent="false"
+                    android:title="@string/low" app:min="0" android:max="100"
+                    app:showSeekBarValue="true" app:updatesContinuously="false" />
+                <SeekBarPreference android:key="custom_eq_mid" android:persistent="false"
+                    android:title="@string/mid" app:min="0" android:max="100"
+                    app:showSeekBarValue="true" app:updatesContinuously="false" />
+                <SeekBarPreference android:key="custom_eq_high" android:persistent="false"
+                    android:title="@string/high" app:min="0" android:max="100"
+                    app:showSeekBarValue="true" app:updatesContinuously="false" />
+                <Preference android:key="custom_eq_reset" android:title="@string/reset" />
+            </PreferenceCategory>
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/connection_category">
+        <SwitchPreferenceCompat android:key="automatic_ear_detection" android:persistent="false"
+            android:title="@string/automatic_ear_detection" />
+        <SwitchPreferenceCompat android:key="automatic_connection" android:persistent="false"
+            android:title="@string/automatic_connection" />
+    </PreferenceCategory>
+
+    <PreferenceScreen android:key="microphone_screen" android:title="@string/microphone">
+        <ListPreference android:key="microphone_mode" android:persistent="false"
+            android:title="@string/microphone" android:entries="@array/microphone_entries"
+            android:entryValues="@array/microphone_values"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceScreen>
+
+    <SwitchPreferenceCompat android:key="sleep_detection" android:persistent="false"
+        android:title="@string/sleep_detection" />
+    <PreferenceScreen android:key="head_gestures" android:title="@string/head_gestures">
+        <SwitchPreferenceCompat android:key="head_gestures_enabled"
+            android:defaultValue="false" android:title="@string/head_gestures"
+            android:summary="@string/head_gestures_details" />
+    </PreferenceScreen>
+    <SwitchPreferenceCompat android:key="optimized_charging" android:persistent="false"
+        android:title="@string/optimized_charging" />
+
+    <PreferenceScreen android:key="accessibility_screen" android:title="@string/accessibility">
+        <ListPreference android:key="press_speed" android:persistent="false"
+            android:title="@string/press_speed" android:entries="@array/press_speed_entries"
+            android:entryValues="@array/press_speed_values"
+            app:useSimpleSummaryProvider="true" />
+        <ListPreference android:key="press_hold_duration" android:persistent="false"
+            android:title="@string/press_hold_duration"
+            android:entries="@array/press_speed_entries"
+            android:entryValues="@array/press_speed_values"
+            app:useSimpleSummaryProvider="true" />
+        <SwitchPreferenceCompat android:key="one_bud_anc" android:persistent="false"
+            android:title="@string/one_bud_anc" />
+        <SwitchPreferenceCompat android:key="accessibility_loud_sound_reduction"
+            android:persistent="false" android:title="@string/loud_sound_reduction"
+            android:summary="@string/loud_sound_reduction_description" />
+        <PreferenceScreen android:key="transparency_screen"
+            android:title="@string/customize_transparency_mode"
+            android:summary="@string/customize_transparency_mode_description">
+            <SwitchPreferenceCompat android:key="transparency_enabled" android:persistent="false"
+                android:title="@string/transparency_mode" />
+            <SeekBarPreference android:key="transparency_amplification"
+                android:persistent="false" android:title="@string/amplification"
+                android:summary="@string/bipolar_slider_summary" app:min="0" android:max="100"
+                app:showSeekBarValue="true" app:updatesContinuously="false" />
+            <SeekBarPreference android:key="transparency_balance" android:persistent="false"
+                android:title="@string/balance" android:summary="@string/balance_slider_summary"
+                app:min="0" android:max="100" app:showSeekBarValue="true"
+                app:updatesContinuously="false" />
+            <SeekBarPreference android:key="transparency_tone" android:persistent="false"
+                android:title="@string/tone" android:summary="@string/tone_slider_summary"
+                app:min="0" android:max="100" app:showSeekBarValue="true"
+                app:updatesContinuously="false" />
+            <SeekBarPreference android:key="transparency_ambient" android:persistent="false"
+                android:title="@string/ambient_noise_reduction"
+                app:min="0" android:max="100" app:showSeekBarValue="true"
+                app:updatesContinuously="false" />
+            <SwitchPreferenceCompat android:key="transparency_conversation_boost"
+                android:persistent="false" android:title="@string/conversation_boost"
+                android:summary="@string/conversation_boost_description" />
+            <PreferenceCategory android:key="transparency_equalizer"
+                android:title="@string/equalizer">
+                <SeekBarPreference android:key="transparency_eq_1" android:persistent="false"
+                    android:title="@string/band_1" app:min="0" android:max="100"
+                    app:showSeekBarValue="true" app:updatesContinuously="false" />
+                <SeekBarPreference android:key="transparency_eq_2" android:persistent="false"
+                    android:title="@string/band_2" app:min="0" android:max="100"
+                    app:showSeekBarValue="true" app:updatesContinuously="false" />
+                <SeekBarPreference android:key="transparency_eq_3" android:persistent="false"
+                    android:title="@string/band_3" app:min="0" android:max="100"
+                    app:showSeekBarValue="true" app:updatesContinuously="false" />
+                <SeekBarPreference android:key="transparency_eq_4" android:persistent="false"
+                    android:title="@string/band_4" app:min="0" android:max="100"
+                    app:showSeekBarValue="true" app:updatesContinuously="false" />
+                <SeekBarPreference android:key="transparency_eq_5" android:persistent="false"
+                    android:title="@string/band_5" app:min="0" android:max="100"
+                    app:showSeekBarValue="true" app:updatesContinuously="false" />
+                <SeekBarPreference android:key="transparency_eq_6" android:persistent="false"
+                    android:title="@string/band_6" app:min="0" android:max="100"
+                    app:showSeekBarValue="true" app:updatesContinuously="false" />
+                <SeekBarPreference android:key="transparency_eq_7" android:persistent="false"
+                    android:title="@string/band_7" app:min="0" android:max="100"
+                    app:showSeekBarValue="true" app:updatesContinuously="false" />
+                <SeekBarPreference android:key="transparency_eq_8" android:persistent="false"
+                    android:title="@string/band_8" app:min="0" android:max="100"
+                    app:showSeekBarValue="true" app:updatesContinuously="false" />
+            </PreferenceCategory>
+        </PreferenceScreen>
+        <SeekBarPreference android:key="chime_volume" android:persistent="false"
+            android:title="@string/chime_volume" app:min="0" android:max="100"
+            app:showSeekBarValue="true" app:updatesContinuously="false" />
+        <SwitchPreferenceCompat android:key="volume_swipe" android:persistent="false"
+            android:title="@string/volume_swipe" />
+        <ListPreference android:key="volume_swipe_speed" android:persistent="false"
+            android:title="@string/volume_swipe_speed"
+            android:entries="@array/volume_swipe_speed_entries"
+            android:entryValues="@array/volume_swipe_speed_values"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceScreen>
+
+    <SwitchPreferenceCompat android:key="allow_off" android:persistent="false"
+        android:title="@string/allow_off_mode" />
+
+    <PreferenceScreen android:key="smart_routing" android:title="@string/smart_routing"
+        android:summary="@string/smart_routing_description">
+        <PreferenceCategory android:title="@string/takeover_airpods_state">
+            <SwitchPreferenceCompat android:key="takeover_when_disconnected"
+                android:defaultValue="false" android:title="@string/takeover_disconnected"
+                android:summary="@string/takeover_disconnected_description" />
+            <SwitchPreferenceCompat android:key="takeover_when_idle"
+                android:defaultValue="false" android:title="@string/takeover_idle"
+                android:summary="@string/takeover_idle_description" />
+            <SwitchPreferenceCompat android:key="takeover_when_music"
+                android:defaultValue="false" android:title="@string/takeover_music"
+                android:summary="@string/takeover_music_description" />
+            <SwitchPreferenceCompat android:key="takeover_when_call"
+                android:defaultValue="false" android:title="@string/takeover_call"
+                android:summary="@string/takeover_call_description" />
+        </PreferenceCategory>
+        <PreferenceCategory android:title="@string/takeover_phone_state">
+            <SwitchPreferenceCompat android:key="takeover_when_ringing_call"
+                android:defaultValue="false" android:title="@string/takeover_ringing_call"
+                android:summary="@string/takeover_ringing_call_description" />
+            <SwitchPreferenceCompat android:key="takeover_when_media_start"
+                android:defaultValue="false" android:title="@string/takeover_media_start"
+                android:summary="@string/takeover_media_start_description" />
+        </PreferenceCategory>
+    </PreferenceScreen>
+
+    <PreferenceScreen android:key="about_screen" android:title="@string/about">
+        <Preference android:key="about_model" android:selectable="false"
+            android:title="@string/model_number" />
+        <Preference android:key="about_serial" android:selectable="false"
+            android:title="@string/serial_number" />
+        <Preference android:key="about_left_serial" android:selectable="false"
+            android:title="@string/left_serial_number" />
+        <Preference android:key="about_right_serial" android:selectable="false"
+            android:title="@string/right_serial_number" />
+        <Preference android:key="about_version1" android:selectable="false"
+            android:title="@string/version_1" />
+        <Preference android:key="about_version2" android:selectable="false"
+            android:title="@string/version_2" />
+        <Preference android:key="about_version3" android:selectable="false"
+            android:title="@string/version_3" />
+        <Preference android:key="about_hardware" android:selectable="false"
+            android:title="@string/hardware_revision" />
+    </PreferenceScreen>
+
+    <Preference android:key="disconnect" android:title="@string/disconnect" />
+</PreferenceScreen>

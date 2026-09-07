@@ -7,6 +7,9 @@ android_app {
     product_specific: true,
     sdk_version: "current",
     min_sdk_version: "35",
+    static_libs: [
+        "Aperture_com.google.zxing_core",
+    ],
     optimize: {
         enabled: true,
     },

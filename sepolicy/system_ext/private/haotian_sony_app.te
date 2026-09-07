@@ -1,0 +1,7 @@
+type haotian_sony_app, domain, coredomain;
+app_domain(haotian_sony_app)
+bluetooth_domain(haotian_sony_app)
+
+# Android BluetoothSocket, standard metadata and the signature-protected UI facade.
+allow haotian_sony_app app_api_service:service_manager find;
+allow haotian_sony_app system_api_service:service_manager find;

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/section_personal_audio">
+
+    <com.android.settingslib.widget.TopIntroPreference
+        android:key="personal_intro"
+        android:title="@string/personal_audio_intro"
+        android:selectable="false" />
+
+    <PreferenceCategory
+        android:key="sound_id_category"
+        android:title="@string/sound_id">
+        <SwitchPreferenceCompat
+            android:key="sound_id_enabled"
+            android:title="@string/personal_processing_enabled"
+            android:summary="@string/sound_id_summary"
+            android:persistent="false" />
+        <Preference
+            android:key="sound_id_reset"
+            android:title="@string/reset_profile"
+            android:persistent="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="sound_id_bands"
+        android:title="@string/sound_id_curve" />
+
+    <PreferenceCategory
+        android:key="hearing_category"
+        android:title="@string/hearing_compensation">
+        <SwitchPreferenceCompat
+            android:key="hearing_enabled"
+            android:title="@string/personal_processing_enabled"
+            android:summary="@string/hearing_compensation_summary"
+            android:persistent="false" />
+        <SwitchPreferenceCompat
+            android:key="hearing_link_channels"
+            android:title="@string/link_left_right"
+            android:summary="@string/link_left_right_summary"
+            android:persistent="false"
+            android:defaultValue="true" />
+        <Preference
+            android:key="hearing_reset"
+            android:title="@string/reset_profile"
+            android:persistent="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="hearing_left_bands"
+        android:title="@string/left_ear" />
+
+    <PreferenceCategory
+        android:key="hearing_right_bands"
+        android:title="@string/right_ear" />
+
+    <PreferenceCategory
+        android:key="ear_scan_category"
+        android:title="@string/ear_canal_scan">
+        <Preference
+            android:key="ear_scan_status_detail"
+            android:title="@string/calibration_data"
+            android:selectable="false" />
+        <SwitchPreferenceCompat
+            android:key="ear_scan_enabled"
+            android:title="@string/personal_processing_enabled"
+            android:persistent="false" />
+        <Preference
+            android:key="ear_scan_measure"
+            android:title="@string/start_ear_scan"
+            android:summary="@string/ear_scan_hardware_summary"
+            android:persistent="false" />
+        <EditTextPreference
+            android:key="ear_scan_import"
+            android:title="@string/import_calibration"
+            android:dialogTitle="@string/import_calibration"
+            android:summary="@string/import_calibration_summary"
+            android:persistent="false" />
+        <Preference
+            android:key="ear_scan_clear"
+            android:title="@string/clear_calibration"
+            android:persistent="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="headset_model_category"
+        android:title="@string/headset_model">
+        <ListPreference
+            android:key="headset_model_select"
+            android:title="@string/headset_model"
+            android:entries="@array/headset_model_entries"
+            android:entryValues="@array/headset_model_values"
+            android:persistent="false" />
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">小米音效</string>
+    <string name="page_summary">為內建揚聲器、有線、USB 與藍牙音訊提供原生 Dolby Atmos 與 MiSound 處理。</string>
+    <string name="section_effect">音效</string>
+    <string name="active_output">目前音訊輸出</string>
+    <string name="status_loading">正在載入…</string>
+    <string name="effect_implementation">音效實作</string>
+    <string name="effect_misound">MiSound</string>
+    <string name="effect_dolby">Dolby Atmos</string>
+    <string name="effect_original">原聲</string>
+    <string name="effect_original_summary">關閉 Dolby、MiSound 與沉浸式音效處理</string>
+    <string name="immersive_sound">沉浸式音效</string>
+    <string name="immersive_sound_summary">為支援的揚聲器與耳機內容使用小米空間音訊渲染器</string>
+    <string name="immersive_sound_not_applied">已要求開啟，但空間音訊引擎未接受此狀態</string>
+    <string name="immersive_sound_waiting_route">已開啟，正在等待相容的音訊輸出裝置</string>
+    <string name="immersive_sound_active">正在處理目前播放的音訊</string>
+    <string name="immersive_sound_content_bypassed">已開啟，但目前播放的音訊沒有進入空間化鏈路</string>
+    <string name="immersive_sound_ready">已開啟並就緒，目前沒有媒體正在播放</string>
+    <string name="virtual_surround">虛擬沉浸式音效</string>
+    <string name="virtual_surround_summary">增強立體聲耳機播放的音場深度</string>
+    <string name="section_dolby">Dolby Atmos</string>
+    <string name="section_misound">MiSound</string>
+    <string name="preset">預設</string>
+    <string name="graphic_equalizer">圖形等化器</string>
+    <string name="section_equalizer">自訂等化器</string>
+    <string name="equalizer_expand">點按展開</string>
+    <string name="equalizer_collapse">點按收起</string>
+    <string name="equalizer_reset">重設等化器</string>
+    <string name="eq_band_summary">%1$.2f dB</string>
+    <string name="profile_dynamic">動態</string><string name="profile_smart">智慧</string>
+    <string name="profile_video">影片</string><string name="profile_music">音樂</string>
+    <string name="profile_voice">語音</string>
+    <string name="eq_custom">自訂</string><string name="eq_flat">平坦</string>
+    <string name="eq_rock">搖滾</string><string name="eq_jazz">爵士</string>
+    <string name="eq_pop">流行</string><string name="eq_classical">古典</string>
+    <string name="eq_hip_hop">嘻哈</string><string name="eq_blues">藍調</string>
+    <string name="eq_electronic">電子</string><string name="eq_country">鄉村</string>
+    <string name="eq_dance">舞曲</string><string name="eq_metal">金屬</string>
+    <string name="head_tracking">頭部追蹤</string>
+    <string name="head_tracking_available">已連接相容的藍牙頭部追蹤器</string>
+    <string name="head_tracking_unavailable">未連接相容的藍牙頭部追蹤器</string>
+    <string name="head_tracking_enabled_summary">目前輸出使用隨頭部轉動的空間音訊</string>
+    <string name="head_tracking_disabled_summary">目前輸出使用固定方向的空間音訊</string>
+    <string name="head_tracking_requires_immersive">請先開啟沉浸式音效，再啟用頭部追蹤</string>
+    <string name="head_tracking_debug_title">頭部追蹤視覺化</string>
+    <string name="head_tracking_debug_summary">即時第三人稱姿態與感測器診斷</string>
+    <string name="head_tracking_debug_intro">此介面顯示目前提供器姿態，或 Android 選中的原生頭部追蹤器。「回正」重設視覺化方向並請求空間音訊回正。下方原生感測器四元數保留為診斷值，不受視覺化回正影響。</string>
+    <string name="head_tracking_debug_hint">身體保持不動，頭部模型與前向箭頭跟隨耳機轉動。</string>
+    <string name="head_tracking_debug_recenter">以目前方向為正前方</string>
+    <string name="head_tracking_recenter_requested">請短暫保持面向正前方，正在重新校準</string>
+    <string name="head_tracking_debug_visualization">第三人稱頭部方向視覺化</string>
+    <string name="head_tracking_debug_no_output">未連接相容的頭部追蹤輸出裝置。</string>
+    <string name="head_tracking_debug_no_output_short">沒有追蹤器</string>
+    <string name="head_tracking_debug_waiting">%1$s 已連接，正在等待完成校準的姿態影格…</string>
+    <string name="head_tracking_debug_waiting_short">正在等待姿態資料</string>
+    <string name="head_tracking_debug_live">即時</string>
+    <string name="head_tracking_debug_stale">姿態資料已暫停</string>
+    <string name="head_tracking_debug_connection_format">%1$s · %2$s\n提供器：%3$s</string>
+    <string name="head_tracking_debug_error_format">最近的提供器錯誤：%1$s</string>
+    <string name="head_tracking_debug_angles_format">實際渲染方向\n偏航 %1$+.1f° · 俯仰 %2$+.1f° · 翻滾 %3$+.1f°\n正規化四元數：[%4$+.4f, %5$+.4f, %6$+.4f, %7$+.4f]</string>
+    <string name="head_tracking_debug_stream_format">姿態資料：%1$.1f Hz · 影格年齡 %2$s · 生產端延遲 %3$s\n信心度 %4$.2f · 角速度 [%5$+.3f, %6$+.3f, %7$+.3f] rad/s\n不連續計數 %8$d · 第 %9$d 影格</string>
+    <string name="head_tracking_latency_title">全鏈路延遲</string>
+    <string name="head_tracking_latency_intro">測量從 AACP 資料包到達 Android 時開始，所有階段均使用 CLOCK_BOOTTIME。輸出延遲由音訊路徑回報，最終聲學延遲是估算值，不是麥克風實測值。</string>
+    <string name="head_tracking_latency_overview_format">估算姿態 → 實際發聲\n%1$s\n實測姿態 → 音效回呼 %2$s · 回報的輸出延遲 %3$s\n預測前視 %4$d ms · 補償殘差 %5$s\n%6$s</string>
+    <string name="head_tracking_latency_estimate_note">正殘差表示預測後的姿態到達耳朵時仍可能偏晚；關聯誤差不超過一個姿態影格。</string>
+    <string name="head_tracking_latency_effect_tap_unavailable">無法取得音效回呼旁路，已暫停端到端估算。</string>
+    <string name="head_tracking_latency_stages_format">分段實測\nAACP 資料包 → 正規化姿態：%1$s\n解碼器 → 資料接收器：%2$s\n共享記憶體發佈：%3$s\n發佈 → Sensors HAL 取樣：%4$s\nSensors HAL 取樣 → 提交：%5$s\n姿態時間戳 → 音效回呼：%6$s\nHAL 序號 %7$d / 生產端 %8$d</string>
+    <string name="head_tracking_latency_output_format">音訊輸出\n編碼器：%1$s\n編碼影格時長：%2$s\n混音緩衝區塊：%3$s\nHAL/A2DP 回報輸出延遲：%4$s\n音效回呼影格年齡：%5$s</string>
+    <string name="head_tracking_backend_auto">後端自動選擇</string>
+    <string name="head_tracking_backend_hardware_requested">已要求硬體編碼</string>
+    <string name="head_tracking_backend_software_requested">已要求軟體編碼</string>
+    <string name="apply_failed">無法套用音訊設定，請查看 logcat。</string>
+    <string name="effect_status">音效狀態</string>
+    <string name="effect_status_ready">專有音效元件可用</string>
+    <string name="effect_status_unavailable">無法開啟專有音效元件</string>
+    <string name="effect_status_service_unavailable">音訊控制服務無法使用</string>
+    <string name="section_personal_audio">個人化音訊</string>
+    <string name="sound_id">SoundID</string>
+    <string name="hearing_compensation">個人化聽感補償</string>
+    <string name="ear_canal_scan">耳道校準</string>
+    <string name="headset_model">耳機型號調音</string>
+    <string name="headset_model_id">型號 ID %1$d</string>
+    <string name="personal_audio_not_configured">尚未為此輸出裝置設定</string>
+    <string name="personal_audio_saved">設定檔已儲存，處理目前未啟用</string>
+    <string name="personal_audio_active">已啟用並套用到此輸出裝置</string>
+    <string name="personal_audio_waiting_for_misound">已啟用；選擇 MiSound 後生效</string>
+    <string name="personal_audio_intro">以下設定依輸出裝置分別儲存。SoundID、聽感補償與耳道濾波係數均由原生 MiSound DSP 鏈路套用。</string>
+    <string name="sound_id_intro">為目前輸出裝置建立並啟用六頻段 SoundID 設定。</string>
+    <string name="hearing_compensation_intro">為目前輸出裝置分別調整左右耳聽感補償曲線。</string>
+    <string name="ear_canal_intro">管理套用到目前輸出裝置的耳道校準資料。</string>
+    <string name="headset_model_intro">選擇目前輸出裝置使用的原生 MiSound 耳機調音。</string>
+    <string name="personal_processing_enabled">啟用處理</string>
+    <string name="sound_id_summary">對目前輸出套用六頻段個人 SoundID 曲線</string>
+    <string name="sound_id_curve">個人曲線</string>
+    <string name="hearing_compensation_summary">分別對左右耳套用六頻段聽感補償</string>
+    <string name="link_left_right">連動左右聲道</string>
+    <string name="link_left_right_summary">調整時同步變更左右兩側</string>
+    <string name="left_ear">左耳</string>
+    <string name="right_ear">右耳</string>
+    <string name="reset_profile">重設曲線</string>
+    <string name="calibration_data">校準資料</string>
+    <string name="calibration_loaded">已載入 %1$d 個濾波係數</string>
+    <string name="start_ear_scan">使用相容耳機測量</string>
+    <string name="ear_scan_hardware_summary">需要開放私有入耳測量通道的小米耳機</string>
+    <string name="ear_scan_hardware_dialog">DSP 套用鏈路已接通。重新測量還需要受支援的小米/Redmi 耳機及其私有藍牙測量傳輸，目前的一般音訊路由無法提供。可在下方匯入既有的原廠校準係數。</string>
+    <string name="import_calibration">匯入原廠校準資料</string>
+    <string name="import_calibration_summary">貼上恰好 1024 個以空格或逗號分隔的浮點係數</string>
+    <string name="import_calibration_invalid">校準資料無效：必須是 1024 個 −128 到 128 範圍內的有限數值</string>
+    <string name="clear_calibration">清除校準資料</string>
+    <string name="headset_none">不使用型號修正</string>
+    <string name="headset_general">一般耳機</string>
+    <string name="headset_general_inear">一般入耳式耳機</string>
+    <string name="effect_engine_status">音效引擎</string>
+    <string name="input_audio_status">目前進入音效鏈路的音軌</string>
+    <string name="output_audio_status">目前輸出鏈路</string>
+    <string name="spatial_audio_status">空間音訊處理</string>
+    <string name="personal_audio_status">個人化處理</string>
+    <string name="audio_status_unavailable">無法讀取音訊框架狀態</string>
+    <string name="engine_status_format">%1$s · %2$s</string>
+    <string name="status_running">引擎已開啟</string>
+    <string name="status_bypassed">音效已旁路</string>
+    <string name="status_unavailable_short">無法使用</string>
+    <string name="status_available_short">可用</string>
+    <string name="status_on">開啟</string><string name="status_off">關閉</string>
+    <string name="status_yes">是</string><string name="status_no">否</string>
+    <string name="status_unsupported">不支援</string><string name="status_dynamic">動態</string>
+    <string name="status_saved_not_active">已儲存；目前未選擇 MiSound</string>
+    <string name="no_active_audio_tracks">目前沒有正在播放的音軌</string>
+    <plurals name="active_audio_tracks"><item quantity="other">%1$d 條活動播放音軌</item></plurals>
+    <string name="more_audio_tracks">\n另有 %1$d 條</string>
+    <string name="audio_session">工作階段 %1$d</string>
+    <string name="track_spatialized">正在空間化</string><string name="track_muted">已靜音</string>
+    <string name="unknown_audio_output">未知輸出</string><string name="unknown_audio_source">未知來源</string>
+    <string name="output_mixer_format">主混音：%1$s · 每緩衝區 %2$s 幀 · 延遲 %3$d ms</string>
+    <string name="output_capabilities">裝置能力：取樣率 %1$s · 聲道 %2$s · 格式 %3$s</string>
+    <string name="spatializer_not_supported">不支援空間音訊渲染器</string>
+    <string name="spatial_status_format">開關%1$s · 目前路由%2$s\n頭部追蹤：實際%3$s · 要求%4$s · 追蹤器%5$s</string>
+    <string name="personal_status_format">耳機型號：%1$s\nSoundID %2$s · 聽感補償%3$s · 耳道校準%4$s</string>
+    <string name="head_tracking_world">相對世界</string><string name="head_tracking_device">相對裝置</string>
+    <string name="usage_media">媒體</string><string name="usage_game">遊戲</string>
+    <string name="usage_call">通話</string><string name="usage_alarm">鬧鐘</string>
+    <string name="usage_notification">通知</string><string name="audio_rate_unknown">取樣率未知</string>
+    <string name="channel_mono">單聲道</string><string name="channel_stereo">立體聲</string>
+    <string name="channel_count">%1$d 聲道</string><string name="channel_unknown">聲道未知</string>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2026 The Xiaomi haotian developers
+     SPDX-License-Identifier: Apache-2.0
+
+     Qualcomm's Android-facing download implementation is a stub in this blob.
+     Keep its complete lower UimLpaService enabled for HaotianQtiEuicc.
+-->
+<config>
+    <component-override package="com.qualcomm.qti.lpa">
+        <component class=".QtiEuiccServiceImpl" enabled="false" />
+    </component-override>
+</config>

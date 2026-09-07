@@ -1,0 +1,14 @@
+# The Synaptics kernel driver supplies raw frames through /dev/xiaomi-touch. Xiaomi's stock THP
+# libraries process those frames and report the Type-B events consumed by AOSP Recovery.
+on early-init
+    # Android's root layout makes /odm/firmware point at /vendor/odm/firmware. Recovery does not
+    # mount odm, so redirect the stock library's fixed lookup path to firmware in the ramdisk.
+    rm /odm/firmware
+    symlink /lib/firmware /odm/firmware
+
+service haotian-recovery-touch /system/bin/haotian-recovery-touch
+    class hal
+    user root
+    group root input
+    capabilities SYS_NICE
+    seclabel u:r:recovery:s0

@@ -11,6 +11,10 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 # Bringup debug: keep adbd available before the framework is healthy.
 WITH_ADB_INSECURE := true
 
+# HaotianAudio owns the single AirPods AACP transport, including the head-pose
+# stream.  This must be set before common_full_phone inherits evolution.mk.
+TARGET_EXCLUDES_BTHELPER := true
+
 # Inherit some common Lineage stuff.
 $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 

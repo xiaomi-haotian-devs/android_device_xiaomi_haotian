@@ -1,0 +1,10 @@
+// SPDX-License-Identifier: Apache-2.0
+android_app {
+    name: "HaotianHaptics",
+    certificate: "platform",
+    privileged: true,
+    system_ext_specific: true,
+    platform_apis: true,
+    srcs: ["src/**/*.java"],
+    static_libs: ["androidx.preference_preference", "SettingsLib"],
+}

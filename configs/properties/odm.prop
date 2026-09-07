@@ -9,6 +9,8 @@ bluetooth.device.default_name=Xiaomi 15 Pro
 # Display
 debug.config.video.hevchdr10.encode.support=true
 debug.video.recovery.killenable=true
+# Stock haotian exposes Xiaomi's FOV-corrected front ALS for automatic brightness.
+ro.miui.support.light.fov=1
 persist.sys.miui_default_resolution=1440x3200
 persist.sys.miui_resolution=1440,3200,600
 persist.vendor.disable_idle_fps.threshold=0
@@ -43,9 +45,18 @@ vendor.display.force_lm_to_fb_config=1
 vendor.display.support_mafr_feature=1
 vendor.mi_sf.enable_second_refresh_rate_overlay=1
 
+# Developer refresh-rate HUD: nominal/HWC rate on the left, SF render rate on the right.
+# Do not enable the spinner: its animation would keep LTPO out of idle states.
+debug.sf.show_refresh_rate_overlay_render_rate=1
+
+# Xiaomi LTPO panels expose Auto/Idle groups instead of composer3 VRR configs. SurfaceFlinger
+# follows the stock two-stage idle path: 10 Hz first, then the stock 2232 ms gradient to 1 Hz.
+ro.surface_flinger.xiaomi_ltpo_state_machine=true
+ro.surface_flinger.xiaomi_ltpo_gradient_idle_ms=2232
+
 # Camera
 persist.vendor.camera.logentry=1
-persist.vendor.camera.sdk.third.jpegr.enable=0
+persist.vendor.camera.sdk.third.jpegr.enable=1
 
 # Fingerprint
 persist.vendor.fingerprint.type=udfps

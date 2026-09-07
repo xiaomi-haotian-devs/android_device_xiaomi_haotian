@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="noise_mode_entries">
+        <item>@string/noise_off</item>
+        <item>@string/noise_cancellation</item>
+        <item>@string/transparency</item>
+        <item>@string/adaptive</item>
+    </string-array>
+    <string-array name="noise_mode_values" translatable="false">
+        <item>1</item><item>2</item><item>3</item><item>4</item>
+    </string-array>
+    <string-array name="noise_mode_entries_no_off">
+        <item>@string/noise_cancellation</item>
+        <item>@string/transparency</item>
+        <item>@string/adaptive</item>
+    </string-array>
+    <string-array name="noise_mode_values_no_off" translatable="false">
+        <item>2</item><item>3</item><item>4</item>
+    </string-array>
+    <string-array name="noise_mode_bits" translatable="false">
+        <item>1</item><item>2</item><item>4</item><item>8</item>
+    </string-array>
+    <string-array name="noise_mode_bits_no_off" translatable="false">
+        <item>2</item><item>4</item><item>8</item>
+    </string-array>
+    <string-array name="stem_action_entries">
+        <item>@string/noise_control</item>
+        <item>@string/voice_assistant</item>
+    </string-array>
+    <string-array name="stem_action_values" translatable="false">
+        <item>1</item><item>5</item>
+    </string-array>
+    <string-array name="microphone_entries">
+        <item>@string/microphone_automatic</item>
+        <item>@string/microphone_always_right</item>
+        <item>@string/microphone_always_left</item>
+    </string-array>
+    <string-array name="mute_action_entries">
+        <item>@string/press_once</item><item>@string/press_twice</item>
+    </string-array>
+    <string-array name="mute_action_values" translatable="false">
+        <item>3</item><item>2</item>
+    </string-array>
+    <string-array name="hang_up_action_entries">
+        <item>@string/press_once</item><item>@string/press_twice</item>
+    </string-array>
+    <string-array name="hang_up_action_values" translatable="false">
+        <item>2</item><item>3</item>
+    </string-array>
+    <string-array name="microphone_values" translatable="false">
+        <item>0</item><item>1</item><item>2</item>
+    </string-array>
+    <string-array name="press_speed_entries">
+        <item>@string/default_option</item>
+        <item>@string/slower</item>
+        <item>@string/slowest</item>
+    </string-array>
+    <string-array name="press_speed_values" translatable="false">
+        <item>0</item><item>1</item><item>2</item>
+    </string-array>
+    <string-array name="volume_swipe_speed_entries">
+        <item>@string/default_option</item>
+        <item>@string/longer</item>
+        <item>@string/longest</item>
+    </string-array>
+    <string-array name="volume_swipe_speed_values" translatable="false">
+        <item>1</item><item>2</item><item>3</item>
+    </string-array>
+    <string-array name="equalizer_mode_entries">
+        <item>@string/recommended</item><item>@string/custom</item>
+    </string-array>
+    <string-array name="equalizer_mode_values" translatable="false">
+        <item>1</item><item>2</item>
+    </string-array>
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Xiaomi earbuds</string>
+    <string name="disconnected">Connect compatible Xiaomi earbuds to use these controls</string>
+    <string name="connecting">Connecting to earbud controls…</string>
+    <string name="authenticating">Authenticating earbuds…</string>
+    <string name="ready">Connected</string>
+    <string name="applying">Applying and checking setting…</string>
+    <string name="retrying">Waiting to reconnect. Another earbud app may be using the control connection.</string>
+    <string name="refresh">Refresh / reconnect</string>
+    <string name="earbud_rendering">Earbud rendering</string>
+    <string name="immersive_sound">Immersive sound in earbuds</string>
+    <string name="immersive_sound_summary">Rendered inside the earbuds; independent of HaotianAudio phone rendering</string>
+    <string name="local_head_tracking">Earbud-local head tracking</string>
+    <string name="local_head_tracking_summary">Preserves the earbud preference even while immersive sound is off</string>
+    <string name="phone_rendering">Phone rendering</string>
+    <string name="open_haotian_audio">HaotianAudio spatial audio</string>
+    <string name="open_haotian_audio_summary">Turn off earbud immersive sound first to avoid double processing, then choose phone spatial rendering and dynamic head tracking</string>
+    <string name="state_unavailable">Waiting for verified earbud readback</string>
+    <string name="operation_error">Could not apply setting: %1$s</string>
+</resources>

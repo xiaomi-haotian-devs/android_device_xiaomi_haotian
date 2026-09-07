@@ -1,0 +1,7 @@
+# RcspAuth is found by libjl_bluetooth.so during JNI_OnLoad and its native methods
+# are registered by their source-level names and signatures.
+-keep class com.jieli.bluetooth.impl.RcspAuth { *; }
+
+# CryptoUtil is also unconditionally found and registered during JNI_OnLoad,
+# including when only RcspAuth's authentication primitives are used.
+-keep class com.jieli.bluetooth.utils.CryptoUtil { *; }

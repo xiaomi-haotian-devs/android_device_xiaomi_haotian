@@ -7,3 +7,5 @@ vendor_public_prop(vendor_haotian_nfc_prop)
 # controller service, never by a cloud configuration client.
 vendor_internal_prop(vendor_batteryantiaging_prop)
 vendor_internal_prop(vendor_haotian_charging_prop)
+vendor_internal_prop(vendor_miface_prop)
+vendor_internal_prop(vendor_mitee_prop)

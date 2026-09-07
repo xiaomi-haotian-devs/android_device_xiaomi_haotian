@@ -1,0 +1,45 @@
+//
+// SPDX-FileCopyrightText: 2026 The Xiaomi haotian developers
+// SPDX-License-Identifier: Apache-2.0
+//
+
+filegroup {
+    name: "haotian_audio_control_api_sources",
+    srcs: [
+        "src/org/xiaomi/haotian/audio/AudioDeviceProfile.aidl",
+        "src/org/xiaomi/haotian/audio/AudioDeviceProfile.java",
+        "src/org/xiaomi/haotian/audio/IHaotianAudioService.aidl",
+        "src/org/xiaomi/haotian/audio/MiSoundCompatContract.java",
+    ],
+    visibility: ["//device/xiaomi/haotian:__subpackages__"],
+}
+
+filegroup {
+    name: "haotian_headphone_provider_api_sources",
+    srcs: [
+        "src/org/xiaomi/haotian/audio/HeadPoseFrame.java",
+        "src/org/xiaomi/haotian/audio/provider/*.aidl",
+        "src/org/xiaomi/haotian/audio/provider/*.java",
+    ],
+    visibility: ["//device/xiaomi/haotian:__subpackages__"],
+}
+
+android_app {
+    name: "HaotianAudio",
+    certificate: "platform",
+    privileged: true,
+    system_ext_specific: true,
+    platform_apis: true,
+    srcs: [
+        "src/**/*.aidl",
+        "src/**/*.java",
+    ],
+    resource_dirs: ["res"],
+    static_libs: [
+        "androidx.preference_preference",
+        "SettingsLib",
+    ],
+    optimize: {
+        enabled: true,
+    },
+}

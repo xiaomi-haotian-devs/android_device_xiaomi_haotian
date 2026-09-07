@@ -1,0 +1,59 @@
+// SPDX-License-Identifier: Apache-2.0
+package {
+    default_applicable_licenses: ["haotian_sony_mdr_license"],
+}
+
+license {
+    name: "haotian_sony_mdr_license",
+    visibility: [":__subpackages__"],
+    license_kinds: ["SPDX-license-identifier-MIT", "SPDX-license-identifier-Apache-2.0"],
+    license_text: ["third_party/LICENSE", "NOTICE"],
+}
+
+cc_library_static {
+    name: "libhaotian_mdr",
+    srcs: ["third_party/libmdr/src/*.cpp", "third_party/libmdr/src/Generated/*.cpp"],
+    local_include_dirs: ["third_party/libmdr/src"],
+    export_include_dirs: ["third_party/libmdr/include"],
+    cpp_std: "c++20",
+    cflags: ["-DMDR_VALIDATION_NO_DEBUG_TRAPS"],
+    shared_libs: ["libbase"],
+    system_ext_specific: true,
+    visibility: [":__subpackages__"],
+}
+
+cc_library_shared {
+    name: "libhaotian_sony_jni",
+    srcs: ["jni/SonyMdrBridge.cpp"],
+    static_libs: ["libhaotian_mdr"],
+    shared_libs: ["libbase", "liblog"],
+    header_libs: ["jni_headers"],
+    cpp_std: "c++20",
+    cflags: ["-Wall", "-Wextra", "-Werror"],
+    system_ext_specific: true,
+}
+
+android_app {
+    name: "HaotianSony",
+    defaults: ["SettingsLibDefaults"],
+    certificate: "platform",
+    privileged: true,
+    system_ext_specific: true,
+    platform_apis: true,
+    srcs: ["src/**/*.java", "src/**/*.aidl"],
+    aidl: { local_include_dirs: ["src"] },
+    resource_dirs: ["res"],
+    static_libs: ["androidx.core_core", "androidx.preference_preference", "SettingsLib"],
+    jni_libs: ["libhaotian_sony_jni"],
+    required: ["default-permissions-haotian-sony"],
+    privapp_allowlist: "privapp-permissions-haotian-sony.xml",
+    optimize: { enabled: true },
+}
+
+prebuilt_etc {
+    name: "default-permissions-haotian-sony",
+    relative_install_path: "default-permissions",
+    src: "default-permissions-haotian-sony.xml",
+    filename_from_src: true,
+    system_ext_specific: true,
+}

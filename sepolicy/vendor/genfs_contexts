@@ -1,0 +1,7 @@
+# Keep the EUA erase/unmap control under the directory type; system_server is only allowed to
+# traverse that type. Only the four immutable status nodes receive the readable type.
+genfscon sysfs /devices/platform/soc/1d84000.ufshc/ufseua/eua_support u:object_r:vendor_sysfs_ufseua_ro:s0
+genfscon sysfs /devices/platform/soc/1d84000.ufshc/ufseua/eua_support_size u:object_r:vendor_sysfs_ufseua_ro:s0
+genfscon sysfs /devices/platform/soc/1d84000.ufshc/ufseua/eua_enable u:object_r:vendor_sysfs_ufseua_ro:s0
+genfscon sysfs /devices/platform/soc/1d84000.ufshc/ufseua/eua_hide u:object_r:vendor_sysfs_ufseua_ro:s0
+genfscon sysfs /devices/platform/soc/1d84000.ufshc/ufseua u:object_r:vendor_sysfs_ufseua:s0

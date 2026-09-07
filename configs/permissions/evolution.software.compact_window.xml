@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Product opt-in for Evolution X phone compact windows. -->
+<permissions>
+    <feature name="android.software.freeform_window_management" />
+    <feature name="com.evolution.feature.compact_window" />
+</permissions>

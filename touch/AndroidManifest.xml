@@ -9,6 +9,7 @@
     android:sharedUserId="android.uid.system">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.MANAGE_ACTIVITY_TASKS" />
 
     <application
         android:defaultToDeviceProtectedStorage="true"
@@ -29,6 +30,11 @@
 
         <service
             android:name=".EdgeSuppressionService"
+            android:directBootAware="true"
+            android:exported="false" />
+
+        <service
+            android:name=".TouchControlService"
             android:directBootAware="true"
             android:exported="false" />
     </application>

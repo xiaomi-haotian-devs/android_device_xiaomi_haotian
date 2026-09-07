@@ -11,7 +11,11 @@ android_app {
     platform_apis: true,
     srcs: ["src/**/*.java"],
     resource_dirs: ["res"],
-    static_libs: ["vendor.lineage.powershare-V1-java"],
+    static_libs: [
+        "androidx.preference_preference",
+        "SettingsLib",
+        "vendor.lineage.powershare-V1-java",
+    ],
     optimize: {
         enabled: true,
     },
